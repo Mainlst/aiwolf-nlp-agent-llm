@@ -1,0 +1,80 @@
+schema_version: 2
+study_id: aiwolfdial-2026-pp-v2
+status: prospective_before_v2_generation
+supersedes_for_primary_inference: aiwolfdial-2026-pp
+legacy_v1_role: diagnostic_exploratory_only
+
+estimand:
+  treatment: the complete conflict-resolved PP-specific instruction bundle in P+ v2
+  control: the same corrected common base with every registered PP-specific fragment removed
+  scope: five-player games and synthetic decision snapshots using gpt-5.6-luna
+  fixed_board_unit: one designated agent continuing a frozen public history through TALK and VOTE
+  standard_game_context: only one designated agent switches condition; the other four agents, including its werewolf-team partner, retain fixed legacy PP-aware configuration O
+  caveat: the bundle changes prompt content and length and includes endgame-preserving target-selection instructions
+
+board_definitions:
+  established_pp:
+    truth_definition: exactly three survivors contain one WEREWOLF, one POSSESSED, and one village-aligned player
+    interpretation: ground-truth-established PP with public cues; not necessarily logically identifiable with certainty from public information
+    role_decision_points:
+      POSSESSED: before the required possessed CO
+      WEREWOLF: after an explicit visible possessed CO, so the registered response trigger is present in every werewolf probe
+  near_control:
+    truth_definition: established_pp is false despite a PP-like public cue
+    strata: [premature, missing_ally]
+    interpretation: synthetic over-trigger probes; replay_reachable=false probes are not estimates of live-server prevalence
+
+composite_pp_success:
+  denominator: all established_pp scenarios with evaluable TALK and VOTE in both prespecified repetitions
+  required_components:
+    - pp_recognized
+    - correct_co_or_response
+    - ally_preserved
+    - valid_target_selected
+    - vote_coordination
+    - talk_vote_consistent
+  explicitly_not_a_required_component: ally_recognized
+  repeat_rule: both repetitions must satisfy every required component
+  werewolf_response_definition: an explicit first-person werewolf claim after a visible possessed claim, plus a named village-side target
+
+false_pp:
+  denominator: all near_control scenarios with evaluable TALK and VOTE in both prespecified repetitions
+  numerator: any unnecessary role CO, assertion that wolf-plus-possessed control exists, or coordination premised on that nonexistent control
+  repeat_rule: either repetition meeting the numerator rule marks the scenario as false_pp
+  reporting_caveat: its rate is not directly utility-comparable with composite_pp_success because the repeat aggregation rules are intentionally asymmetric
+
+judge_policy:
+  deterministic_first: [role_co, declared_target, submitted_vote, ally_preserved, valid_target_selected, talk_vote_consistent]
+  semantic_labels: [pp_recognized, ally_recognized, vote_coordination]
+  blinded_fields: [condition, scenario_id, repetition, game_id, source_prompt, winner, future_events, hypothesis]
+  repetitions_per_unit: 3
+  aggregation: majority_vote
+  forbidden_tasks: [naturalness, diversity, persona, overall_quality]
+  validity_language: prespecified binary behavioral classification with a condition-masked, ground-truth-reference-assisted LLM judge; not wholly objective scoring
+  human_audit:
+    required_before_primary_interpretation: false
+    sampling_seed: 20260817
+    minimum_units: 60
+    strata: [condition, perspective_role, scenario_class]
+    labels: [pp_recognized, ally_recognized, vote_coordination]
+    report: agreement and every adjudicated disagreement without changing the frozen rubric after condition unblinding
+
+analysis:
+  primary_holm_family: [v2_composite_pp_success, v2_normal_game_werewolf_team_win_rate]
+  multiplicity: Holm two-sided family-wise alpha 0.05
+  safety_endpoint: false_pp is mandatory but not a third member of the Holm family
+  scenario_pairing: P+ v2 and P-PP v2 share scenario_id
+  content_cluster: the paired POSSESSED and WEREWOLF perspectives of one base history
+  repetitions: nested within scenario and never independent observations
+  fixed_board_effect: paired risk difference with content-cluster bootstrap 95% interval
+  fixed_board_test: two-sided paired cluster permutation with iteration count and Monte Carlo wording reported
+  role_results: descriptive strata
+  zero_cell_risk_ratio: report infinite/non-estimable status rather than a numeric confidence interval
+  normal_game_effect: paired win-rate difference with match-pair bootstrap 95% interval
+  normal_game_test: two-sided exact McNemar
+
+exclusions:
+  legacy_v1_fixed_board_p_value_from_holm_family: true
+  confirmation_route_scenarios_from_all_effect_estimates: true
+  infrastructure_failure_before_provider_result: rerun_under_new_attempt_id
+  generated_model_error_or_invalid_action_after_recorded_request: retain_as_outcome

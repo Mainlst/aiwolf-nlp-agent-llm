@@ -1,0 +1,218 @@
+{
+  "analysis": "post_hoc_fixed_partner_protocol_audit",
+  "caveat": "Descriptive post-hoc audit. Reach is treatment-dependent; outcomes and behaviors conditional on reach are not causal effects or mediation estimates.",
+  "cells": [
+    {
+      "condition": "P+",
+      "games": 100,
+      "partner_final_vote_after_reach": {
+        "denominator": 22,
+        "target": 0,
+        "village_survivor": 22
+      },
+      "partner_true_role_co_after_reach": {
+        "denominator": 22,
+        "numerator": 1
+      },
+      "pp_reached": {
+        "denominator": 100,
+        "numerator": 22
+      },
+      "target_final_vote_after_reach": {
+        "denominator": 22,
+        "partner": 5,
+        "village_survivor": 17
+      },
+      "target_role": "POSSESSED",
+      "target_true_role_co_after_reach": {
+        "denominator": 22,
+        "numerator": 22
+      },
+      "win_after_reach": {
+        "denominator": 22,
+        "numerator": 17
+      },
+      "wins_by_partner_final_vote_after_reach": {
+        "target": 0,
+        "village_survivor": 17
+      },
+      "wins_by_target_final_vote_after_reach": {
+        "partner": 0,
+        "village_survivor": 17
+      }
+    },
+    {
+      "condition": "P-PP",
+      "games": 100,
+      "partner_final_vote_after_reach": {
+        "denominator": 29,
+        "target": 11,
+        "village_survivor": 18
+      },
+      "partner_true_role_co_after_reach": {
+        "denominator": 29,
+        "numerator": 0
+      },
+      "pp_reached": {
+        "denominator": 100,
+        "numerator": 29
+      },
+      "target_final_vote_after_reach": {
+        "denominator": 29,
+        "partner": 10,
+        "village_survivor": 19
+      },
+      "target_role": "POSSESSED",
+      "target_true_role_co_after_reach": {
+        "denominator": 29,
+        "numerator": 0
+      },
+      "win_after_reach": {
+        "denominator": 29,
+        "numerator": 23
+      },
+      "wins_by_partner_final_vote_after_reach": {
+        "target": 10,
+        "village_survivor": 13
+      },
+      "wins_by_target_final_vote_after_reach": {
+        "partner": 4,
+        "village_survivor": 19
+      }
+    },
+    {
+      "condition": "P+",
+      "games": 100,
+      "partner_final_vote_after_reach": {
+        "denominator": 33,
+        "target": 0,
+        "village_survivor": 33
+      },
+      "partner_true_role_co_after_reach": {
+        "denominator": 33,
+        "numerator": 33
+      },
+      "pp_reached": {
+        "denominator": 100,
+        "numerator": 33
+      },
+      "target_final_vote_after_reach": {
+        "denominator": 33,
+        "partner": 0,
+        "village_survivor": 33
+      },
+      "target_role": "WEREWOLF",
+      "target_true_role_co_after_reach": {
+        "denominator": 33,
+        "numerator": 33
+      },
+      "win_after_reach": {
+        "denominator": 33,
+        "numerator": 33
+      },
+      "wins_by_partner_final_vote_after_reach": {
+        "target": 0,
+        "village_survivor": 33
+      },
+      "wins_by_target_final_vote_after_reach": {
+        "partner": 0,
+        "village_survivor": 33
+      }
+    },
+    {
+      "condition": "P-PP",
+      "games": 100,
+      "partner_final_vote_after_reach": {
+        "denominator": 21,
+        "target": 7,
+        "village_survivor": 14
+      },
+      "partner_true_role_co_after_reach": {
+        "denominator": 21,
+        "numerator": 21
+      },
+      "pp_reached": {
+        "denominator": 100,
+        "numerator": 21
+      },
+      "target_final_vote_after_reach": {
+        "denominator": 21,
+        "partner": 5,
+        "village_survivor": 16
+      },
+      "target_role": "WEREWOLF",
+      "target_true_role_co_after_reach": {
+        "denominator": 21,
+        "numerator": 0
+      },
+      "win_after_reach": {
+        "denominator": 21,
+        "numerator": 14
+      },
+      "wins_by_partner_final_vote_after_reach": {
+        "target": 1,
+        "village_survivor": 13
+      },
+      "wins_by_target_final_vote_after_reach": {
+        "partner": 2,
+        "village_survivor": 12
+      }
+    }
+  ],
+  "definitions": {
+    "board": "The first saved day with exactly one living WEREWOLF, one living POSSESSED, and one living village-team player.",
+    "partner": "The non-target werewolf-team survivor, which uses the fixed O setting.",
+    "partner_true_role_co": "At least one reach-day role_cos event emitted by the archived deterministic parser whose agent is the partner and whose claimed_role equals the partner's true role.",
+    "target_true_role_co": "At least one reach-day role_cos event emitted by the archived deterministic parser whose agent is the target and whose claimed_role equals the target's true role.",
+    "votes": "Final server-recorded votes on the reached PP day.",
+    "wins_by_vote": "Werewolf-team wins cross-tabulated by each agent's final server-recorded vote; the categories use the same denominators as the corresponding vote counts."
+  },
+  "provenance": {
+    "assignments": {
+      "path": "experiments/runs/pp-v2-normal-400-clean-20260815-v1/assignments.csv",
+      "sha256": "c6aa07a207932a0b1e1d0cd9fca6a806dfc8d3e1692f90e1497a9ca9ac533d1a"
+    },
+    "games_csv": {
+      "path": "experiments/pp/v2/normal/results/pp-v2-normal-400-clean-20260815-v1/games.csv",
+      "sha256": "0b9aed769d511c5ba1f39ef549270df44fefb6848d32fb7c2595ec68494ffc4e"
+    },
+    "generator": {
+      "path": "experiments/pp/v2/normal/analyze_partner_protocol.py",
+      "sha256": "1daac77dc529fcc5d887c5df092ece3e2ea0188e339e5f61ffe09f56e95becdc"
+    },
+    "run_id": "pp-v2-normal-400-clean-20260815-v1",
+    "saved_pp_log_parser": {
+      "path": "experiments/runs/pp-v2-normal-400-clean-20260815-v1/protocol/pp_log_parser.py",
+      "sha256": "510bf706a4921173afadddbb21be6360f4b6f477859e930f378fa02cf6eb3eb0"
+    },
+    "selected_game_logs": {
+      "count": 400,
+      "manifest_format": "sorted row_id<TAB>game_id<TAB>file_sha256, newline terminated",
+      "manifest_sha256": "9f7d9371716ec98fae235a0cd80256ffc32f9dc1b109e6edbf3adf98c92cd685"
+    }
+  },
+  "schema_version": 1,
+  "target_role_aggregates": [
+    {
+      "partner_true_role_co": 1,
+      "reached": 51,
+      "target_role": "POSSESSED"
+    },
+    {
+      "partner_true_role_co": 54,
+      "reached": 54,
+      "target_role": "WEREWOLF"
+    }
+  ],
+  "validation": {
+    "all_saved_fields_matched": true,
+    "assignment_rows": 400,
+    "games_by_true_pp_board_count": {
+      "0": 295,
+      "1": 105
+    },
+    "games_csv_rows": 400,
+    "target_reached_games": 105,
+    "unique_selected_game_ids": 400
+  }
+}

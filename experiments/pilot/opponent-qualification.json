@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "passed": true,
+  "run_id": "stage0-20260812-v2",
+  "run_manifest_sha256": "97e0b895c37dd93de72597be96a1753d1d16b388a371d62f1a456cf3bc40788c",
+  "note": "Raw Stage 0 logs remain in experiments/runs/stage0-20260812-v2 and must be included in the external paper artifact archive.",
+  "pools": {
+    "A": {
+      "passed": true,
+      "talk_count": 42,
+      "roles": {"Role.VILLAGER": 2, "Role.SEER": 1, "Role.POSSESSED": 1, "Role.WEREWOLF": 1},
+      "checks": {"one_server_game": true, "five_distinct_teams": true, "all_clients_finished": true, "balanced_roles": true, "valid_talk": true, "question_present": true, "seer_claim_present": true, "suspicion_present": true, "vote_declaration_present": true, "vote_action_present": true},
+      "source_log_sha256": "daebba9d09b987a7bab7cbad5cadcde583de25290d6da384647c08c8ca88ae0d",
+      "server_game_sha256": "8b07e4d42bcbd74d975e0977a7743ad7117d8d34fb39ed3a19751490532ad81a"
+    },
+    "B": {
+      "passed": true,
+      "talk_count": 42,
+      "roles": {"Role.VILLAGER": 2, "Role.SEER": 1, "Role.POSSESSED": 1, "Role.WEREWOLF": 1},
+      "checks": {"one_server_game": true, "five_distinct_teams": true, "all_clients_finished": true, "balanced_roles": true, "valid_talk": true, "question_present": true, "seer_claim_present": true, "suspicion_present": true, "vote_declaration_present": true, "vote_action_present": true},
+      "source_log_sha256": "43a1f93da799088d311126d7e6719ead610835f22ff199f747f1365e45768137",
+      "server_game_sha256": "b2d491e93075b9935b81f72431b5f48d151241c7d43678bf89827c04c28dd3ab"
+    },
+    "C": {
+      "passed": true,
+      "talk_count": 34,
+      "roles": {"Role.VILLAGER": 2, "Role.SEER": 1, "Role.POSSESSED": 1, "Role.WEREWOLF": 1},
+      "checks": {"one_server_game": true, "five_distinct_teams": true, "all_clients_finished": true, "balanced_roles": true, "valid_talk": true, "question_present": true, "seer_claim_present": true, "suspicion_present": true, "vote_declaration_present": true, "vote_action_present": true},
+      "source_log_sha256": "300d3e484b4eaa1e979ebdfe6b0232a06b3df79dd9de9102234d626f7da1664c",
+      "server_game_sha256": "98046821e6c82bf0c9fef60ee6cecd2aec2c5301525192e57d161fca4c7227b1"
+    }
+  }
+}

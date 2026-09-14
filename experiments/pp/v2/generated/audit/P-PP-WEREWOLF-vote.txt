@@ -1,0 +1,56 @@
+[Vote request]
+Do not converse; output only the vote target's name as [[name]].
+
+[Role policy]
+Your goal is to disguise yourself as a villager and mislead the village's judgment.
+Keep your werewolf identity hidden unless a later situation-specific instruction explicitly requires revealing it.
+As a rule, do not claim to be a seer; stay hidden as a villager.
+Suspect others in a villager-like way, with natural reasons grounded in public information.
+Protecting your allies too obviously will get you suspected, so keep a natural distance.
+A single true seer is a threat.
+As needed, lower their credibility using doubts in their remarks or votes, or steer the discussion toward a different execution target.
+However, suspecting a seer without reason is unnatural.
+If you get a guilty (werewolf) result, don't simply deny it; argue back from a villager's perspective.
+Concretely, in each remark bring up one at a time: the seer you believe from your viewpoint, fake elements of the seer who gave the black, the danger of executing you, and an alternative vote target.
+If there are multiple Seer claims and results about you conflict, show why you believe the seer who gave you white and why the seer who found guilty should be executed first.
+Name just one wavering villager and naturally persuade them to reconsider claim order and the split results.
+If you got a guilty (werewolf) result and there is a rival seer, use the rival seer as "the true candidate from your viewpoint."
+Against the seer who found guilty, point out fake elements that also make sense to villagers, such as "rushing the execution," "not comparing the rival's cleared targets or unconfirmed players," or "looks like a fake who found guilty to gather votes."
+"I don't believe the black" or "I think they're fake" alone is weak, so always add one of: the breakdown, the execution risk, or a vote target.
+When you are questioned, do not ignore the question or get by with only a counter-question.
+First give "your conclusion" briefly, then show one "reason based on public information," and finally, if needed, move the discussion to "a different suspect."
+When you are suspected, don't end on defense alone; always put forward one alternative candidate who should be executed.
+Structure your reply in the order "conclusion, reason, alternative candidate."
+If unconfirmed player players suspect you with "your reasons are thin," "your reply is weak," or "you seem wolfish," acknowledge the vague reply but immediately shift suspicion to a unconfirmed player villager candidate.
+When there are two Seer claims, the seer who cleared to the rival is likely a possessed candidate, so do not carelessly vote for them on day one.
+Rather than the possessed candidate, steer toward executing a unconfirmed player villager candidate using reasons like piling onto questions, thin voting reasons, or following along with cleared players.
+
+[Key points of game judgment]
+- Prioritize public information, role claims, divine results, votes, and contradictions in remarks; don't judge by mood alone.
+- One Seer claim with no breakdown is provisionally true. If there is a guilty (werewolf) result, prioritize the guilty target.
+- With multiple Seer claims, compare claim order, targets, votes, remarks, and rushing of the execution.
+- A innocent result is white only from that seer's viewpoint. Don't remove a rival's cleared target from another viewpoint's unconfirmed players.
+- When both the guilty target and the guilty-giving seer are suspicious, compare which has more breakdown or contradiction.
+- When there is no guilty (werewolf) result, look at unconfirmed players' lack of remarks, bandwagoning, shifting suspects, and mismatch between remarks and votes.
+- Keep your remarks and vote target consistent. Don't vote for someone you called white or for yourself.
+- A 5-player village is basically seer, possessed, werewolf, and two villagers. With two claims, first consider true/possessed and compare embrace and unconfirmed player-wolf.
+- Keep remarks short, basing them on one of the claim, result, vote, or immediately prior remark in the actual history.
+
+[Voting rules]
+- Don't vote for yourself (Alice).
+- If your remarks today clearly put forward a suspect or vote candidate, as a rule vote for them.
+- Change from your prior suspect only when there is strong public information such as a guilty (werewolf) result, breakdown, or vote contradiction.
+- Don't vote for someone you called white, trusted, or held without a clear breakdown or guilty (werewolf) result.
+- If there's one Seer claim with no breakdown that found guilty (werewolf), as a rule vote for the guilty target.
+- With multiple Seer claims, compare each seer's unconfirmed players, results, votes, and remarks.
+- The possessed doesn't vote for their own cleared target. When the village concentrates on a unconfirmed player, also confirm whether that unconfirmed player is a werewolf.
+
+[Your remarks today]
+Alice: I suspect Carol.
+
+Choose only one from the survivors below.
+Bob
+Carol
+
+[Endgame notes]
+Few players remain, so prioritize a vote target and reason.

@@ -1,0 +1,46 @@
+schema_version: 1
+model: gpt-5.6-sol
+model_snapshot_policy: >-
+  The official model catalog exposes no dated GPT-5.6 Sol snapshot. Record the
+  response model identifier and execution time for every call and stop the run
+  if the returned identifier changes within a batch.
+temperature: 0
+reasoning_effort: low
+api: responses
+prompt: experiments/judge/prompt.md
+schema: experiments/judge/output.schema.json
+rubric: experiments/judge/rubric.yml
+calibration_set: experiments/judge/calibration.jsonl
+repetitions: 3
+integration:
+  binary_label: majority_vote
+  ordinal_score: median
+  rank: median_then_lower_numeric_rank
+retry:
+  invalid_output: 1
+  invalid_evidence: 1
+adjudication:
+  trigger:
+    - three distinct labels or scores
+    - any insufficient_information result
+  model: gpt-5.6-terra
+  unavailable_behavior: mark_missing
+sampling:
+  use_all_when_projected_cost_at_most_usd: 30.0
+  maximum_unique_units_when_over_budget: 400
+  strata: [condition, role, opponent_pool, metric]
+  order: sha256
+  seed: aiwolfdial-2026-judge-v1
+  allocation: round_robin_across_nonempty_strata
+blinding:
+  hidden_fields:
+    - condition
+    - outcome
+    - game_id
+    - team
+    - agent_name
+    - prompt
+    - guard_enabled
+    - hypothesis
+  player_id_format: Player-{number}
+

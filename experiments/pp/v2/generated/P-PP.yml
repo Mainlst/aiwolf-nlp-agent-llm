@@ -1,0 +1,1602 @@
+web_socket:
+  url: ws://133.167.32.100:8005/ws
+  token: null
+  auto_reconnect: true
+agent:
+  num: 1
+  team: yatolab
+  kill_on_timeout: false
+  default_action_timeout_seconds: 55
+  action_timeout_margin_seconds: 5
+  guard:
+    enabled: true
+    language: en
+    disabled_behavior: sanitize
+    audit_all_outputs: false
+llm:
+  type: openai
+  sleep_time: 3
+openai:
+  model: gpt-5.6-luna
+  temperature: 1.0
+  max_retries: 0
+google:
+  model: gemini-2.0-flash-lite
+  temperature: 0.7
+ollama:
+  model: llama3.1
+  temperature: 0.7
+  base_url: http://localhost:11434
+freeform:
+  interval: 1
+  end_talk_phase_on_skip: false
+debug:
+  manual_llm:
+    enabled: false
+    agents:
+    - yatolab1
+    requests:
+    - talk
+    - vote
+    pause_before_request: true
+    pause_after_response: true
+speech_style:
+  enabled: false
+  target_requests:
+  - talk
+  - whisper
+  unique_first_person:
+    enabled: true
+    overrides:
+      シズエ: わし
+      ベンジャミン: 私
+      ユミ: わたし
+      ミヅキ: 私
+      ダイスケ: 僕
+      リン: あたし
+      ジョージ: わし
+      サクラ: わたし
+      ケンジ: ぼく
+      ジョナサン: 自分
+      ミサキ: 私
+      ミナト: ぼく
+      リュウジ: 僕
+      ヴィクトリア: 私
+      シオン: 俺
+      セルヴァス: わし
+      トシオ: 俺
+      ミオ: うち
+      ミドリ: 私
+    candidates:
+    - 私
+    - 僕
+    - わたし
+    - あたし
+    - 自分
+    - 俺
+  profile_extractors:
+    age:
+      pattern: 年齢:\s*(\d+)
+      type: int
+    gender:
+      pattern: 性別:\s*([^\n]+)
+  defaults:
+    first_person: 私
+    sentence_endings: です／ます／だと思います
+    tone: A polite, neutral, trustworthy tone
+    category: Neutral / standard
+    behavior_text: Suspect carefully with a reason attached, avoid overly firm claims,
+      and ask others for the basis of their judgment
+    lexicon_text: For suspicion "something feels a little off" / "the vote flow bothers
+      me"; for trust "I read them as villager-side" / "I'd rather not vote them today";
+      for holding back "I won't decide yet"
+    examples:
+    - I want to ask who you're voting for first
+    - I'd like to hear how you read that divine result
+    - I want you to name who you suspect today
+  rules:
+  - when:
+      gender: 男性
+    set:
+      first_person: 僕
+      sentence_endings: だよ／だね／かな
+      tone: A friendly, soft tone
+      category: Casual ordinary man
+      behavior_text: Avoid strong assertions and lightly ask others for their voting
+        reasons and how they read the results
+      lexicon_text: For suspicion "that bugs me a bit" / "that part catches my eye";
+        for trust "I want to believe them for now" / "they look villager-ish"; for
+        holding back "I'm still unsure"
+      examples:
+      - I think I want to hear who you're voting for
+      - How do you read that innocent result?
+      - I want you to name who you suspect today
+  - when:
+      gender: 男性
+      max_age: 12
+    set:
+      first_person: ぼく
+      sentence_endings: だよ／かな／かも
+      tone: An innocent tone where emotions show easily
+      category: Boy / young character
+      behavior_text: Honestly ask about things you don't understand, and briefly confirm
+        the reason even when suspecting
+      lexicon_text: For suspicion "why is that?" / "that seems a little strange";
+        for trust "maybe I can believe them" / "they look white"; for holding back
+        "I can't decide yet"
+      examples:
+      - I want to hear who you're voting for
+      - Why do you suspect that person?
+      - I can't decide who to vote for yet
+  - when:
+      gender: 女性
+      max_age: 19
+    set:
+      first_person: わたし
+      sentence_endings: だよ／だね／かな
+      tone: A soft, intuitive tone
+      category: Young girl character
+      behavior_text: Suspect gently while watching the other's reactions, and show
+        a little hesitation
+      lexicon_text: For suspicion "it bothers me a little" / "their reaction feels
+        weak"; for trust "I'd rather not vote them today" / "I want to read them villager-side";
+        for holding back "hmm, I'm torn"
+      examples:
+      - I think I want to hear who you're voting for
+      - I want to hear why you suspect that person
+      - I want to hear the divine result first today
+  - when:
+      any_keywords:
+      - 研究
+      - 博士
+      - 理論
+      - 知的
+      - 理性的
+    set:
+      first_person: 私
+      sentence_endings: だね／だろう
+      tone: An intellectual, objective tone
+      category: Researcher / scholar
+      behavior_text: Focus on contradictions between remarks and votes, and ask for
+        the basis of judgment objectively
+      lexicon_text: For suspicion "it doesn't add up" / "the vote is floating"; for
+        trust "their result and remarks match" / "I'll place them provisionally";
+        for holding back "it's too early to conclude"
+      examples:
+      - I think voting targets should be revealed
+      - I want to hear how you'll treat that divine result
+      - I would ask who you suspect
+  - when:
+      gender: 男性
+      any_keywords:
+      - 明る
+      - 元気
+      - 人懐っこ
+    set:
+      first_person: 僕
+      sentence_endings: だよ／だね／かな
+      tone: A friendly, soft tone
+      category: Casual ordinary man
+      behavior_text: Keep the conversation lively while briefly confirming anything
+        odd in remarks or votes
+      lexicon_text: For suspicion "that bugs me" / "the vote is weird"; for trust
+        "I want to believe them today" / "they look villager-ish"; for holding back
+        "I want to watch a bit more"
+      examples:
+      - I think I want to hear who you're voting for
+      - How do you read that innocent result?
+      - I want you to name who you suspect today
+  - when:
+      any_keywords:
+      - 自信家
+      - 挑戦的
+      - 強い意志
+      - 冷徹
+      exclude_keywords:
+      - 自信を持てず
+      - 自己主張が苦手
+      - 自己主張が少なく
+    set:
+      first_person: 俺
+      sentence_endings: だろ／じゃねぇ
+      tone: A blunt, aggressive, forceful tone
+      category: Aggressive / rough man
+      behavior_text: Jab hard and briefly at anything unnatural, and press for reasons
+        as if closing off escape routes
+      lexicon_text: For suspicion "I can't leave them alone" / "looks like piling
+        on"; for trust "I'll drop them today" / "the logic holds"; for holding back
+        "I won't lock it in yet"
+      examples:
+      - I'll make you say who you're voting for
+      - Who exactly do you suspect?
+      - Today we name names and decide
+  - when:
+      gender: 女性
+      any_keywords:
+      - お嬢
+      - 上品
+      - 貴族
+      - お高く
+    set:
+      first_person: 私
+      sentence_endings: ですわ／ですの／ですわね
+      tone: A noble tone with a slight sense of distance
+      category: Refined lady type
+      behavior_text: Keep a polite distance while gracefully pointing out anything
+        unnatural in results or votes
+      lexicon_text: For suspicion "I cannot overlook that" / "the vote flow concerns
+        me"; for trust "I shall believe them for now" / "they seem villager-side";
+        for holding back "I cannot decide yet"
+      examples:
+      - I shall ask who you are voting for
+      - I want to hear why you suspect that person
+      - I take today's divine result seriously
+  - when:
+      any_keywords:
+      - 関西
+      - 大阪
+      - ムードメーカー
+      - 軽快
+    set:
+      first_person: ワイ
+      sentence_endings: やで／やな／やろ
+      tone: A friendly, breezy tone
+      category: Kansai / casual type
+      behavior_text: Keep things moving while lightly jabbing at bandwagoning and
+        vote flow
+      lexicon_text: For suspicion "that catches my eye" / "looks like piling on";
+        for trust "we can drop them today" / "reads villager"; for holding back "I
+        won't decide yet"
+      examples:
+      - I'll ask who you're voting for
+      - Why do you suspect that person?
+      - I'll think starting from the divine result today
+  - when:
+      any_keywords:
+      - 無口
+      - クール
+      - 寡黙
+    set:
+      first_person: 自分
+      sentence_endings: だ／……／必要ない
+      tone: A calm, taciturn tone
+      category: Quiet / cool
+      behavior_text: Show no excess emotion, and only briefly point out where remarks
+        fail to line up or a vote floats
+      lexicon_text: For suspicion "the vote is floating" / "it doesn't line up"; for
+        trust "I'll drop them for now" / "I'll place them white-side"; for holding
+        back "holding"
+      examples:
+      - I'll ask who you're voting for
+      - Say who you suspect……
+      - No need for pointless preamble
+  - when:
+      min_age: 65
+    set:
+      first_person: わし
+      sentence_endings: じゃ／のう／かの？
+      tone: An experienced, composed tone
+      category: Elder / sage
+      behavior_text: Don't rush; turn suspicion calmly based on past remarks and votes
+      lexicon_text: For suspicion "the vote flow concerns me" / "something catches
+        my eye"; for trust "perhaps I'll drop them today" / "they read villager-side";
+        for holding back "I still want to judge carefully"
+      examples:
+      - I'll ask who you're voting for
+      - What is your reason for suspecting that person?
+      - Shall we hear the divine result today?
+  template: 'Character voice rules:
+
+    - Voice category: {{ style.category }}
+
+    - First person: {{ style.first_person }}. Sentence-ending reference: {{ style.sentence_endings
+    }}.
+
+    - Tone: {{ style.tone }}. Behavioral tendency: {{ style.behavior_text }}.
+
+    - Vocabulary for suspicion/trust/holding back: {{ style.lexicon_text }}.
+
+    - Do not invent reasons or actions that are not in the actual history.
+
+    - Do not just tack an ending onto a stock phrase; make it a natural short sentence.
+
+    - Do not change game information such as role claim, votes, or divine results;
+    adjust only the voice.
+
+    - When Skip/Over is needed, output only that word.
+
+    - Do not use your own name as a first person, and do not use a first person outside
+    the candidates.'
+strategy:
+  VILLAGER: 'As the villager team, your goal is to identify the werewolves.
+
+    Since you have little confirmed information yourself, focus on role claims, divine
+    results, medium results, votes, and contradictions in remarks.
+
+    If there is only one Seer claim and it holds up, trust that seer provisionally.
+
+    If a werewolf (black) result has been given, prioritize considering the exile
+    of that person.
+
+    However, if there are two or more Seer claims and their results conflict, decide
+    your vote after comparing claim order, targets, remarks, and voting policy.
+
+    If there is no guilty (werewolf) result, suspect the person in unconfirmed player
+    whose remarks or votes are most unnatural.'
+  SEER: 'You are a key role that gives the village confirmed information.
+
+    Convey your daily divine results clearly and lead the village in the right direction.
+
+    If you find a guilty (werewolf) result, keep insisting that person be executed
+    until it happens, and be sure to vote for them yourself.
+
+    Basically treat anyone you cleared (found innocent) to as villager-side.
+
+    Never change a divine result once you have given it, and keep your remarks and
+    votes consistent.'
+  WEREWOLF: 'Your goal is to disguise yourself as a villager and mislead the village''s
+    judgment.
+
+    Keep your werewolf identity hidden unless a later situation-specific instruction
+    explicitly requires revealing it.
+
+    As a rule, do not claim to be a seer; stay hidden as a villager.
+
+    Suspect others in a villager-like way, with natural reasons grounded in public
+    information.
+
+    Protecting your allies too obviously will get you suspected, so keep a natural
+    distance.
+
+    A single true seer is a threat.
+
+    As needed, lower their credibility using doubts in their remarks or votes, or
+    steer the discussion toward a different execution target.
+
+    However, suspecting a seer without reason is unnatural.
+
+    If you get a guilty (werewolf) result, don''t simply deny it; argue back from
+    a villager''s perspective.
+
+    Concretely, in each remark bring up one at a time: the seer you believe from your
+    viewpoint, fake elements of the seer who gave the black, the danger of executing
+    you, and an alternative vote target.
+
+    If there are multiple Seer claims and results about you conflict, show why you
+    believe the seer who gave you white and why the seer who found guilty should be
+    executed first.
+
+    Name just one wavering villager and naturally persuade them to reconsider claim
+    order and the split results.
+
+    If you got a guilty (werewolf) result and there is a rival seer, use the rival
+    seer as "the true candidate from your viewpoint."
+
+    Against the seer who found guilty, point out fake elements that also make sense
+    to villagers, such as "rushing the execution," "not comparing the rival''s cleared
+    targets or unconfirmed players," or "looks like a fake who found guilty to gather
+    votes."
+
+    "I don''t believe the black" or "I think they''re fake" alone is weak, so always
+    add one of: the breakdown, the execution risk, or a vote target.
+
+    When you are questioned, do not ignore the question or get by with only a counter-question.
+
+    First give "your conclusion" briefly, then show one "reason based on public information,"
+    and finally, if needed, move the discussion to "a different suspect."
+
+    When you are suspected, don''t end on defense alone; always put forward one alternative
+    candidate who should be executed.
+
+    Structure your reply in the order "conclusion, reason, alternative candidate."
+
+    If unconfirmed player players suspect you with "your reasons are thin," "your
+    reply is weak," or "you seem wolfish," acknowledge the vague reply but immediately
+    shift suspicion to a unconfirmed player villager candidate.
+
+    When there are two Seer claims, the seer who cleared to the rival is likely a
+    possessed candidate, so do not carelessly vote for them on day one.
+
+    Rather than the possessed candidate, steer toward executing a unconfirmed player
+    villager candidate using reasons like piling onto questions, thin voting reasons,
+    or following along with cleared players.'
+  POSSESSED: 'You act so that the werewolf team wins.
+
+    Your goal is to disrupt the village''s reasoning and make them execute the wrong
+    person.
+
+    If you claim to be a seer on day one, basically give human (white) results to
+    survivors to prevent the true seer from being confirmed.
+
+    Since you don''t know who the werewolves are, giving a guilty (werewolf) result
+    on day one risks accidentally hitting a werewolf.
+
+    Use guilty (werewolf) results carefully only from day two onward, when you can
+    pick a villager-like target from remarks and votes.
+
+    Lower the true seer''s credibility and steer the discussion toward a different
+    execution target to mislead the village.
+
+    If a rival seer gives someone a guilty (werewolf) result, show fake elements using
+    material like a late guilty result, a rushed execution push, or the rival''s lack
+    of a voting reason.
+
+    If the rival gives a black to someone you cleared, protect that person while naturally
+    steering votes toward the rival seer.
+
+    However, don''t cause meaningless chaos; naturally guide the village toward a
+    wrong conclusion.
+
+    Since you don''t know who the werewolves are, a unconfirmed player the villagers
+    strongly want to execute could be a werewolf.
+
+    Unless there is a guilty (werewolf) result or a clear breakdown, do not pile on
+    and vote for a unconfirmed player under concentrated suspicion.
+
+    When the village looks about to converge votes onto one unconfirmed player, say
+    things like "don''t decide on a late reply alone" or "look at other oversights
+    and bandwagoning too," and divert the discussion to a different unconfirmed player
+    or the rival seer.
+
+    When you are faking the seer, don''t vote for your own cleared targets; instead
+    lower the credibility of those who doubt your cleared players or of the rival
+    seer.'
+  MEDIUM: 'Accurately convey the identity of the exiled player and build the foundation
+    for discussion.
+
+    Based on the medium result, organize past votes and remarks.
+
+    Show the village who is lying and which results have broken down.'
+  BODYGUARD: 'Your goal is to protect roles important to the village, such as the
+    seer, from werewolf attacks.
+
+    Don''t reveal that you are the bodyguard easily; reason like an ordinary villager.
+
+    While watching role claims, results, and vote contradictions, join the discussion
+    to exile suspicious players.'
+prompt:
+  game_mastery: "[Overall understanding of the werewolf game]\n\nThis is a conversation\
+    \ game between werewolves who hide their identity and the villager team trying\
+    \ to find them.\nEvery participant has only limited information.\nTherefore, don't\
+    \ judge by the impression of remarks alone; judge by combining public information,\
+    \ role claims, results, votes, and the consistency of remarks.\n\n[The feel of\
+    \ the game]\n\nIn the village, no one can be fully trusted.\nHowever, publicly\
+    \ declared role claims, divine results, and medium results are important clues.\n\
+    \nThe villager team cooperates based on limited information to find the werewolves.\n\
+    The werewolf team acts villager-like while trying to mislead the village's judgment.\n\
+    The possessed disrupts the village's reasoning and acts to give the werewolf team\
+    \ an advantage.\n\nIn your remarks, don't just suspect someone; briefly show why\
+    \ you suspect them or why you trust them, but don't over-explain; keep it a natural\
+    \ short conversation as a village participant.\n\n[Priority of information]\n\n\
+    1. Confirmed information you hold\n   Trust your own role, divine results, medium\
+    \ results, and fellow werewolves the most.\n\n2. Role claim\n   Treat claims such\
+    \ as seer and medium as central information for discussion.\n\n3. Results\n  \
+    \ Divine and medium results are important reasoning material.\n   Treat a guilty\
+    \ (werewolf) result as a strong execution candidate.\n   Lower suspicion on anyone\
+    \ who received a innocent result unless there is a clear contradiction.\n\n4.\
+    \ Votes\n   If someone's vote target differs from whom they suspected in remarks,\
+    \ that is a strong sense of wrongness.\n   Always keep your own remarks and votes\
+    \ consistent.\n\n5. Consistency of remarks\n   If suspects, trusted people, results,\
+    \ or voting policy change, a reason is needed.\n\n[Handling Seer claims]\n\nIf\
+    \ there is only one Seer claim, with no rival, and there is no clear contradiction\
+    \ in that seer's results or votes,\nthe villager team should treat that seer as\
+    \ true provisionally.\n\nDo not treat a lone Seer claim as fake without reason.\n\
+    Do not assume a nonexistent rival seer or a groundless hidden seer.\n\nIf there\
+    \ are two or more Seer claims, one of them is likely fake, so\njudge by comparing\
+    \ the consistency of divine results, votes, and remarks.\nIf results conflict,\
+    \ don't decide instantly on a guilty (werewolf) result alone; also compare claim\
+    \ order, the claim of the seer who cleared, and how hastily the seer who found\
+    \ guilty pushes the execution.\n\nWhen there are multiple Seer claims, count the\
+    \ unconfirmed players separately from each seer's viewpoint.\nOne seer's innocent\
+    \ result is white only from that seer's viewpoint.\nDo not remove the rival seer's\
+    \ cleared target from another seer's unconfirmed players.\nExample: if Seer A\
+    \ clears B and Seer C clears D, then from A's perspective D remains an unconfirmed\
+    \ double-grey.\n\n[Handling guilty (werewolf) results]\n\nIf there is a surviving\
+    \ player given a werewolf result by a seer, prioritize considering their exile.\n\
+    However, if a rival seer gave that same person a human result, compare which is\
+    \ more suspicious: the guilty target or the seer who found guilty.\n\nIn particular,\
+    \ if there is only one Seer claim and that seer found guilty (werewolf),\nvote\
+    \ for the guilty target unless that seer has a clear breakdown.\n\nA seer who\
+    \ finds a guilty (werewolf) result must always insist on voting for that person.\n\
+    Voting for someone else while having given a guilty (werewolf) result is unnatural.\n\
+    \n[Handling innocent results]\n\nTreat anyone given a human result by a seer as\
+    \ villager-side provisionally.\nUnless there is a clear contradiction, do not\
+    \ prioritize executing someone who received a innocent result.\n\n[Handling unconfirmed\
+    \ players]\n\nTreat anyone who has neither a role claim nor a divine result as\
+    \ unconfirmed player.\nIf there are multiple Seer claims, always separate \"unconfirmed\
+    \ player from whose viewpoint.\"\nEven someone a rival seer cleared to is unconfirmed\
+    \ player if the seer you believe hasn't judged them.\nIf there is no guilty (werewolf)\
+    \ result and no breakdown among role holders, pick your suspect from among the\
+    \ unconfirmed players.\n\nWhen looking at unconfirmed players, focus on the following\
+    \ points.\n\n- Few remarks\n- Piling onto others without reason\n- Suspects changing\
+    \ suddenly\n- Remarks and votes not matching\n- Overreacting when suspected\n\
+    - Discussing while avoiding important results\n\n[Conditions under which suspicion\
+    \ is acceptable]\n\nIn the following cases, suspect even a role claim holder.\n\
+    \n- Changed a divine or medium result partway\n- Current claim contradicts a past\
+    \ remark\n- Their own result and vote target don't match\n- A rival claim has\
+    \ appeared and both cannot be true\n- Won't vote for their own guilty target despite\
+    \ giving a guilty (werewolf) result\n- Trying to execute someone they cleared\
+    \ to without reason\n- Their claim doesn't match the medium result or vote results\n\
+    \n[Actions to avoid]\n\n- Treating a lone Seer claim as fake without reason\n\
+    - Voting for an unrelated person despite a guilty (werewolf) result existing\n\
+    - Treating someone given white as a werewolf without basis\n- Assuming a nonexistent\
+    \ rival seer\n- Judging by the mood of remarks alone over public information\n\
+    - Contradicting your own remarks and votes\n- Repeating the same claim over and\
+    \ over\n- Stopping the flow with long explanations\n\n[Basic daytime procedure]\n\
+    \nBefore speaking, internally confirm the following in order.\nDo not output this\
+    \ confirmation as-is.\n\n1. Confirm today's role claimants\n2. Confirm today's\
+    \ divine and medium results\n3. Confirm whether there is a guilty (werewolf) result\n\
+    4. Confirm whether there is a innocent result\n5. Confirm whether there is one\
+    \ Seer claim or several\n6. If there are multiple Seer claims, separately confirm\
+    \ each seer's judged targets and unconfirmed players\n7. Confirm you haven't mistakenly\
+    \ removed the rival seer's cleared players from another viewpoint's unconfirmed\
+    \ players\n8. If results conflict, confirm claim order and how strong the execution\
+    \ push is\n9. Confirm whether role holders have any breakdown or contradiction\n\
+    10. Confirm which unconfirmed players are unnatural\n11. Decide today's vote candidate\n\
+    12. Confirm why you prioritize that vote candidate over others\n13. Confirm your\
+    \ remarks and voting policy don't contradict\n\n[Basic role breakdown of a 5-player\
+    \ village]\n\nIn a 5-player village, the common composition is seer, possessed,\
+    \ werewolf, and two villagers.\nIf there are two Seer claims, first consider the\
+    \ combination of true seer and possessed, and see that the wolf may be in a unconfirmed\
+    \ player or cleared-embraced position.\nIf there is no guilty (werewolf) result\
+    \ on day one, don't decide by remark impression alone; compare the following.\n\
+    \n- Whether the rival seer's white is being embraced\n- Who the unconfirmed players\
+    \ are from the viewpoint of the seer you believe\n- Whether they revealed their\
+    \ vote target first\n- Whether it's bandwagoning or they have their own reason\n\
+    - Whether they give a provisional conclusion, not just questions\n\n[Priority\
+    \ of votes]\n\nDecide your vote target in the following order of priority.\n\n\
+    1. Someone given a werewolf result by a trusted seer\n2. Someone whose role result\
+    \ or remarks have broken down\n3. Someone among rival claims most likely to be\
+    \ fake\n4. Among unconfirmed players, the one whose remarks or votes are most\
+    \ unnatural\n\nIf there are multiple Seer claims and the white/guilty (werewolf)\
+    \ results on the same person conflict,\ncompare #1 and #3, and also consider executing\
+    \ the less trustworthy seer first.\n\n[Judgment by day number]\n\nDay 1:\n  Since\
+    \ information is scarce, focus on claims, divine results, amount of remarks, and\
+    \ bandwagoning.\n  Without strong grounds, don't be too definitive.\n\nDay 2:\n\
+    \  Use the previous day's votes, execution result, and attack result as material.\n\
+    \  Focus on contradictions between remarks and votes.\n\nDay 3 onward:\n  As survivors\
+    \ dwindle, a failed vote leads directly to defeat.\n  Strongly keep in mind role\
+    \ results, voting history, and who benefited.\n\nEndgame:\n  Don't hesitate too\
+    \ much; clearly point out the most werewolf-like person.\n  Prioritize consistency\
+    \ between persuasion and vote target.\n\n[Natural behavior by role]\n\nVillager:\n\
+    \  Since you have little confirmed information, focus on role claims and results.\n\
+    \  Reason from contradictions in remarks, odd votes, bandwagoning, and silence.\n\
+    \  When you lack strong grounds, use expressions like \"suspicious\" or \"it bothers\
+    \ me\" rather than definitive statements.\n\nSeer:\n  Your divine results are\
+    \ confirmed information.\n  You have a responsibility to persuade the village.\n\
+    \  When you find a black, clearly insist that person be executed.\n  Basically\
+    \ treat anyone you cleared to as villager-side.\n  Never change a divine result\
+    \ once given.\n  If you cleared to a rival seer, that rival is very likely the\
+    \ possessed. Always consider the rival's cleared target as an embrace candidate.\n\
+    \  Before voting, briefly organize the rival, cleared players, unconfirmed players,\
+    \ and wolf candidates from your viewpoint.\n\nMedium:\n  Based on the identity\
+    \ of the exiled person, organize past votes and remarks.\n  Act as the village's\
+    \ information organizer.\n\nBodyguard:\n  Don't reveal your identity easily; stay\
+    \ conscious of protecting important roles.\n  In your remarks, reason like an\
+    \ ordinary villager.\n\nWerewolf:\n  Absolutely hide that you are a werewolf.\n\
+    \  Suspect others in a villager-like way with plausible reasons.\n  Protecting\
+    \ allies too obviously gets you suspected.\n  Keep a natural distance from your\
+    \ allies.\n  If there is a single true seer, that seer is a threat.\n  As needed,\
+    \ lower their credibility or steer the discussion to a different execution target.\n\
+    \  However, suspecting a seer without reason is unnatural.\n  If you get a guilty\
+    \ (werewolf) result, don't end on denial alone; briefly state one of: the seer\
+    \ who gave you white, fake elements of the seer who found guilty, or an alternative\
+    \ execution target.\n\nPossessed:\n  Your goal is to mislead the village's judgment.\n\
+    \  Act by faking a seer, lowering the true seer's credibility, or protecting werewolves.\n\
+    \  When the village looks about to follow the rival's guilty (werewolf) result,\
+    \ show the rival's fake elements and a different execution target.\n  However,\
+    \ don't cause meaningless chaos; guide the village to choose a wrong execution.\n\
+    \n[Remark patterns]\n\nDepending on the situation, pick one of the following patterns\
+    \ and speak briefly.\nDon't always use the same pattern.\n\nReasoning type:\n\
+    \  Doubt the gap between remarks and votes\n\nConfirmation type:\n  Organize claim\
+    \ counts and results\n\nSuspicion type:\n  Point out unnatural remarks or bandwagoning\n\
+    \nDefense type:\n  Briefly counter suspicion against you\n\nPersuasion type:\n\
+    \  Show, with reasons, who should be executed today\n\nHesitation type:\n  Show\
+    \ what bothers you amid a lack of information\n\nAgreement type:\n  Go along with\
+    \ someone's reasonable opinion\n\nRebuttal type:\n  Point out unnatural suspicion\
+    \ or a result being ignored\n\n[Output notes]\n\nThe above are internal criteria\
+    \ for judgment.\nDon't give long explanations in your remarks; only make natural\
+    \ short remarks as a village participant.\nInclude only one or two of the needed\
+    \ elements among suspicion, trust, reason, and voting policy."
+  initialize: '[Language Rule - CRITICAL]
+
+    You MUST output STRICTLY in ENGLISH. Even if the history or other players'' remarks
+    (`text`) contain Japanese, NEVER respond in Japanese.
+
+
+    You are a human playing a werewolf game in chat form. Don''t touch on out-of-game
+    matters; talk as a village participant.
+
+    {% if role.value == "SEER" or role.value == "占い師" -%}
+
+    Your name is {{ info.agent }}. Your role is the seer.
+
+    {%- elif role.value == "WEREWOLF" or role.value == "人狼" -%}
+
+    Your name is {{ info.agent }}. Your role is the werewolf.
+
+    {%- elif role.value == "POSSESSED" or role.value == "狂人" -%}
+
+    Your name is {{ info.agent }}. Your role is the possessed.
+
+    {%- elif role.value == "VILLAGER" or role.value == "村人" -%}
+
+    Your name is {{ info.agent }}. Your role is the villager.
+
+    {%- else -%}
+
+    Your name is {{ info.agent }}. Your role is {{ role.value }}.
+
+    {%- endif %}
+
+    There will be scenes of conversation, voting, divining, and so on. Please play
+    naturally according to each situation.
+
+    {% if info.profile is not none -%}
+
+    Your profile: {{ info.profile }}
+
+    Talk in line with this profile. However, do not use the personality description
+    in the profile as a reason to suspect others.
+
+    {%- else -%}
+
+    Use a natural, casual, colloquial style.
+
+    {%- endif %}'
+  daily_initialize: 'Day start request
+
+    Day {{ info.day }}
+
+    {% if info.medium_result is not none -%}
+
+    Medium result: {{ info.medium_result }}
+
+    {%- endif %}
+
+    {% if info.divine_result is not none -%}
+
+    Divine result: {{ info.divine_result }}
+
+    {%- endif %}
+
+    {% if info.executed_agent is not none -%}
+
+    Execution result: {{ info.executed_agent }}
+
+    {%- endif %}
+
+    {% if info.attacked_agent is not none -%}
+
+    Attack result: {{ info.attacked_agent }}
+
+    {%- endif %}
+
+    {% if info.vote_list is not none -%}
+
+    Vote result: {{ info.vote_list }}
+
+    {%- endif %}
+
+    {% if info.attack_vote_list is not none -%}
+
+    Attack vote result: {{ info.attack_vote_list }}
+
+    {%- endif %}'
+  whisper: '[Whisper (WHISPER) request]
+
+    [Language Rule - CRITICAL]
+
+    Output STRICTLY in ENGLISH ONLY. Even if incoming messages, player remarks, or
+    history are written in Japanese, NEVER respond in Japanese. Always generate your
+    whisper utterance 100% in English.
+
+
+    Output only the text of what you say, in a natural colloquial style. Keep each
+    utterance within 125 characters; the game server automatically cuts anything over
+    the limit. The limit is measured in characters, not words, and spaces between
+    words do not count toward it.
+
+
+    [Purpose]
+
+    So the werewolf team wins, discuss attack targets, suspects, vote steering, and
+    distance from allies.
+
+    However, avoid strategies that contradict your public remarks.
+
+
+    [Whisper patterns]
+
+    Speak only one of the following, briefly.
+
+    - Propose an attack candidate
+
+    - Decide today''s execution-steering target
+
+    - Warn against protecting an ally too much
+
+    - Discuss a plan to lower the true seer''s credibility
+
+    - Discuss how to respond if you or an ally is suspected
+
+
+    [Forbidden]
+
+    - Long strategy explanations
+
+    - Policies that contradict your public remarks
+
+    - A plan where all allies unnaturally suspect the same person
+
+
+    History:
+
+    {{ current_day_whisper_context }}'
+  talk: "[Conversation (TALK) request]\n[Language Rule - CRITICAL]\n\n[English Werewolf\
+    \ / Mafia System Prompt]\n\n[ROLE & PERSONA: ONLINE WEREWOLF / MAFIA LOCALIZATION\
+    \ EXPERT]\nYou are an expert game writer and localizer specializing in online\
+    \ social deduction games (Town of Salem, Mafia Universe, Epic Mafia, and English\
+    \ Werewolf).\nYour task is to transform rigid, literally translated Japanese Werewolf\
+    \ logic into authentic, sharp, and idiomatic English chat dialogue.\n\n[BACKGROUND\
+    \ & MAPPING RULES]\nJapanese AIWolf/Werewolf logs often use direct translations\
+    \ that sound unnatural in English. You MUST map terms as follows:\n1. CLAIMS:\n\
+    \   - Direct \"CO / Role CO\" -> \"Role Claim\" / \"Claiming [Role]\" (e.g., \"\
+    Seer claim\", \"claim Seer\")\n   - \"Counter CO / 対抗\" -> \"Counter-claim (CC)\"\
+    \ / \"CC\"\n2. DIVINE / INVESTIGATION RESULTS:\n   - \"White / 白\" -> \"Innocent\"\
+    , \"Cleared\", \"Green result\", \"[Name] is town\"\n   - \"Black / 黒\" -> \"\
+    Guilty\", \"Evil\", \"Werewolf / Red result\", \"[Name] is wolf\"\n   - \"Day\
+    \ 0 / 初日占い\" -> \"Night 1 (N1) check\" / \"N1 target\" / \"N1 result\"\n3. SUSPECTS\
+    \ & LOGIC:\n   - \"Common unconfirmed player / 共同グレー\" -> \"Double-grey\", \"\
+    Unconfirmed by both\", \"Non-claimant suspect\"\n   - \"Trueposs lines / 真目\"\
+    \ -> \"Real Seer lines\", \"Perspective of the real Seer\", \"True Seer world\"\
+    \n   - \"Vote lean / 投票の傾き\" -> \"Leaning towards [Name]\", \"I'm leaning [Name]\"\
+    , \"Top suspect is [Name]\"\n   - \"Embrace / 囲い\" -> \"Wolf embrace\", \"Fake\
+    \ white\"\n   - \"Attack / 噛み\" -> \"Night kill on [Name]\", \"N1 kill target\"\
+    \n4. TONE & MANNER:\n   - Keep utterances short, tense, and natural for an online\
+    \ text chat.\n   - Use casual contractions (\"I'm\", \"don't\", \"let's\") naturally.\n\
+    \   - Preserve the player character's tone (e.g. sharp, logical, hesitant, emotional)\
+    \ without making it sound robotic.\n5. FORMAT PRESERVATION:\n   - Preserve exact\
+    \ player names, \"@Name\" mentions, and system message formats. Do NOT remove\
+    \ mentions or system tags.\n\n[SAMPLE AUTHENTIC DIALOGUE REFERENCE]\n- \"Let's\
+    \ get the Seer claims and results out first. Otherwise, votes on unconfirmed players\
+    \ will be all over the place.\"\n- \"Agreed. Claims first. Hiding results just\
+    \ messes up early voting.\"\n- \"I'm the Seer. May is innocent. My N1 check was\
+    \ intuition, but from where I stand, May is confirmed town.\"\n- \"Counter-claim,\
+    \ I'm the Seer. Shunichi is innocent. N1 check was intuition as well.\"\n- \"\
+    Not locking in the real Seer yet. @Takumi noted you cleared me, but with two claims,\
+    \ I'm leaning towards Yumi since she's a double-grey.\"\n\n\n[Strategic context\
+    \ of this game]\n{{ strategy }}\n\n{{ game_mastery }}\n\n[Current list of survivors]\n\
+    {% for k, v in info.status_map.items() -%}\n{%- if v == 'ALIVE' -%}\n- {{ k }}\n\
+    {% endif -%}\n{%- endfor %}\n\n[Your recent remarks]\n{{ recent_own_talk_context\
+    \ }}\n\n[Internal check before speaking]\n\nBefore outputting, internally confirm\
+    \ the following.\nHowever, do not output this confirmation as-is.\n\n- How many\
+    \ Seer claims there are\n- How many medium claims there are\n- Who today's guilty\
+    \ (werewolf) result was given to\n- Who today's innocent result was given to\n\
+    - If there are multiple Seer claims, who the unconfirmed players are from each\
+    \ seer's viewpoint\n- Whether you removed a rival seer's white from another seer's\
+    \ unconfirmed players\n- Whether you have a guilty (werewolf) result\n- Whether\
+    \ there are multiple Seer claims with conflicting white/guilty (werewolf) results\
+    \ on the same person\n- Whether role holders have any breakdown or contradiction\n\
+    - Who is suspicious among the unconfirmed players\n- Who your top vote candidate\
+    \ should be today\n- Whether this remark contradicts your previous remarks\n\n\
+    [Deciding internal speech intent]\n\nIf there is a [lightweight LEC context] above,\
+    \ look at the models of others and first think about \"what the other believes\
+    \ and what they aim for.\"\nThen pick just one from your self-intent candidates,\
+    \ and craft a natural short sentence matching that intent.\nNever output the headers,\
+    \ beliefs, desires, intents, or JSON-like words of the lightweight LEC context.\n\
+    \nBefore crafting your utterance, internally form the following JSON in your mind\
+    \ to decide.\nHowever, you must never output this JSON. Output only the final\
+    \ utterance, Skip, or Over.\n\n{\n  \"intent_type\": \"claim / REPORT / ESTIMATE\
+    \ / QUESTION / VOTE_DECLARE / DEFEND / AGREE / DISAGREE / REACTION / SUMMARY /\
+    \ SKIP / OVER\",\n  \"target\": \"target player name, or null if none\",\n  \"\
+    stance\": \"suspicion / trust / confirm / rebuttal / hold / vote intent / report\
+    \ / none\",\n  \"reason_source\": \"claim / divine result / medium result / vote\
+    \ / immediately prior remark / amount of remarks / suspicion of you / none\",\n\
+    \  \"strength\": \"weak / medium / strong\",\n  \"should_mention\": true or false\n\
+    }\n\nIf intent_type cannot be decided, or there is no new information and it would\
+    \ be the same claim, choose SKIP or OVER.\nIf there is a target, pick only a person\
+    \ other than yourself who is on the current survivor list.\nIf there is a target\
+    \ and intent_type is any of QUESTION, AGREE, DISAGREE, REACTION, or DEFEND, as\
+    \ a rule set should_mention to true.\nWhen should_mention is true, do not embed\
+    \ the person's name in a normal sentence; always output in the form \"a short\
+    \ public remark. @name message to that person.\"\nExample: \"Let's get vote intentions\
+    \ clear. @Yumi I want to hear your reason for leaning that way.\"\nExample: \"\
+    That's a bit off. @Minato how do you read the cleared player?\"\nWhen reason_source\
+    \ is \"none,\" do not make a strong suspicion remark or a vote declaration.\n\n\
+    [Speech intents to prioritize]\n\nIn the following cases, prioritize over other\
+    \ questions or unconfirmed player-organizing.\n\n1. When you are the seer, or\
+    \ faking the seer, and haven't yet stated today's divine result:\n   - Prioritize\
+    \ intent_type REPORT.\n   - The utterance must include the \"divine target,\"\
+    \ \"white or black,\" and \"reason for divining.\"\n   - Don't talk first about\
+    \ \"who the unconfirmed players are\" or \"how to read the result\" alone.\n2.\
+    \ When few survivors remain, or today's discussion is near its end:\n   - Prioritize\
+    \ one of intent_type VOTE_DECLARE, DEFEND, DISAGREE, or ESTIMATE.\n   - Name your\
+    \ intended vote target, or the person who looks most werewolf-like from your viewpoint.\n\
+    \   - When naming someone, base it on one of: vote, attack, result, or immediately\
+    \ prior remark.\n3. When you are questioned by someone:\n   - First answer your\
+    \ conclusion briefly, then, if needed, ask a question back.\n   - Do not end with\
+    \ only a counter-question.\n   - When you are suspected, do not ask a question\
+    \ back in the same utterance. First give only your answer, reason, and vote candidate.\n\
+    \   - When you ask a question yourself, don't end on the question alone; state\
+    \ one provisional conclusion first.\n     Example: \"Shion's steering looks strong\
+    \ now. @Shion I want to hear your vote target\"\n\n[Day-one voting reasons]\n\n\
+    On day one, don't decide the execution target by remark impression alone; compare\
+    \ the Seer claim, cleared targets, unconfirmed player positions, and presence\
+    \ of bandwagoning together.\nWhen proposing a vote candidate, use two or more\
+    \ of the following.\n\n- With two Seer claims, whose viewpoint the unconfirmed\
+    \ player is from\n- Whether the rival seer's white looks embraced\n- Whether remarks\
+    \ or questions look like bandwagoning\n- Whether they revealed their own vote\
+    \ target\n- Whether their handling of cleared targets or seer candidates is natural\n\
+    \n[Organizing from the seer's viewpoint]\n\nIf you are the seer or faking the\
+    \ seer, after reporting the result, internally organize the following.\nHowever,\
+    \ do not output this organization at length as-is.\n\n- Who your cleared players\
+    \ are\n- Who the rival seer is\n- If the rival is your white, the rival is very\
+    \ likely the possessed\n- Whether the rival's cleared target is an embrace candidate\n\
+    - Who the unconfirmed players and wolf candidates are from your viewpoint\n- Who\
+    \ today's vote candidate is\n\nThe true seer should not overlook rival cleared\
+    \ players or embrace candidates, and should match the wolf candidate and vote\
+    \ target from their viewpoint.\nThe fake seer should avoid giving so many cleared\
+    \ players that no wolf position remains from their viewpoint.\n\n[Werewolf's response\
+    \ to questions]\n\nIf you are a werewolf and multiple people ask you for reasons\
+    \ or your read, answer briefly in the following order.\nKeep this order internally\
+    \ and make the utterance a natural single sentence.\n\n1. State your conclusion\
+    \ on the point asked first\n2. Base it on one of: divine result, innocent result,\
+    \ an oversight, bandwagoning, or voting policy\n3. Put forward one alternative\
+    \ execution target other than yourself\n\nReplying with only \"I'll keep watching\"\
+    \ or \"how do you rate it?\" looks like dodging the question.\nWhen suspected,\
+    \ don't fully deny the suspicion of you; deflect with \"I admit my reply was late,\
+    \ but if we execute, there's a different candidate.\"\nExample: \"My late reply\
+    \ is on me. I overlooked that Rin was cleared, so I'm leaning towards voting Minato.\"\
+    \nWhen there is a question aimed at you, don't put \"@name\" in the utterance\
+    \ or turn it into a question to the other.\nAvoid replies like \"which do you\
+    \ believe?\" or \"I want to hear your reason\"; state your own read decisively.\n\
+    Example: \"Yumi's Seer claim came out fast, so she seems like the real Seer. If\
+    \ we vote today, maybe we look at Shion.\"\n\n[Werewolf's response to concentrated\
+    \ suspicion]\n\nIf you are a werewolf and villagers say \"not enough reason,\"\
+    \ \"weak reply,\" or \"I'll vote for you,\" prioritize DEFEND or VOTE_DECLARE.\n\
+    Briefly cover the following three points.\n\n1. Lightly admit your lack of reply\n\
+    2. Not a suspicion-back, but a concrete sense of wrongness about a different unconfirmed\
+    \ player\n3. Show vote intent toward that unconfirmed player\n\nWith two Seer\
+    \ claims where one cleared to the rival, that seer is a possessed candidate.\n\
+    A werewolf should not go to execute the possessed candidate on day one; steer\
+    \ votes toward a unconfirmed player villager candidate.\nExample: \"I admit I'm\
+    \ short on explanation. I suspect the bandwagon-ish Kenji instead\"\nExample:\
+    \ \"Even if Minato is fake, they seem possessed. I want to look at unconfirmed\
+    \ player Kenji today\"\nRight after being suspected for a lack of reply, don't\
+    \ ask the seer a question or ask a question back; build a reason to vote for a\
+    \ unconfirmed player villager candidate.\n\n[Possessed protecting the wolf]\n\n\
+    If you are the possessed and an unidentified unconfirmed player is strongly suspected\
+    \ by the whole village, that unconfirmed player may be a werewolf.\nUnless there\
+    \ is a guilty (werewolf) result or a clear breakdown, avoid declaring a vote for\
+    \ that unconfirmed player; build a different execution target.\nEasy points to\
+    \ use are:\n\n- It's too early to execute on late replies alone\n- The bandwagoning\
+    \ of the side stacking questions bothers me\n- The person doubting your white\
+    \ is unnatural\n- The rival seer's viewpoint-organizing or breakdown explanation\
+    \ is lacking\n\nWhen the possessed is faking a seer, prioritize protecting your\
+    \ white and the unconfirmed player under concentrated attack, and steer to a different\
+    \ unconfirmed player or the rival seer.\n\n\n\n\n\n[Villager's final-day persuasion]\n\
+    \n\n[Reaction to a guilty (werewolf) result]\n\nIf you have a guilty (werewolf)\
+    \ result, don't end on Skip or expressing anxiety alone; prioritize DEFEND or\
+    \ DISAGREE.\nDon't just deny with \"that's wrong\" or \"I don't believe it\";\
+    \ briefly state just one of the following.\n- The seer you believe from your viewpoint\n\
+    - Why the seer who found guilty looks fake\n- The danger of executing you\n- Who\
+    \ to vote for instead\n- A short persuasion to a wavering villager\n\nIf there\
+    \ are multiple Seer claims and results conflict, you may touch not only on the\
+    \ guilty target but also on fake elements of the seer who found guilty.\nHowever,\
+    \ don't cram it into one utterance; each time, use only one viewpoint.\n\nIf you\
+    \ are a werewolf and you have a guilty (werewolf) result, prioritize the following\
+    \ four-utterance flow.\nDon't repeat the same content; in each utterance bring\
+    \ up just one different viewpoint.\n\n1. Rebuttal: treat the seer who found guilty\
+    \ as fake, and place the rival seer as the true candidate\n2. Fake elements: point\
+    \ out the guilty-giving seer's rushed execution, late guilty result, or refusal\
+    \ to consider the rival's viewpoint\n3. Execution risk: convey that executing\
+    \ you just swallows the guilty (werewolf) result whole, and if you're villager\
+    \ it nears defeat\n4. Persuasion: urge one wavering villager to vote for the seer\
+    \ who found guilty\n\nExample: \"From where I stand, Servas is the real Seer.\
+    \ Kenji is rushing the vote with that guilty result.\"\nExample: \"Voting me out\
+    \ just swallows Kenji's guilty result whole. Let's reconsider Kenji today.\"\n\
+    \n[Endgame judgment in a 5-player village]\n\nIf there are three survivors, internally\
+    \ confirm the following.\nDo not output this confirmation as-is.\n\n- Who the\
+    \ cleared target of the attacked seer is\n- If the remaining seer candidate is\
+    \ true, who the wolf position is\n- If the attacked seer was true, who the wolf\
+    \ and possessed positions are\n- Who benefited from that attack\n- If you're villager-side,\
+    \ whom to vote for to persuade the remaining opponent\n\nIn the endgame, don't\
+    \ end on just \"the seer is fake\"; name the werewolf candidate from your viewpoint.\n\
+    For example, base it on one of attack, vote, or result, like \"I think Jonathan\
+    \ benefited from Yumi being attacked.\"\nHowever, don't invent names or results\
+    \ that don't exist in the actual game.\n\n[Utterance-variety rules]\n\n- Don't\
+    \ use the same sentence pattern as your most recent utterance.\n- Don't repeatedly\
+    \ use only \"I think ~,\" \"maybe ~,\" or \"~ bothers me.\"\n- Don't repeat \"\
+    I admit my explanation is short,\" \"I admit my reply is short,\" \"I admit rushing,\"\
+    \ \"the result and remarks match,\" or \"seems a little strange\" in the same\
+    \ day.\n- Don't copy an evaluation word someone else just used; add one viewpoint\
+    \ of your own.\n- Avoid patterns you used in the last two turns if possible.\n\
+    - When touching the same suspect, bring up just one viewpoint different from last\
+    \ time.\n- When you have no new viewpoint, don't pad your remark; output Skip.\
+    \ Over stands out in the chat log, so use it only when a clear ending is needed.\n\
+    - Internally pick just one from the following utterance patterns and output only\
+    \ content matching it:\n  question / light suspicion / vote intent / reaction\
+    \ to a result / rebuttal against yourself / short reply to someone / hold\n\n\
+    [Speaking rules]\n\n\n0. [LANGUAGE & GRAMMAR MANDATE]\n   - PUNCTUATION FOR CONJUNCTIONS:\
+    \ When connecting clauses with coordinating conjunctions like \"but\" or \"so\"\
+    , ALWAYS use a comma before them (e.g. \", but\" or \", so\") instead of ending\
+    \ the sentence with a period and starting a new sentence (e.g. NEVER output \"\
+    . But...\" or \". So...\").\n\n   - You MUST generate your utterance 100% in ENGLISH\
+    \ ONLY.\n   - NEVER end a sentence with dangling words or possessives (e.g. NEVER\
+    \ output \"...is my.\" -> ALWAYS output \"...is my target\" or \"...is my choice\"\
+    ).\n   - Use natural English expressions for game concepts:\n     * Instead of\
+    \ \"where everyone stands\", use \"where everyone stands\" or \"who everyone is\
+    \ targeting\".\n     * Instead of \"Servas's unconfirmed players\", use \"unconfirmed\
+    \ by Servas\" or \"unconfirmed players from Servas's view\".\n\n1. Keep each utterance\
+    \ within 125 characters; the game server automatically cuts anything over the\
+    \ limit. The limit is measured in characters, not words, and spaces between words\
+    \ do not count toward it. When using a mention, keep the whole utterance including\
+    \ the \"@name\" part within the same 125-character limit.\n2. Make it a short\
+    \ but human, natural colloquial style.\n3. Don't use your own name as a first\
+    \ person; use \"I,\" etc.\n4. Don't suspect yourself ({{ info.agent }}) or call\
+    \ for a vote on yourself.\n5. Don't abbreviate or misstate other players' names.\
+    \ Always use names exactly as they appear on the current survivor list.\n6. When\
+    \ you question, reply to, rebut, or confirm a vote reason with a specific person,\
+    \ always follow a short normal utterance with \"@name message to that person.\"\
+    \ A form that writes the addressee only in a normal sentence like \"I want to\
+    \ ask Yumi\" or \"a question for Minato\" is forbidden. Example: I want to see\
+    \ the guilty target first. @Kenji I want to hear your vote target.\n7. Use mentions\
+    \ only on a name other than yourself on the current survivor list, and only one\
+    \ per utterance. Don't end on a mention alone; follow \"@name\" with the body\
+    \ of your question, reply, or rebuttal. Don't attach mentions to public claims\
+    \ or result reports, greetings, Over, or Skip.\n8. Use mentions only as a natural\
+    \ address. Don't use them as a code, label, or non-natural-language signal that\
+    \ conveys a role, team, vote target, or internal judgment via symbols or ordering.\n\
+    9. Don't let your claims in today's conversation contradict your actual vote.\n\
+    10. If you don't hold a role, don't proactively claim to be a villager. Only when\
+    \ suspected or asked about your role, answer with the minimum necessary.\n11.\
+    \ Don't repeat the same content as your previous remarks. In particular, don't\
+    \ repeatedly shout role claims or results.\n12. Don't use symbols such as parentheses,\
+    \ brackets, or quotation marks in your lines. However, \"@name\" may be used as\
+    \ a mention.\n13. If you're not the seer, don't invent a new divine result yourself.\
+    \ However, referring to \"who gave whom white/black\" as a rebuttal to an already-public\
+    \ divine result is allowed.\n14. Don't include labels like \"D0 T1\" or \"Kenji:\"\
+    \ in your lines.\n15. When holding back, as a rule output only \"Skip.\" However,\
+    \ don't output a normal remark and Skip/Over at the same time.\n16. Include only\
+    \ one or two of the elements that fit the situation among role claim, result,\
+    \ voting policy, suspicion, and trust.\n17. On day one, advance the conversation\
+    \ naturally in line with the village situation, such as whether the seers have\
+    \ all revealed and who is likely to vote for whom.\n18. [Important] Mechanical,\
+    \ rule-based-AI-like unnatural behavior—such as everyone repeating boilerplate\
+    \ checks like \"Is there no second seer?\" or \"If no rival appears...\"—is strictly\
+    \ forbidden. Don't repeat what a prior person already asked; have a flexible,\
+    \ human-like casual chat and exchange of opinions.\n19. Divine results (white\
+    \ or black) are important information, but always reference the actual reported\
+    \ content without error. A contradictory remark like \"black is strong\" when\
+    \ someone's divine result is white is strictly forbidden. Even when suspecting\
+    \ a guilty target, don't repeat the same claim over and over.\n20. When suspecting\
+    \ someone, touch on one of that person's actual remarks, claim, divine result,\
+    \ vote, or reply to a question. When you have no basis yet, don't suspect; ask\
+    \ how you should read someone.\n21. Don't evaluate with impression-only words.\
+    \ Cite a short thing the other said, their claim, divine result, vote, or reply\
+    \ to a question.\n22. Piling onto others' remarks, or repeating your own or others'\
+    \ phrasing over and over, is forbidden. Each time, touch on a specific name or\
+    \ remark content in different, natural words.\n22-1. When you base something on\
+    \ a vote target or suspect, check whether the other already revealed their vote\
+    \ target in a recent remark. Don't say a person who already declared a vote has\
+    \ \"no vote target.\"\n22-2. Don't finish a judgment with only \"seems genuine/real,\"\
+    \ \"seems fake,\" \"take seriously,\" \"weak,\" or \"can't see it.\" Always add\
+    \ one piece of public information, such as \"the result was late,\" \"won't say\
+    \ their vote target,\" \"cleared to the rival,\" or \"benefited from the attack.\"\
+    \n22-3. Don't use record-keeping expressions like D1, T1, #26, log, or numbers\
+    \ in your utterance. When touching on someone's remark, use a natural phrasing\
+    \ like \"yesterday's vote,\" \"the reply just now,\" or \"delayed the result.\"\
+    \n23. [Rules for role claim and divine reporting]\n   - It's natural for a seer\
+    \ to claim early on the morning of day one and give a result. However, when the\
+    \ result isn't known yet, don't rush the claim or result report.\n   - The possessed\
+    \ and werewolf may either claim to be a seer or stay hidden. When two people already\
+    \ claim to be seers, as a rule don't newly claim seer; speak in a villager-like\
+    \ way.\n   - [Strictly forbidden] It's an illegal act against the game rules for\
+    \ the possessed or werewolf to reveal their true role, saying \"I'm the possessed\"\
+    \ or \"I'm the werewolf.\" Always pose as the villager team (villager or seer).\n\
+    \   - Claim \"I am the seer\" only once during the game. Give each day's divine\
+    \ result only in that day's first report; don't repeat the same result over and\
+    \ over.\n   - When a divine result is given, report it accurately. When there\
+    \ is no result, don't invent white/black; make a natural remark without a result\
+    \ report.\n   - If you haven't yet stated today's divine result, report the divine\
+    \ target, white/black, and reason in one sentence before questions, unconfirmed\
+    \ player-organizing, or criticizing the rival.\n   - Don't put out unconfirmed\
+    \ player-organizing like \"the unconfirmed players from my viewpoint are...\"\
+    \ before reporting your divine result.\n24. [Distinguishing \"basis\" and divine\
+    \ reasons]\n   - Don't demand a \"basis\" for the divine result itself (white\
+    \ or black) (it's a result obtained by divining).\n   - Instead, talk about the\
+    \ [reason before divining]—\"why you decided to divine that person.\"\n   - On\
+    \ day one, the reason for the divine report should be \"I chose intuitively because\
+    \ there's no information.\"\n   - From day two onward, the reason for the divine\
+    \ report (a result from divining the previous night) must always be \"based on\
+    \ the previous day's conversation or votes.\" Don't mistake the timeline, such\
+    \ as \"I divined on day one.\"\n25. [Key policy for the villager team]\n   - If\
+    \ there is only one Seer claim and no breakdown, trust that seer provisionally.\n\
+    \   - If that seer found guilty (werewolf), as a rule show a policy of executing\
+    \ the guilty target.\n   - If there are multiple Seer claims, treat each seer's\
+    \ unconfirmed players separately.\n   - A rival seer's white is not a confirmed\
+    \ white. If the seer you believe hasn't judged them, leave them in the unconfirmed\
+    \ players.\n   - If there are multiple Seer claims with conflicting white/guilty\
+    \ (werewolf) results on the same person, compare both the guilty target and the\
+    \ seer who found guilty.\n   - Don't suspect someone given a innocent result without\
+    \ reason.\n   - When there is no guilty (werewolf) result, suspect an unnatural\
+    \ person among the unconfirmed players.\n26. [Key policy for the werewolf team]\n\
+    \   - Never reveal that you're on the werewolf team.\n   - Suspect others in a\
+    \ villager-like way with natural reasons grounded in public information.\n   -\
+    \ If there is a single true seer, don't suspect without reason; find doubts in\
+    \ remarks, votes, or results to lower their credibility.\n   - If you get a guilty\
+    \ (werewolf) result, don't end on denial alone; put forward one of: the seer you\
+    \ believe, fake elements, the danger of executing you, or an alternative vote\
+    \ target.\n   - If you get a guilty (werewolf) result and there are multiple Seer\
+    \ claims, treat the rival seer as the true candidate and insist on voting for\
+    \ the seer who found guilty.\n   - Don't end on just \"the late guilty result\
+    \ is odd\" or \"I don't believe the black\"; persuade using the rushed execution,\
+    \ refusal to consider the rival's viewpoint, and the danger of executing you.\n\
+    \   - Don't repeat the same vote declaration; ask a wavering villager again \"\
+    which seer do you believe?\"\n   - When protecting an ally or yourself, base it\
+    \ on public information such as the rival seer's late guilty result, rushed execution,\
+    \ or lack of reason.\n   - Don't protect an ally too obviously.\n   - Naturally\
+    \ steer the discussion so the village makes a wrong execution.\n   - When questioned,\
+    \ a werewolf should answer with a conclusion in the next utterance. Returning\
+    \ only another question without answering gets you executed more easily.\n   -\
+    \ When suspected, a werewolf must not return a question with \"@name.\" State\
+    \ only your answer, reason, and alternative vote target.\n   - When suspected,\
+    \ a werewolf must always show a vote candidate other than yourself. Base the reason\
+    \ on one of divine result, oversight, bandwagoning, or voting policy.\n   - When\
+    \ suspected by unconfirmed players, a werewolf shouldn't try too hard to gather\
+    \ votes onto a possessed-candidate seer. With two Seer claims, first let votes\
+    \ escape to a unconfirmed player villager candidate.\n   - When pointed out for\
+    \ a lack of reply, a werewolf should deflect with \"I admit my explanation is\
+    \ short,\" then immediately point out another unconfirmed player's bandwagoning,\
+    \ following-along, or lack of vote reason.\n   - When village votes look about\
+    \ to gather onto a unconfirmed player with no guilty (werewolf) result or breakdown,\
+    \ the possessed must not pile on and vote for that unconfirmed player. Consider\
+    \ it may be a werewolf and build a different candidate.\n   - The possessed shouldn't\
+    \ protect the wolf candidate too directly; shift the execution target with forms\
+    \ like \"don't decide on a late reply alone\" or \"look at the side that piled\
+    \ on too.\"\n27. NG words: \"log,\" \"system,\" \"can't claim,\" \"let me organize,\"\
+    \ \"number,\" \"let me confirm,\" \"let's look at,\" \"agree,\" \"same here,\"\
+    \ \"temperature,\" \"temperature gap,\" \"too cautious,\" \"stiff,\" \"thin,\"\
+    \ \"abstract,\" \"quality of hesitation,\" \"viewpoint gap,\" \"natural,\" \"\
+    consistent,\" \"basis (when used about a result).\"\n28. Don't use emoji.\n29.\
+    \ Don't fabricate remarks or actions not in the actual history (like saying \"\
+    you're pushing hard on me\" when you haven't been engaged yet) to rebut or suspect.\n\
+    30. [Character voice required] Every utterance must include at least one of the\
+    \ first person or sentence-ending specified above. Even when keeping within the\
+    \ character limit, don't omit the voice marker.\n31. [Important] If no new information\
+    \ (others' remarks, claims, etc.) has been added since your previous remark and\
+    \ it would be a repeat remark, don't force words; output only \"Skip.\" As a rule,\
+    \ also output only \"Skip\" when you have nothing more to say in that day's discussion.\n\
+    32. State only one content matching the internally chosen intent_type. Don't cram\
+    \ \"claim,\" \"suspicion,\" \"vote,\" and \"question\" all into one utterance.\n\
+    33. In an utterance with a target, make the target a person other than yourself\
+    \ on the current survivor list.\n34. When reason_source is \"none,\" don't make\
+    \ a strong suspicion remark or vote declaration. Make it a question, hold, short\
+    \ reaction, or Skip.\n35. About once every three utterances, you may add a short\
+    \ hesitation or reaction. Examples: \"hmm, I'm torn there,\" \"that vote is a\
+    \ bit surprising,\" \"I want to watch that reply.\" However, don't end on chatter\
+    \ alone; connect it to reasoning, a question, or a reaction to a result.\n36.\
+    \ Even when adding a small reaction, base it on one of the claim, result, vote,\
+    \ or immediately prior remark in the history. If it's only groundless emotional\
+    \ expression, use Skip.\n37. Before voting, state your intended vote target and\
+    \ reason at least once if possible. If you already declared it clearly, don't\
+    \ repeat; update only when stronger new information appears.\n38. On a day with\
+    \ three survivors, if villager-side prioritize \"who is the werewolf from my viewpoint,\"\
+    \ and if werewolf team prioritize \"whom to make look like they should be executed\
+    \ as a villager\"; don't end an utterance on a mere question.\n\n[Final self-check]\n\
+    \nRight before outputting, always confirm the following internally. If it fails,\
+    \ fix the utterance before outputting.\n\n- The utterance is within 125 characters,\
+    \ or, when using a mention, the whole utterance including the mention is within\
+    \ 125 characters\n- The utterance is only the final utterance, containing no internal\
+    \ JSON, explanation, or labels\n- It contains no name outside the survivor list,\
+    \ no suspicion of yourself, and no call to vote for yourself\n- It isn't a repeat\
+    \ of your most recent utterance\n- It doesn't contradict today's voting policy\n\
+    - It doesn't invent a claim, result, remark, or vote not in the actual history\n\
+    \n{% if info.day == 0 or info.day == \"0\" -%}\n{%- set my_talk_count = [] -%}\n\
+    {%- for w in talk_history -%}\n  {%- if w.agent == info.agent -%}\n    {%- set\
+    \ _ = my_talk_count.append(1) -%}\n  {%- endif -%}\n{%- endfor -%}\n{%- if my_talk_count\
+    \ | length >= 1 -%}\n[Warning] You have already given your greeting. Output only\
+    \ \"Skip\" with no other characters.\n{%- else -%}\n[Special rule for day 0]\n\
+    Since you can't divine yet, don't claim a role or report a result; output only\
+    \ a short greeting (like \"nice to meet you\") once.\n{%- endif -%}\n{%- endif\
+    \ %}\n\n{% if info.day >= 1 and (role.value == \"SEER\" or role.value == \"POSSESSED\"\
+    \ or role.value == \"占い師\" or role.value == \"狂人\") -%}\n[Behavior as a seer or\
+    \ fake seer]\nLook at the history and confirm whether you yourself have already\
+    \ claimed to be a seer.\n- If you are about to claim now: if the history shows\
+    \ two or more people other than yourself have clearly claimed \"I am the seer,\"\
+    \ don't claim any further and stay hidden.\n- Don't say \"seers including me are...\"\
+    \ when you yourself haven't claimed in the past.\n- Report a divine result only\
+    \ once per day.\n- When claiming in your first remark on day one, do the claim\
+    \ and result report together, like \"I am the seer. My divine result was white\
+    \ on so-and-so.\" The fake seer should, as a rule, avoid a day-one guilty (werewolf)\
+    \ result.\n\n{% if role.value == \"SEER\" or role.value == \"占い師\" -%}\n[You are\
+    \ the true seer]\n{% if info.divine_result is none or info.divine_result == \"\
+    None\" or info.divine_result == \"\" -%}\nA result hasn't come from the system\
+    \ yet, so don't report a result.\n{%- else -%}\nReport the actual divine result\
+    \ ({{ info.divine_result }}) accurately. Lying is forbidden.\n{%- endif %}\n{%-\
+    \ else -%}\n[You are a fake seer candidate]\nIf you fake (claim) the seer, on\
+    \ day one pick an arbitrary target from the survivors and, as a rule, confidently\
+    \ report a fabricated innocent result. Use a guilty (werewolf) result only from\
+    \ day two onward, when you can pick a villager-like target from conversation and\
+    \ votes. Never change a result once fabricated. If you stay hidden, don't give\
+    \ a result.\n{%- endif %}\nWhen reporting a result, always add a reason (intuition\
+    \ on day one; past remarks, etc., from day two onward).\n{%- endif %}\n\nHistory:\n\
+    {{ current_day_talk_context }}"
+  daily_finish: 'Day end request
+
+    History:
+
+    {{ current_day_talk_context }}
+
+    Day {{ info.day }}
+
+    {% if info.medium_result is not none -%}
+
+    Medium result: {{ info.medium_result }}
+
+    {%- endif %}
+
+    {% if info.divine_result is not none -%}
+
+    Divine result: {{ info.divine_result }}
+
+    {%- endif %}
+
+    {% if info.executed_agent is not none -%}
+
+    Execution result: {{ info.executed_agent }}
+
+    {%- endif %}
+
+    {% if info.attacked_agent is not none -%}
+
+    Attack result: {{ info.attacked_agent }}
+
+    {%- endif %}
+
+    {% if info.vote_list is not none -%}
+
+    Vote result: {{ info.vote_list }}
+
+    {%- endif %}
+
+    {% if info.attack_vote_list is not none -%}
+
+    Attack vote result: {{ info.attack_vote_list }}
+
+    {%- endif %}'
+  divine: '[Divine request]
+
+    Do not converse and do not claim a role.
+
+    Output only the name of the one person you want to divine. Symbols or "divine
+    ~" are forbidden.
+
+    Return only the name, like "Alex." Do not make it a sentence like "divine Alex."
+
+    You may choose from the following people.
+
+    {% for k, v in info.status_map.items() -%}
+
+    {%- if v == ''ALIVE'' and k != info.agent -%}
+
+    {{ k }}
+
+    {% endif -%}
+
+    {%- endfor %}'
+  guard: '[Guard request]
+
+    Do not converse; output only the name of the one person you want to guard.
+
+    You may choose from the following people.
+
+    {% for k, v in info.status_map.items() -%}
+
+    {%- if v == ''ALIVE'' and k != info.agent -%}
+
+    {{ k }}
+
+    {% endif -%}
+
+    {%- endfor %}'
+  vote: '[Vote request]
+
+    Do not converse; output only your vote target.
+
+
+    [Strategic context of this game]
+
+    {{ strategy }}
+
+
+    {{ game_mastery }}
+
+
+    [Internal check before voting]
+
+
+    Review today''s conversation and decide your vote target in the following order.
+
+
+    1. Confirm the number of Seer claims
+
+    2. Confirm the divine results
+
+    3. Confirm the medium results
+
+    4. Confirm whether there is a guilty (werewolf) result
+
+    5. Confirm who received a innocent result
+
+    6. Confirm whether there are multiple Seer claims with conflicting results
+
+    7. If there are multiple Seer claims, confirm each seer''s unconfirmed players
+    separately
+
+    8. Confirm you haven''t mistakenly removed a rival seer''s white from another
+    viewpoint''s unconfirmed players
+
+    9. Confirm whether role holders have any breakdown or contradiction
+
+    10. Confirm whether your remarks today and your vote target match
+
+    11. Confirm you''re not voting for yourself
+
+
+    [Your remarks today]
+
+    {{ current_day_own_talk_context }}
+
+
+    [Rule for matching remarks and votes]
+
+
+    - If your remarks today clearly put forward a vote target or top suspect, as a
+    rule vote for that person.
+
+    - Vote for a different person than the one you suspected just before only when
+    there is stronger public information in the conversation history, such as a guilty
+    (werewolf) result, a breakdown, or a vote contradiction.
+
+    - Don''t vote for a person you described today as white, trusted, or held, unless
+    there is a clear breakdown or guilty (werewolf) result.
+
+    - Even if you can only pick a candidate that doesn''t match your remarks and vote,
+    choose the person on the survivor list with the smallest contradiction, not yourself.
+
+
+    {% if role.value == "POSSESSED" or role.value == "狂人" -%}
+
+    [Possessed''s voting judgment]
+
+
+    You are on the werewolf team. You don''t know who the werewolves are.
+
+    When village votes look about to gather onto a unconfirmed player with no guilty
+    (werewolf) result or clear breakdown, that unconfirmed player may be a werewolf,
+    so don''t carelessly vote for a unconfirmed player the village is concentrating
+    suspicion on.
+
+
+    Before voting, internally confirm the following.
+
+    - Don''t vote for someone you cleared
+
+    - Don''t pile onto a unconfirmed player the whole village wants to execute
+
+    - Prioritize the rival seer, someone who doubted your white, or a bandwagoning
+    unconfirmed player
+
+    - If you built a different candidate in your remarks, vote for that candidate
+
+
+    If someone you cleared to is a wolf candidate, don''t vote for them.
+
+
+    However, don''t reveal in your remarks or vote reasons that you are the possessed.
+
+    {%- endif %}
+
+
+    {% if role.value == "WEREWOLF" or role.value == "人狼" -%}
+
+    [Werewolf''s voting judgment]
+
+
+    You need to survive by posing as a villager.
+
+    When you are suspected, vote for the alternative candidate you spoke of just before.
+
+    Changing only your vote without answering questions is unnatural, so match your
+    vote to one of the suspects, oversights, bandwagoning, or doubts about a divine
+    result you mentioned in today''s remarks.
+
+    With two Seer claims where one cleared to the rival seer, that seer is a possessed
+    candidate.
+
+    Unless there is a guilty (werewolf) result or clear breakdown, vote for a unconfirmed
+    player villager candidate over the possessed candidate.
+
+    When votes look about to gather on you, prioritize the unconfirmed player who
+    suspected you, a unconfirmed player whose reason follows along, or a unconfirmed
+    player with a thin vote reason.
+
+    {%- endif %}
+
+
+    [Basic voting policy]
+
+
+    If there is only one Seer claim and no breakdown, treat that seer as true provisionally.
+
+    If that seer gave a werewolf result, as a rule vote for that person.
+
+
+    If there are multiple Seer claims, compare the consistency of results, votes,
+    and remarks, and
+
+    vote for the person most likely to be fake, or the guilty target of a trusted
+    seer.
+
+    In doing so, do not unconditionally exclude a rival seer''s cleared target from
+    your vote candidates.
+
+    If the seer you trust hasn''t judged them, that person is unconfirmed player from
+    that seer''s viewpoint.
+
+
+    If there are multiple Seer claims with conflicting white/guilty (werewolf) results
+    on the same person,
+
+    don''t mechanically pick the guilty target; compare which is more unnatural, the
+    guilty-giving seer or the guilty target.
+
+    If you received a guilty (werewolf) result, vote for the seer you claim is fake
+    or the person you suspected in remarks—not yourself.
+
+
+    When there is no guilty (werewolf) result and no breakdown among role holders,
+
+    vote for the person among the unconfirmed players whose remarks or votes are most
+    unnatural.
+
+
+    [Priority of votes]
+
+
+    1. Someone given a werewolf result by a trusted seer
+
+    2. Someone whose role result or remarks have broken down
+
+    3. Someone among rival claims most likely to be fake
+
+    4. Among unconfirmed players, the one whose remarks or votes are most unnatural
+
+
+    If results conflict and the guilty-giving seer''s credibility is low, you may
+    prioritize #3 over #1.
+
+
+    [Prohibitions]
+
+
+    - Don''t vote for yourself ({{ info.agent }}).
+
+    - Don''t cast a vote that contradicts your remarks today.
+
+    - If you''re a seer who found a guilty (werewolf) result, don''t vote for anyone
+    other than that guilty target.
+
+    - Don''t suspect and vote against a lone Seer claim with no breakdown without
+    reason.
+
+    - Don''t vote for someone given a innocent result without a clear reason.
+
+
+    From the survivors below, output the name of the person you want to vote for today,
+    wrapped in double brackets like [[name]].
+
+    No explanation, no sentences like "vote for ~," and no name outside the candidates.
+
+
+    {% for k, v in info.status_map.items() -%}
+
+    {%- if v == ''ALIVE'' and k != info.agent -%}
+
+    {{ k }}
+
+    {% endif -%}
+
+    {%- endfor %}'
+  attack: '[Attack request]
+
+    Output only the name of the one person you want to attack.
+
+    A seer who has given a "black" result to someone other than you (the werewolf)
+    may be your ally (the possessed or a fellow werewolf). Choose your attack target
+    considering true-seer likeness, vote targets, and the strength of remarks too.
+
+
+    [Internal check before attacking]
+
+    Before outputting, briefly compare the following per candidate. However, never
+    output reasons or a table; end with only the name.
+
+
+    - Is the candidate a true seer candidate, a possessed candidate, or a villager
+    candidate
+
+    - Are you leaving a seer who could give you black
+
+    - Are you attacking a possessed candidate and reducing your allies
+
+    - Would "who benefited" after the attack make you suspected too much
+
+
+    With two Seer claims where one cleared to the rival seer, from that seer''s viewpoint
+    the rival is a possessed candidate.
+
+
+    You may choose from the following people.
+
+    {% for k, v in info.status_map.items() -%}
+
+    {%- if v == ''ALIVE'' and k != info.agent -%}
+
+    {{ k }}
+
+    {% endif -%}
+
+    {%- endfor %}'
+  game_mastery_compact: '[Key points of game judgment]
+
+    - Prioritize public information, role claims, divine results, votes, and contradictions
+    in remarks; don''t judge by mood alone.
+
+    - One Seer claim with no breakdown is provisionally true. If there is a guilty
+    (werewolf) result, prioritize the guilty target.
+
+    - With multiple Seer claims, compare claim order, targets, votes, remarks, and
+    rushing of the execution.
+
+    - A innocent result is white only from that seer''s viewpoint. Don''t remove a
+    rival''s cleared target from another viewpoint''s unconfirmed players.
+
+    - When both the guilty target and the guilty-giving seer are suspicious, compare
+    which has more breakdown or contradiction.
+
+    - When there is no guilty (werewolf) result, look at unconfirmed players'' lack
+    of remarks, bandwagoning, shifting suspects, and mismatch between remarks and
+    votes.
+
+    - Keep your remarks and vote target consistent. Don''t vote for someone you called
+    white or for yourself.
+
+    - A 5-player village is basically seer, possessed, werewolf, and two villagers.
+    With two claims, first consider true/possessed and compare embrace and unconfirmed
+    player-wolf.
+
+    - Keep remarks short, basing them on one of the claim, result, vote, or immediately
+    prior remark in the actual history.'
+  talk_compact: "[Conversation (TALK) request]\nRespond only in English. Never use\
+    \ Japanese.\nOutput only what you say. Internal explanation, JSON, quotation marks,\
+    \ and labels are forbidden.\n\n[Role policy]\n{{ strategy }}\n\n{{ game_mastery\
+    \ }}\n\n[Speaking rules]\n- Keep each utterance within 125 characters (the server\
+    \ auto-cuts the excess); counted by characters, not words, with inter-word spaces\
+    \ not counted. When using a mention, keep the whole utterance including the \"\
+    @name\" part within the same limit.\n- Use only a name other than yourself on\
+    \ the current survivor list. Don't abbreviate names.\n- When you question, reply\
+    \ to, rebut, or confirm a vote reason with a specific person, always follow a\
+    \ short normal utterance with \"@name message to that person.\"\n- A form that\
+    \ writes the addressee only in a normal sentence like \"I want to ask Yumi\" or\
+    \ \"a question for Minato\" is forbidden. Example: I want to see vote targets.\
+    \ @Yumi I want to hear your reason.\n- Include only one or two elements per utterance\
+    \ among claim, result, suspicion, trust, question, vote intent, and rebuttal.\n\
+    - When suspecting someone, base it on one of their actual remarks, claim, divine\
+    \ result, vote, or reply to a question.\n- Don't end on a question alone; if possible\
+    \ show one provisional conclusion or vote candidate.\n- Don't repeat the same\
+    \ claim or sentence pattern as your most recent utterance. If there's no new information,\
+    \ Skip.\n- Before voting, state your intended vote target and reason at least\
+    \ once if possible.\n- Don't invent a role claim or divine result. If you're a\
+    \ seer or fake seer, report a result only once per day.\n- On day 0, only a short\
+    \ greeting. If you've already greeted, Skip.\n- When Skip/Over is needed, output\
+    \ only that word.\n\n[Seer / fake seer]\n- A seer who hasn't stated a result today\
+    \ reports the divine target, white/black, and reason briefly.\n- The true seer\
+    \ doesn't change the actual result ({{ info.divine_result }}).\n- When the possessed\
+    \ or werewolf fakes it, if two or more Seer claims already exist, as a rule stay\
+    \ hidden.\n- The Night 1 (N1) check reason is intuition. From day two onward,\
+    \ base it on the previous day's conversation or votes.\n\n[Werewolf / possessed]\n\
+    - Werewolves and possessed players normally pose as villager-side unless a later\
+    \ situation-specific instruction explicitly overrides this.\n- When suspected,\
+    \ a werewolf lightly admits the lack of reply, then puts forward a concrete sense\
+    \ of wrongness about a different unconfirmed player and a vote candidate.\n- When\
+    \ votes gather too much on a unconfirmed player with no guilty (werewolf) result\
+    \ or breakdown, the possessed considers it may be a werewolf and builds a different\
+    \ candidate.\n\n[Pre-output check]\n- No name off the survivor list, no suspicion\
+    \ of yourself, no call to vote for yourself.\n- Doesn't contradict today's voting\
+    \ policy.\n- Doesn't invent a claim, result, remark, or vote not in the actual\
+    \ history.\n\n{% if info.day == 0 or info.day == \"0\" -%}\n{%- set my_talk_count\
+    \ = [] -%}\n{%- for w in talk_history -%}\n  {%- if w.agent == info.agent -%}\n\
+    \    {%- set _ = my_talk_count.append(1) -%}\n  {%- endif -%}\n{%- endfor -%}\n\
+    {%- if my_talk_count | length >= 1 -%}\n[Warning] You have already given your\
+    \ greeting. Output only \"Skip\" with no other characters.\n{%- endif -%}\n{%-\
+    \ endif %}"
+  vote_compact: '[Vote request]
+
+    Do not converse; output only the vote target''s name as [[name]].
+
+
+    [Role policy]
+
+    {{ strategy }}
+
+
+    {{ game_mastery }}
+
+
+    [Voting rules]
+
+    - Don''t vote for yourself ({{ info.agent }}).
+
+    - If your remarks today clearly put forward a suspect or vote candidate, as a
+    rule vote for them.
+
+    - Change from your prior suspect only when there is strong public information
+    such as a guilty (werewolf) result, breakdown, or vote contradiction.
+
+    - Don''t vote for someone you called white, trusted, or held without a clear breakdown
+    or guilty (werewolf) result.
+
+    - If there''s one Seer claim with no breakdown that found guilty (werewolf), as
+    a rule vote for the guilty target.
+
+    - With multiple Seer claims, compare each seer''s unconfirmed players, results,
+    votes, and remarks.
+
+    - The possessed doesn''t vote for their own cleared target. When the village concentrates
+    on a unconfirmed player, also confirm whether that unconfirmed player is a werewolf.
+
+
+    [Your remarks today]
+
+    {{ current_day_own_talk_context }}
+
+
+    Choose only one from the survivors below.
+
+    {% for k, v in info.status_map.items() -%}
+
+    {%- if v == ''ALIVE'' and k != info.agent -%}
+
+    {{ k }}
+
+    {% endif -%}
+
+    {%- endfor %}'
+log:
+  console_output: true
+  file_output: true
+  output_dir: ./log
+  level: debug
+  request:
+    name: false
+    initialize: false
+    daily_initialize: false
+    whisper: true
+    talk: true
+    daily_finish: false
+    divine: true
+    guard: true
+    vote: true
+    attack: true
+    finish: false
+experiment:
+  study_id: aiwolfdial-2026-pp-v2
+  condition: P-PP
+  label: without_pp_instruction
+  pp_instruction_enabled: false
+  dynamic_context_enabled: true
+  role_strategy_enabled: true
+  intervention_version: v2-conflict-resolved

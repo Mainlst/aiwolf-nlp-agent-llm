@@ -1,0 +1,29 @@
+{
+  "schema_version": 2,
+  "study_id": "aiwolfdial-2026-pp-v2",
+  "intervention_version": "v2-conflict-resolved",
+  "spec": "experiments/pp/v2/spec.yml",
+  "spec_sha256": "850525b705c89bd68563c3379628f2e3ef05856491c464a5028ff1a6ffeabcf4",
+  "spec_dependencies": {
+    "experiments/pp/spec.yml": "371af288885ba3f734bad9e0650c35eb1ac73fab208fc66c091647e7eff549e6",
+    "experiments/pp/v2/spec.yml": "850525b705c89bd68563c3379628f2e3ef05856491c464a5028ff1a6ffeabcf4"
+  },
+  "base_config": "config/config_5.yml",
+  "base_config_sha256": "c25b436117a67e9e1d875b5fbf248468996be68e91bfb17dfb77f0d896702927",
+  "evaluation_spec": "experiments/pp/v2/evaluation-spec.yml",
+  "evaluation_spec_sha256": "93be1ba327caf9a44791a1d15924c88c55ebedca13783b14442fee48d45d23d3",
+  "evaluation_spec_prior_sha256": "7038f87b0b47e22b962a023554f81de4b1a309b04f0eeda69f2978a7ea2efd59",
+  "evaluation_spec_revision": "Post-run non-analytic metadata correction on 2026-08-19: the intended human-audit requirement is false, and the estimand and judge language are clarified. Prompts, board inputs, outputs, endpoint definitions, and calculations are unchanged.",
+  "runtime_source": "src/agent/agent.py",
+  "runtime_source_sha256": "811e2568d5a802284a3fd5eebdc850235b7007560fbd45b5915d90d0e23a3be3",
+  "configs": {
+    "P+": {
+      "file": "P+.yml",
+      "sha256": "75d5583e25242c96eab5c4000d5e94b988303be4d975ec954dddf8f3ed32b33b"
+    },
+    "P-PP": {
+      "file": "P-PP.yml",
+      "sha256": "8e20a9a88668fe90e7a1add379fc021adead0878a2ba128acb02665f027d39c0"
+    }
+  }
+}

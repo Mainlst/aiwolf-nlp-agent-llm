@@ -1,0 +1,40 @@
+schema_version: 1
+model: gpt-5.6-sol
+temperature: null
+temperature_policy: omit because gpt-5.6-sol rejects the temperature parameter
+reasoning_effort: low
+repetitions: 3
+max_output_tokens: 1200
+max_parallel: 24
+timeout_seconds: 120
+max_invalid_retries: 1
+order_seed: 20260815
+per_call_cost_limit_usd: 0.25
+batch_cost_limit_usd: 30.0
+pricing_usd_per_million_tokens:
+  input: 5.0
+  cached_input: 0.5
+  output: 30.0
+adjudication:
+  rule: majority vote independently for each binary field
+  missing_rule: require all three valid primary-judge repetitions
+blinding:
+  hidden_fields:
+    - condition
+    - scenario_id
+    - generation_repetition
+    - game_id
+    - source_prompt
+    - winner
+    - future_events
+    - hypothesis
+  player_id_format: Player-{number}
+allowed_outputs:
+  - pp_recognized
+  - ally_recognized
+  - vote_coordination
+forbidden_outputs:
+  - naturalness
+  - diversity
+  - persona_consistency
+  - overall_quality

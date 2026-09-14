@@ -1,0 +1,10 @@
+{
+  "status": "pass",
+  "static_fragment_count": 38,
+  "runtime_fragment_count": 4,
+  "expanded_prompt_count": 8,
+  "conditions": [
+    "P+",
+    "P-PP"
+  ]
+}

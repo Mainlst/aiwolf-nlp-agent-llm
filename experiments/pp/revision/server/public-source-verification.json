@@ -1,0 +1,26 @@
+{
+  "checked_at": "2026-09-14",
+  "go_toolchain": {
+    "arch": "amd64",
+    "filename": "go1.25.0.linux-amd64.tar.gz",
+    "kind": "archive",
+    "os": "linux",
+    "sha256": "2852af0cb20a13139b3448992e69b868e50ed0f8a1e5940ee1de9e19a123b613",
+    "size": 59659213,
+    "version": "go1.25.0"
+  },
+  "historical_commit": {
+    "message": "No commit found for SHA: f73361c9f0f42ca433c72fd27420d032f2e48df8",
+    "status": 422,
+    "url": "https://api.github.com/repos/aiwolfdial/aiwolf-nlp-server/commits/f73361c9f0f42ca433c72fd27420d032f2e48df8"
+  },
+  "patch_apply_check": "passed",
+  "patched_public_base_matches_snapshot_files": 70,
+  "public_base": {
+    "sha": "4088f58da4ab2bef427c41cc7a04a13c2ffe3da5",
+    "status": 200,
+    "tree_sha": "e1c59c10c5346ca95cad90cd42f97b3f3b4e8cd9",
+    "url": "https://api.github.com/repos/aiwolfdial/aiwolf-nlp-server/commits/4088f58da4ab2bef427c41cc7a04a13c2ffe3da5"
+  },
+  "public_base_file_hash_matches": 69
+}

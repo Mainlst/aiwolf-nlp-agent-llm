@@ -1,0 +1,7 @@
+# Generated experiment inputs, logs, and analysis outputs
+/runs/
+
+# Local paper-data backup archives and packaging metadata
+/aiwolfdial*-paper-data-*.zip
+/aiwolfdial*-paper-data-*.zip.sha256
+/paper-data-backup-*/

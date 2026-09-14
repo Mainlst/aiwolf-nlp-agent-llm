@@ -1,0 +1,2 @@
+# The offline entry point imports no model SDKs.
+PyYAML>=6.0.1,<7

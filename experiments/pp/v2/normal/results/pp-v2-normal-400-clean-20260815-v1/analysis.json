@@ -1,0 +1,992 @@
+{
+  "analysis_scope": "gpt-5.6-luna self-play with one target agent switched between P+ and P-PP",
+  "multiplicity": {
+    "fixed_board_effect": {
+      "ci95": [
+        0.6996875000000002,
+        0.875
+      ],
+      "difference": 0.7875
+    },
+    "holm_adjusted_p_values": {
+      "fixed_board_composite_pp_success": 1.999980000199998e-05,
+      "normal_game_werewolf_team_win_rate": 0.9142116370824501
+    },
+    "method": "Holm, two-sided family-wise alpha 0.05",
+    "raw_p_values": {
+      "fixed_board_composite_pp_success": 9.99990000099999e-06,
+      "normal_game_werewolf_team_win_rate": 0.9142116370824501
+    }
+  },
+  "primary": {
+    "condition_summary": [
+      {
+        "condition": "P+",
+        "denominator": 200,
+        "numerator": 56,
+        "proportion": 0.28,
+        "wilson95": [
+          0.22236889773949026,
+          0.3459230458665071
+        ]
+      },
+      {
+        "condition": "P-PP",
+        "denominator": 200,
+        "numerator": 54,
+        "proportion": 0.27,
+        "wilson95": [
+          0.21323449814685846,
+          0.33543435198668425
+        ]
+      }
+    ],
+    "outcome": "werewolf-team win",
+    "paired_comparison": {
+      "bootstrap_iterations": 100000,
+      "bootstrap_seed": 20260815,
+      "exact_mcnemar_p_value": 0.9142116370824501,
+      "match_pair_bootstrap95": [
+        -0.08,
+        0.1
+      ],
+      "paired_difference": 0.01,
+      "paired_table": {
+        "both": 12,
+        "minus_only": 42,
+        "neither": 102,
+        "plus_only": 44
+      },
+      "pairs": 200
+    },
+    "risk_difference_P+_minus_P-PP": 0.010000000000000009,
+    "risk_ratio_P+_over_P-PP": {
+      "estimate": 1.037037037037037,
+      "status": "finite",
+      "wald95": [
+        0.7543130364393601,
+        1.4257287945904575
+      ]
+    }
+  },
+  "provenance": {
+    "assignments_sha256": "c6aa07a207932a0b1e1d0cd9fca6a806dfc8d3e1692f90e1497a9ca9ac533d1a",
+    "eligibility_frozen_sha256": "595e657b8face874be00e1dbd10d1e45a3317762e963b223704ec73a4144a318",
+    "eligible_games": 400,
+    "excluded_games": 0,
+    "execution_sha256": "e8b282e0d98a6f3d20a42a1b233a673b23fcd550b7060c28ce622d9fc652cf0f",
+    "fixed_analysis_sha256": "c3c013dfdeeccba77f2a62e88adfc48907055e9b772950f13c03696d9430af5a"
+  },
+  "run_id": "pp-v2-normal-400-clean-20260815-v1",
+  "schema_version": 1,
+  "secondary": {
+    "condition_block_summary": [
+      {
+        "analysis_block": "01",
+        "condition": "P+",
+        "denominator": 10,
+        "numerator": 3,
+        "proportion": 0.3,
+        "wilson95": [
+          0.10779126740630099,
+          0.6032218525388546
+        ]
+      },
+      {
+        "analysis_block": "02",
+        "condition": "P+",
+        "denominator": 10,
+        "numerator": 3,
+        "proportion": 0.3,
+        "wilson95": [
+          0.10779126740630099,
+          0.6032218525388546
+        ]
+      },
+      {
+        "analysis_block": "03",
+        "condition": "P+",
+        "denominator": 10,
+        "numerator": 1,
+        "proportion": 0.1,
+        "wilson95": [
+          0.017876213095072896,
+          0.4041500267952385
+        ]
+      },
+      {
+        "analysis_block": "04",
+        "condition": "P+",
+        "denominator": 10,
+        "numerator": 3,
+        "proportion": 0.3,
+        "wilson95": [
+          0.10779126740630099,
+          0.6032218525388546
+        ]
+      },
+      {
+        "analysis_block": "05",
+        "condition": "P+",
+        "denominator": 10,
+        "numerator": 4,
+        "proportion": 0.4,
+        "wilson95": [
+          0.16818032970623614,
+          0.6873262302663417
+        ]
+      },
+      {
+        "analysis_block": "06",
+        "condition": "P+",
+        "denominator": 10,
+        "numerator": 3,
+        "proportion": 0.3,
+        "wilson95": [
+          0.10779126740630099,
+          0.6032218525388546
+        ]
+      },
+      {
+        "analysis_block": "07",
+        "condition": "P+",
+        "denominator": 10,
+        "numerator": 1,
+        "proportion": 0.1,
+        "wilson95": [
+          0.017876213095072896,
+          0.4041500267952385
+        ]
+      },
+      {
+        "analysis_block": "08",
+        "condition": "P+",
+        "denominator": 10,
+        "numerator": 2,
+        "proportion": 0.2,
+        "wilson95": [
+          0.05668215145437519,
+          0.5098375284633583
+        ]
+      },
+      {
+        "analysis_block": "09",
+        "condition": "P+",
+        "denominator": 10,
+        "numerator": 3,
+        "proportion": 0.3,
+        "wilson95": [
+          0.10779126740630099,
+          0.6032218525388546
+        ]
+      },
+      {
+        "analysis_block": "10",
+        "condition": "P+",
+        "denominator": 10,
+        "numerator": 2,
+        "proportion": 0.2,
+        "wilson95": [
+          0.05668215145437519,
+          0.5098375284633583
+        ]
+      },
+      {
+        "analysis_block": "11",
+        "condition": "P+",
+        "denominator": 10,
+        "numerator": 4,
+        "proportion": 0.4,
+        "wilson95": [
+          0.16818032970623614,
+          0.6873262302663417
+        ]
+      },
+      {
+        "analysis_block": "12",
+        "condition": "P+",
+        "denominator": 10,
+        "numerator": 1,
+        "proportion": 0.1,
+        "wilson95": [
+          0.017876213095072896,
+          0.4041500267952385
+        ]
+      },
+      {
+        "analysis_block": "13",
+        "condition": "P+",
+        "denominator": 10,
+        "numerator": 1,
+        "proportion": 0.1,
+        "wilson95": [
+          0.017876213095072896,
+          0.4041500267952385
+        ]
+      },
+      {
+        "analysis_block": "14",
+        "condition": "P+",
+        "denominator": 10,
+        "numerator": 4,
+        "proportion": 0.4,
+        "wilson95": [
+          0.16818032970623614,
+          0.6873262302663417
+        ]
+      },
+      {
+        "analysis_block": "15",
+        "condition": "P+",
+        "denominator": 10,
+        "numerator": 3,
+        "proportion": 0.3,
+        "wilson95": [
+          0.10779126740630099,
+          0.6032218525388546
+        ]
+      },
+      {
+        "analysis_block": "16",
+        "condition": "P+",
+        "denominator": 10,
+        "numerator": 5,
+        "proportion": 0.5,
+        "wilson95": [
+          0.236593090512564,
+          0.7634069094874361
+        ]
+      },
+      {
+        "analysis_block": "17",
+        "condition": "P+",
+        "denominator": 10,
+        "numerator": 4,
+        "proportion": 0.4,
+        "wilson95": [
+          0.16818032970623614,
+          0.6873262302663417
+        ]
+      },
+      {
+        "analysis_block": "18",
+        "condition": "P+",
+        "denominator": 10,
+        "numerator": 2,
+        "proportion": 0.2,
+        "wilson95": [
+          0.05668215145437519,
+          0.5098375284633583
+        ]
+      },
+      {
+        "analysis_block": "19",
+        "condition": "P+",
+        "denominator": 10,
+        "numerator": 3,
+        "proportion": 0.3,
+        "wilson95": [
+          0.10779126740630099,
+          0.6032218525388546
+        ]
+      },
+      {
+        "analysis_block": "20",
+        "condition": "P+",
+        "denominator": 10,
+        "numerator": 4,
+        "proportion": 0.4,
+        "wilson95": [
+          0.16818032970623614,
+          0.6873262302663417
+        ]
+      },
+      {
+        "analysis_block": "01",
+        "condition": "P-PP",
+        "denominator": 10,
+        "numerator": 1,
+        "proportion": 0.1,
+        "wilson95": [
+          0.017876213095072896,
+          0.4041500267952385
+        ]
+      },
+      {
+        "analysis_block": "02",
+        "condition": "P-PP",
+        "denominator": 10,
+        "numerator": 2,
+        "proportion": 0.2,
+        "wilson95": [
+          0.05668215145437519,
+          0.5098375284633583
+        ]
+      },
+      {
+        "analysis_block": "03",
+        "condition": "P-PP",
+        "denominator": 10,
+        "numerator": 4,
+        "proportion": 0.4,
+        "wilson95": [
+          0.16818032970623614,
+          0.6873262302663417
+        ]
+      },
+      {
+        "analysis_block": "04",
+        "condition": "P-PP",
+        "denominator": 10,
+        "numerator": 2,
+        "proportion": 0.2,
+        "wilson95": [
+          0.05668215145437519,
+          0.5098375284633583
+        ]
+      },
+      {
+        "analysis_block": "05",
+        "condition": "P-PP",
+        "denominator": 10,
+        "numerator": 2,
+        "proportion": 0.2,
+        "wilson95": [
+          0.05668215145437519,
+          0.5098375284633583
+        ]
+      },
+      {
+        "analysis_block": "06",
+        "condition": "P-PP",
+        "denominator": 10,
+        "numerator": 2,
+        "proportion": 0.2,
+        "wilson95": [
+          0.05668215145437519,
+          0.5098375284633583
+        ]
+      },
+      {
+        "analysis_block": "07",
+        "condition": "P-PP",
+        "denominator": 10,
+        "numerator": 4,
+        "proportion": 0.4,
+        "wilson95": [
+          0.16818032970623614,
+          0.6873262302663417
+        ]
+      },
+      {
+        "analysis_block": "08",
+        "condition": "P-PP",
+        "denominator": 10,
+        "numerator": 1,
+        "proportion": 0.1,
+        "wilson95": [
+          0.017876213095072896,
+          0.4041500267952385
+        ]
+      },
+      {
+        "analysis_block": "09",
+        "condition": "P-PP",
+        "denominator": 10,
+        "numerator": 2,
+        "proportion": 0.2,
+        "wilson95": [
+          0.05668215145437519,
+          0.5098375284633583
+        ]
+      },
+      {
+        "analysis_block": "10",
+        "condition": "P-PP",
+        "denominator": 10,
+        "numerator": 3,
+        "proportion": 0.3,
+        "wilson95": [
+          0.10779126740630099,
+          0.6032218525388546
+        ]
+      },
+      {
+        "analysis_block": "11",
+        "condition": "P-PP",
+        "denominator": 10,
+        "numerator": 3,
+        "proportion": 0.3,
+        "wilson95": [
+          0.10779126740630099,
+          0.6032218525388546
+        ]
+      },
+      {
+        "analysis_block": "12",
+        "condition": "P-PP",
+        "denominator": 10,
+        "numerator": 2,
+        "proportion": 0.2,
+        "wilson95": [
+          0.05668215145437519,
+          0.5098375284633583
+        ]
+      },
+      {
+        "analysis_block": "13",
+        "condition": "P-PP",
+        "denominator": 10,
+        "numerator": 5,
+        "proportion": 0.5,
+        "wilson95": [
+          0.236593090512564,
+          0.7634069094874361
+        ]
+      },
+      {
+        "analysis_block": "14",
+        "condition": "P-PP",
+        "denominator": 10,
+        "numerator": 5,
+        "proportion": 0.5,
+        "wilson95": [
+          0.236593090512564,
+          0.7634069094874361
+        ]
+      },
+      {
+        "analysis_block": "15",
+        "condition": "P-PP",
+        "denominator": 10,
+        "numerator": 2,
+        "proportion": 0.2,
+        "wilson95": [
+          0.05668215145437519,
+          0.5098375284633583
+        ]
+      },
+      {
+        "analysis_block": "16",
+        "condition": "P-PP",
+        "denominator": 10,
+        "numerator": 3,
+        "proportion": 0.3,
+        "wilson95": [
+          0.10779126740630099,
+          0.6032218525388546
+        ]
+      },
+      {
+        "analysis_block": "17",
+        "condition": "P-PP",
+        "denominator": 10,
+        "numerator": 2,
+        "proportion": 0.2,
+        "wilson95": [
+          0.05668215145437519,
+          0.5098375284633583
+        ]
+      },
+      {
+        "analysis_block": "18",
+        "condition": "P-PP",
+        "denominator": 10,
+        "numerator": 4,
+        "proportion": 0.4,
+        "wilson95": [
+          0.16818032970623614,
+          0.6873262302663417
+        ]
+      },
+      {
+        "analysis_block": "19",
+        "condition": "P-PP",
+        "denominator": 10,
+        "numerator": 3,
+        "proportion": 0.3,
+        "wilson95": [
+          0.10779126740630099,
+          0.6032218525388546
+        ]
+      },
+      {
+        "analysis_block": "20",
+        "condition": "P-PP",
+        "denominator": 10,
+        "numerator": 2,
+        "proportion": 0.2,
+        "wilson95": [
+          0.05668215145437519,
+          0.5098375284633583
+        ]
+      }
+    ],
+    "condition_role_summary": [
+      {
+        "actual_role": "POSSESSED",
+        "condition": "P+",
+        "denominator": 100,
+        "numerator": 19,
+        "proportion": 0.19,
+        "wilson95": [
+          0.12514751509768735,
+          0.27778845379064376
+        ]
+      },
+      {
+        "actual_role": "WEREWOLF",
+        "condition": "P+",
+        "denominator": 100,
+        "numerator": 37,
+        "proportion": 0.37,
+        "wilson95": [
+          0.28182360534324524,
+          0.4677947041905709
+        ]
+      },
+      {
+        "actual_role": "POSSESSED",
+        "condition": "P-PP",
+        "denominator": 100,
+        "numerator": 31,
+        "proportion": 0.31,
+        "wilson95": [
+          0.22779697212376038,
+          0.40626055719489407
+        ]
+      },
+      {
+        "actual_role": "WEREWOLF",
+        "condition": "P-PP",
+        "denominator": 100,
+        "numerator": 23,
+        "proportion": 0.23,
+        "wilson95": [
+          0.15843265880303448,
+          0.3215438302287378
+        ]
+      }
+    ],
+    "condition_seat_summary": [
+      {
+        "condition": "P+",
+        "denominator": 40,
+        "numerator": 15,
+        "proportion": 0.375,
+        "target_seat": "1",
+        "wilson95": [
+          0.24222979167233266,
+          0.5296756086269889
+        ]
+      },
+      {
+        "condition": "P+",
+        "denominator": 40,
+        "numerator": 11,
+        "proportion": 0.275,
+        "target_seat": "2",
+        "wilson95": [
+          0.16108016247667337,
+          0.42834955806210573
+        ]
+      },
+      {
+        "condition": "P+",
+        "denominator": 40,
+        "numerator": 13,
+        "proportion": 0.325,
+        "target_seat": "3",
+        "wilson95": [
+          0.200845022317827,
+          0.47982253810122333
+        ]
+      },
+      {
+        "condition": "P+",
+        "denominator": 40,
+        "numerator": 9,
+        "proportion": 0.225,
+        "target_seat": "4",
+        "wilson95": [
+          0.12316091323540743,
+          0.37503096742310027
+        ]
+      },
+      {
+        "condition": "P+",
+        "denominator": 40,
+        "numerator": 8,
+        "proportion": 0.2,
+        "target_seat": "5",
+        "wilson95": [
+          0.10499989725437704,
+          0.347573063463995
+        ]
+      },
+      {
+        "condition": "P-PP",
+        "denominator": 40,
+        "numerator": 10,
+        "proportion": 0.25,
+        "target_seat": "1",
+        "wilson95": [
+          0.14187118639096302,
+          0.40193961420768026
+        ]
+      },
+      {
+        "condition": "P-PP",
+        "denominator": 40,
+        "numerator": 11,
+        "proportion": 0.275,
+        "target_seat": "2",
+        "wilson95": [
+          0.16108016247667337,
+          0.42834955806210573
+        ]
+      },
+      {
+        "condition": "P-PP",
+        "denominator": 40,
+        "numerator": 11,
+        "proportion": 0.275,
+        "target_seat": "3",
+        "wilson95": [
+          0.16108016247667337,
+          0.42834955806210573
+        ]
+      },
+      {
+        "condition": "P-PP",
+        "denominator": 40,
+        "numerator": 10,
+        "proportion": 0.25,
+        "target_seat": "4",
+        "wilson95": [
+          0.14187118639096302,
+          0.40193961420768026
+        ]
+      },
+      {
+        "condition": "P-PP",
+        "denominator": 40,
+        "numerator": 12,
+        "proportion": 0.3,
+        "target_seat": "5",
+        "wilson95": [
+          0.18074845229746528,
+          0.45430018818144935
+        ]
+      }
+    ],
+    "condition_wolf_ally_team_summary": [
+      {
+        "condition": "P+",
+        "denominator": 200,
+        "numerator": 56,
+        "proportion": 0.28,
+        "wilson95": [
+          0.22236889773949026,
+          0.3459230458665071
+        ],
+        "wolf_ally_team": "opponentOalpha"
+      },
+      {
+        "condition": "P-PP",
+        "denominator": 200,
+        "numerator": 54,
+        "proportion": 0.27,
+        "wilson95": [
+          0.21323449814685846,
+          0.33543435198668425
+        ],
+        "wolf_ally_team": "opponentOalpha"
+      }
+    ],
+    "post_reach": [
+      {
+        "components": {
+          "ally_preserved": {
+            "denominator": 55,
+            "numerator": 50,
+            "proportion": 0.9090909090909091,
+            "wilson95": [
+              0.8042250541602005,
+              0.9605418449258196
+            ]
+          },
+          "correct_co_or_response": {
+            "denominator": 55,
+            "numerator": 54,
+            "proportion": 0.9818181818181818,
+            "wilson95": [
+              0.903942239378376,
+              0.9967832195451589
+            ]
+          },
+          "pp_recognized": {
+            "denominator": 55,
+            "numerator": 55,
+            "proportion": 1.0,
+            "wilson95": [
+              0.9347150988829137,
+              1.0
+            ]
+          },
+          "talk_vote_consistent": {
+            "denominator": 55,
+            "numerator": 49,
+            "proportion": 0.8909090909090909,
+            "wilson95": [
+              0.7817445091344648,
+              0.9490327499921767
+            ]
+          },
+          "valid_target_selected": {
+            "denominator": 55,
+            "numerator": 50,
+            "proportion": 0.9090909090909091,
+            "wilson95": [
+              0.8042250541602005,
+              0.9605418449258196
+            ]
+          },
+          "vote_coordination": {
+            "denominator": 55,
+            "numerator": 55,
+            "proportion": 1.0,
+            "wilson95": [
+              0.9347150988829137,
+              1.0
+            ]
+          }
+        },
+        "composite_pp_success": {
+          "denominator": 55,
+          "numerator": 45,
+          "proportion": 0.8181818181818182,
+          "wilson95": [
+            0.6966954036336236,
+            0.8981232956555033
+          ]
+        },
+        "condition": "P+",
+        "reached_games": 55,
+        "win": {
+          "denominator": 55,
+          "numerator": 50,
+          "proportion": 0.9090909090909091,
+          "wilson95": [
+            0.8042250541602005,
+            0.9605418449258196
+          ]
+        }
+      },
+      {
+        "components": {
+          "ally_preserved": {
+            "denominator": 50,
+            "numerator": 35,
+            "proportion": 0.7,
+            "wilson95": [
+              0.562496495355466,
+              0.8089644649911906
+            ]
+          },
+          "correct_co_or_response": {
+            "denominator": 50,
+            "numerator": 0,
+            "proportion": 0.0,
+            "wilson95": [
+              6.938893903907228e-18,
+              0.07134759913335872
+            ]
+          },
+          "pp_recognized": {
+            "denominator": 50,
+            "numerator": 15,
+            "proportion": 0.3,
+            "wilson95": [
+              0.19103553500880954,
+              0.437503504644534
+            ]
+          },
+          "talk_vote_consistent": {
+            "denominator": 50,
+            "numerator": 47,
+            "proportion": 0.94,
+            "wilson95": [
+              0.8378290831116182,
+              0.979385029651026
+            ]
+          },
+          "valid_target_selected": {
+            "denominator": 50,
+            "numerator": 35,
+            "proportion": 0.7,
+            "wilson95": [
+              0.562496495355466,
+              0.8089644649911906
+            ]
+          },
+          "vote_coordination": {
+            "denominator": 50,
+            "numerator": 46,
+            "proportion": 0.92,
+            "wilson95": [
+              0.8116175308165717,
+              0.968450485911407
+            ]
+          }
+        },
+        "composite_pp_success": {
+          "denominator": 50,
+          "numerator": 0,
+          "proportion": 0.0,
+          "wilson95": [
+            6.938893903907228e-18,
+            0.07134759913335872
+          ]
+        },
+        "condition": "P-PP",
+        "reached_games": 50,
+        "win": {
+          "denominator": 50,
+          "numerator": 37,
+          "proportion": 0.74,
+          "wilson95": [
+            0.6044684273515117,
+            0.8412847250644762
+          ]
+        }
+      }
+    ],
+    "post_reach_caveat": "selected outcome conditional on target survival to a true PP board; composite scoring is a post-hoc deterministic live-log operationalization, not the blinded fixed-board judge endpoint",
+    "pp_reach": [
+      {
+        "condition": "P+",
+        "denominator": 200,
+        "numerator": 55,
+        "proportion": 0.275,
+        "wilson95": [
+          0.21779700329307355,
+          0.34068339357669647
+        ]
+      },
+      {
+        "condition": "P-PP",
+        "denominator": 200,
+        "numerator": 50,
+        "proportion": 0.25,
+        "wilson95": [
+          0.19508168006817497,
+          0.31434098312045833
+        ]
+      }
+    ],
+    "pp_reach_paired_comparison": {
+      "bootstrap_iterations": 100000,
+      "bootstrap_seed": 20260818,
+      "exact_mcnemar_p_value": 0.644463913894226,
+      "match_pair_bootstrap95": [
+        -0.06,
+        0.11
+      ],
+      "paired_difference": 0.025,
+      "paired_table": {
+        "both": 15,
+        "minus_only": 35,
+        "neither": 110,
+        "plus_only": 40
+      },
+      "pairs": 200
+    },
+    "role_paired_comparisons_descriptive": {
+      "POSSESSED": {
+        "bootstrap_iterations": 100000,
+        "bootstrap_seed": 20260816,
+        "exact_mcnemar_p_value": 0.0806904677519924,
+        "match_pair_bootstrap95": [
+          -0.24,
+          0.0
+        ],
+        "paired_difference": -0.12,
+        "paired_table": {
+          "both": 5,
+          "minus_only": 26,
+          "neither": 55,
+          "plus_only": 14
+        },
+        "pairs": 100
+      },
+      "WEREWOLF": {
+        "bootstrap_iterations": 100000,
+        "bootstrap_seed": 20260817,
+        "exact_mcnemar_p_value": 0.054076031858869555,
+        "match_pair_bootstrap95": [
+          0.01,
+          0.27
+        ],
+        "paired_difference": 0.14,
+        "paired_table": {
+          "both": 7,
+          "minus_only": 16,
+          "neither": 47,
+          "plus_only": 30
+        },
+        "pairs": 100
+      }
+    }
+  },
+  "sensitivity": {
+    "matching": {
+      "exactly_matched_fields": [
+        "planned_role",
+        "target_seat",
+        "opponent_pool",
+        "analysis_block",
+        "optimizer_seed"
+      ],
+      "interpretation": "pair-stratified analysis conditions on role, pool, seat, block, and optimizer seed by design",
+      "matched_pairs": 200,
+      "opponent_pool_levels": [
+        "O"
+      ]
+    },
+    "note": "The pair-stratified analysis is already adjusted for role, opponent pool, seat, execution block, and optimizer seed because every factor is constant within each match pair. Pool O has one level.",
+    "p_value": 0.9142116370824501,
+    "pair_stratified_conditional_odds_ratio": {
+      "estimate": 1.0476190476190477,
+      "status": "finite",
+      "wald95": [
+        0.6863972014572872,
+        1.5989366894330723
+      ]
+    }
+  },
+  "target_token_usage": {
+    "condition_totals": [
+      {
+        "cached_input_tokens": 0,
+        "condition": "P+",
+        "games": 200,
+        "input_tokens": 5136663,
+        "output_tokens": 336732
+      },
+      {
+        "cached_input_tokens": 0,
+        "condition": "P-PP",
+        "games": 200,
+        "input_tokens": 4816059,
+        "output_tokens": 372476
+      }
+    ],
+    "paired_input_token_difference_P+_minus_P-PP": {
+      "maximum": 24926,
+      "mean": 1603.02,
+      "median": 1453.0,
+      "minimum": -22019
+    }
+  }
+}

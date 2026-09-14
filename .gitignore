@@ -1,0 +1,110 @@
+# Operating-system files
+.DS_Store
+._*
+Thumbs.db
+[Dd]esktop.ini
+$RECYCLE.BIN/
+
+# Editors and local IDE state
+.idea/
+.history/
+.ionide/
+*.swp
+*.swo
+*~
+*.vsix
+
+# Python bytecode and native build products
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Virtual environments and local secrets
+.venv/
+venv/
+env/
+ENV/
+.env
+.env.*
+!.env.example
+!**/.env.example
+pyvenv.cfg
+
+# Packaging outputs
+.Python
+build/
+dist/
+develop-eggs/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+*.egg
+MANIFEST
+
+# Test, coverage, and tool caches
+.cache/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.pyre/
+.pytype/
+.hypothesis/
+.tox/
+.nox/
+.coverage
+.coverage.*
+htmlcov/
+coverage.xml
+*.cover
+*.py,cover
+nosetests.xml
+
+# Notebook and documentation builds
+.ipynb_checkpoints/
+docs/_build/
+/site/
+
+# Local tool configuration
+.pdm.toml
+poetry.toml
+
+# Project-generated runtime artifacts
+/log/
+/logs/
+/runs/
+/cache/
+/plans/
+/evaluations/
+
+# Local binaries and server configuration
+/aiwolf-nlp-server-linux-amd64
+/default_5.yml
+/demo_server.local.yml
+
+# Local research workspaces
+/note/
+/paper/
+
+# Third-party/copyrighted documents
+/doc/papers-past/
+/doc/method/
+/doc/aiwolf-2026-INLG2-maintruck/
+
+experiments-paper/
+
+tmp/
+# Camera-ready data are distributed separately from code
+/dataset/
+/reproduced/
+/.verification/
+/release-backups/
+/server/

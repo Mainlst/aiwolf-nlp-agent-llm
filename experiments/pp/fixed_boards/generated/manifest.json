@@ -1,0 +1,21 @@
+{
+  "analysis_scenarios": 120,
+  "confirmation_scenarios": 12,
+  "files": {
+    "confirmation-inputs.jsonl": "9d799ea39e110bd9b6cb5fdad88a894ea49ebb8b87dd621392f96879d07ec8da",
+    "confirmation-labels.jsonl": "679b4783dde61af0aa7b4bdf4d2505c8042eb5db2565a1a1d333e0a4947507dc",
+    "inputs.jsonl": "c80bcc1fa82c164f1ca2825ccfddab49d41316fe0657de09ca4cce9f570a5b11",
+    "labels.jsonl": "7c3a46a8e41784dddfc6f639ae171a002f1b7840180d64752022be037bc40785"
+  },
+  "generator_sha256": "e95bece8f390eee12bf2ca394c61d58e9bd8c8451f370f9cac67865a14c475a5",
+  "schema_version": 1,
+  "source": {
+    "generator": "experiments/pp/fixed_boards/generate.py",
+    "kind": "synthetic_rule_grammar_v3",
+    "note": "Histories are generated from the five-player role rules and diversified English event grammars; no saved or official game log is read.",
+    "seed": 20260815,
+    "tournament_logs_used": false
+  },
+  "spec_sha256": "668d07379e32a0ee738854a5dc48dc80a534031e70de9fc3898f2c266e56037c",
+  "study_id": "aiwolfdial-2026-pp-fixed-boards-v3"
+}

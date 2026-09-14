@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://aiwolfdial.example/schemas/judge-output-v1.json",
+  "title": "AIWolfDial blind judge output",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["metric", "label", "score", "rank", "evidence", "reason"],
+  "properties": {
+    "metric": {
+      "type": "string",
+      "enum": [
+        "vote_consistency",
+        "claim_consistency",
+        "question_responsiveness",
+        "evidence_bearing_accusation",
+        "repetition",
+        "role_action_quality",
+        "dialogue_a",
+        "dialogue_b",
+        "dialogue_c",
+        "dialogue_d",
+        "dialogue_e"
+      ]
+    },
+    "label": {
+      "type": "string",
+      "enum": ["pass", "fail", "not_applicable", "insufficient_information"]
+    },
+    "score": {"type": ["integer", "null"], "minimum": 0, "maximum": 5},
+    "rank": {"type": ["integer", "null"], "minimum": 1, "maximum": 4},
+    "evidence": {
+      "type": "array",
+      "maxItems": 3,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["event_id", "quote"],
+        "properties": {
+          "event_id": {"type": "string", "minLength": 1},
+          "quote": {"type": "string", "minLength": 1, "maxLength": 180}
+        }
+      }
+    },
+    "reason": {"type": "string", "minLength": 1, "maxLength": 500}
+  }
+}
+

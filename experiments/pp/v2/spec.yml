@@ -1,0 +1,50 @@
+schema_version: 2
+extends: experiments/pp/spec.yml
+study_id: aiwolfdial-2026-pp-v2
+intervention_version: v2-conflict-resolved
+evaluation_spec: experiments/pp/v2/evaluation-spec.yml
+runtime_source: src/agent/agent.py
+
+# These replacements are applied identically to P+ and P-PP before the PP
+# fragments are removed from P-PP. They resolve absolute concealment commands
+# without themselves naming PP or a three-survivor trigger.
+shared_replacements:
+  - id: common-werewolf-concealment-override
+    path: strategy.WEREWOLF
+    old: You must never admit that you are a werewolf.
+    new: Keep your werewolf identity hidden unless a later situation-specific instruction explicitly requires revealing it.
+  - id: common-compact-concealment-override
+    path: prompt.talk_compact
+    old: "- Don't reveal being a werewolf or possessed; pose as villager-side."
+    new: "- Werewolves and possessed players normally pose as villager-side unless a later situation-specific instruction explicitly overrides this."
+  - id: clarify-werewolf-co-and-target
+    path: strategy.WEREWOLF
+    old: If a Possessed claim appears at three survivors, as a rule declare werewolf and match votes onto the possessed and villager candidates.
+    new: If exactly three players are alive and another survivor explicitly claims possessed, declare werewolf, coordinate with that claimant, and vote for one named villager-side survivor; never vote for the possessed claimant.
+  - id: remove-optional-werewolf-nonreveal
+    path: strategy.WEREWOLF
+    old: Even if you choose not to reveal werewolf, clearly state that you believe the possessed's fake result and declare a vote for a villager candidate.
+    new: After revealing werewolf, name exactly one villager-side survivor and ask the possessed claimant to vote for that same player.
+  - id: clarify-full-talk-werewolf-reveal
+    path: prompt.talk
+    old: Even if you don't reveal werewolf, clearly state that you believe the possessed candidate and declare a vote for the villager candidate.
+    new: Reveal werewolf, name exactly one villager-side survivor, and ask the possessed claimant to vote for that same player.
+  - id: clarify-compact-talk-werewolf-reveal
+    path: prompt.talk_compact
+    old: "- If PP is possible at three survivors, the possessed does a Possessed claim, and the werewolf, responding to the Possessed claim, matches votes onto the villager candidate."
+    new: "- At exactly three survivors, the possessed claims possessed; after that explicit claim, the werewolf reveals werewolf, names one villager-side survivor, and matches the possessed's vote onto that player."
+
+fragment_text_overrides:
+  role-werewolf-co-response: If exactly three players are alive and another survivor explicitly claims possessed, declare werewolf, coordinate with that claimant, and vote for one named villager-side survivor; never vote for the possessed claimant.
+  role-werewolf-target: After revealing werewolf, name exactly one villager-side survivor and ask the possessed claimant to vote for that same player.
+  talk-werewolf-target: Reveal werewolf, name exactly one villager-side survivor, and ask the possessed claimant to vote for that same player.
+  compact-talk-pp: "- At exactly three survivors, the possessed claims possessed; after that explicit claim, the werewolf reveals werewolf, names one villager-side survivor, and matches the possessed's vote onto that player."
+
+required_in_p_plus:
+  - '(?is)exactly three players are alive.{0,240}explicitly claims possessed.{0,240}declare werewolf'
+  - '(?i)after revealing werewolf.{0,160}exactly one villager-side survivor'
+  - '(?i)never vote for the possessed claimant'
+forbidden_conflicts_in_both_conditions:
+  - '(?i)must never admit that you are a werewolf'
+  - '(?i)match votes onto the possessed and villager candidates'
+  - '(?i)even if you (choose not to|don.t) reveal werewolf'

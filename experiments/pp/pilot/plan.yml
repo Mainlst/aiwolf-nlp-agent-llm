@@ -1,0 +1,72 @@
+schema_version: 1
+study_id: aiwolfdial-2026-pp-pilot
+purpose: P+とP-PP各5試合で操作、ログ完全性、費用、実行可能性だけを確認する。
+created_at: '2026-08-15T00:00:00+09:00'
+source_document: doc/experiment-plan.md
+condition_spec: experiments/pp/spec.yml
+evaluation_spec: experiments/pp/evaluation-spec.yml
+assignment_file: experiments/pp/pilot/assignments.csv
+opponent_registry: experiments/pp/pilot/opponent-pools.yml
+base_server_config: config/server.example.yml
+target_team: yatolab
+target_agent_count: 1
+server_url: ws://127.0.0.1:8080/ws
+assignment_seed: 20260815
+conditions: [P+, P-PP]
+planned_games_per_condition: 5
+fixed_runtime:
+  language: en
+  player_count: 5
+  roles: {VILLAGER: 2, SEER: 1, POSSESSED: 1, WEREWOLF: 1}
+  target_roles: {POSSESSED: 5, WEREWOLF: 5}
+  talk_per_agent_per_day: 4
+  model: gpt-5.6-luna
+  temperature: 1.0
+  max_retries: 0
+  output_guard_enabled: true
+  dynamic_context_enabled: true
+  role_strategy_enabled: true
+pricing_usd_per_million_tokens:
+  source: https://developers.openai.com/api/docs/pricing
+  retrieved_at: '2026-08-15'
+  context_threshold_tokens: 272000
+  standard:
+    short_context: {input: 0.20, cached_input: 0.02, cache_write: 0.25, output: 1.20}
+    long_context: {input: 0.40, cached_input: 0.04, cache_write: 0.50, output: 1.80}
+  batch:
+    short_context: {input: 0.10, cached_input: 0.01, cache_write: 0.125, output: 0.60}
+    long_context: {input: 0.20, cached_input: 0.02, cache_write: 0.25, output: 0.90}
+  note: Prices are USD per 1M tokens; prompts over 272K input tokens use long-context rates.
+budget:
+  cap_usd: 300.0
+  remaining_usd: null
+  remaining_budget_status: unavailable_user_authorized_skip
+  note: API Dashboardで現在確認できないため、2026-08-15のユーザー指示により残予算記録を省略する。
+  estimate_source: experiments/validation/experiment-budget-estimate.json
+  estimate_basis: one five-Luna connection game; replace with blinded median and p90 after the 10-game pilot
+  required_generation_estimate_usd: 13.273641
+  all_in_estimate_with_optional_and_judge_reserve_usd: 43.505268
+  recommended_operational_reserve_usd: 55.0
+opponent_O:
+  id: O
+  condition_independent: true
+  source_config: config/config_5.yml
+  agents: [opponentOalpha, opponentObravo, opponentOcharlie, opponentOdelta]
+  speech_styles: [fixed-neutral]
+  model: gpt-5.6-luna
+  temperature: 1.0
+  max_retries: 0
+stopping_rules:
+  cumulative_pilot_usd: 10.0
+  per_game_usd: 1.0
+  per_call_usd: 0.25
+  missing_or_unjoinable_fraction: 0.05
+  unintended_model: stop_immediately
+server_matching:
+  self_match: false
+  is_optimize: true
+  team_count: 5
+  game_count_per_row: 1
+backup:
+  destination: release-backups/pp
+  required_before_paid_run: true

@@ -1,0 +1,53 @@
+schema_version: 1
+study_id: aiwolfdial-2026-pp-fixed-boards-v4-reachable
+source:
+  kind: synthetic_rule_grammar_v4_reachable
+  generator: experiments/pp/fixed_boards_v2/generate.py
+  seed: 20260817
+  parent_grammar: experiments/pp/fixed_boards/generate.py
+  tournament_logs_used: false
+  legacy_outputs_used: false
+  note: All decision snapshots are server-reachable; post-terminal controls are replaced before rerunning without reading model outputs or tournament logs.
+
+decision_point_policy:
+  possessed_established: before the perspective player's required possessed CO
+  werewolf_established: immediately after a visible possessed CO by the surviving ally
+  reason: make the registered werewolf response behavior evaluable rather than confounding it with an absent trigger
+analysis_counts:
+  established_pp: {POSSESSED: 40, WEREWOLF: 40}
+  near_control: {POSSESSED: 20, WEREWOLF: 20}
+near_control_strata:
+  POSSESSED: {premature: 10, premature_false_wolf_claim: 10}
+  WEREWOLF: {premature: 10, missing_ally: 10}
+confirmation_counts:
+  established_pp: {POSSESSED: 3, WEREWOLF: 3}
+  near_control: {POSSESSED: 3, WEREWOLF: 3}
+generation:
+  analysis_prefix: FV2
+  confirmation_prefix: QV2
+  analysis_established_index_multiplier: 7
+  analysis_established_index_shift: 43
+  analysis_near_index_multiplier: 7
+  analysis_near_index_shift: 22
+  confirmation_established_index_multiplier: 11
+  confirmation_established_index_shift: 101
+  confirmation_near_index_multiplier: 11
+  confirmation_near_index_shift: 80
+  analysis_name_offset: 29
+  confirmation_name_offset: 47
+future_information_forbidden_keys:
+  - winner
+  - win_side
+  - future_events
+  - future_vote
+  - ground_truth_roles
+  - hidden_roles
+  - correct_ally
+  - valid_village_targets
+  - objective_pp_possible
+  - epistemic_pp_justified
+output_dir: experiments/pp/fixed_boards_v2/generated
+legacy_output_dir: experiments/pp/fixed_boards/generated
+conditions_dir: experiments/pp/v2/generated
+evaluation_spec: experiments/pp/v2/evaluation-spec.yml
+backup_destination: release-backups/pp

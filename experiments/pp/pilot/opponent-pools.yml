@@ -1,0 +1,32 @@
+schema_version: 1
+source_commit: 3300caa0a0119ffad24d3c414594072bcb7a5273
+source_file: experiments/runtime/opponents.py
+source_file_sha256: 36e39c005110ab7bdda336d1f8d40edcd1cc84ea51e0d5af1a50827319f71895
+qualification_report: experiments/pilot/opponent-qualification.json
+qualification_report_sha256: 8d15aa601034477a74bcdef852fd455067e4bfafe8c55336a10d5a31de665847
+qualification_raw_logs:
+  - file: experiments/runs/stage0-20260812-v2/stage0-A-opponents.jsonl
+    sha256: daebba9d09b987a7bab7cbad5cadcde583de25290d6da384647c08c8ca88ae0d
+  - file: experiments/runs/stage0-20260812-v2/stage0-B-opponents.jsonl
+    sha256: 43a1f93da799088d311126d7e6719ead610835f22ff199f747f1365e45768137
+  - file: experiments/runs/stage0-20260812-v2/stage0-C-opponents.jsonl
+    sha256: 300d3e484b4eaa1e979ebdfe6b0232a06b3df79dd9de9102234d626f7da1664c
+runtime_opponent:
+  id: O
+  uses_paid_api: true
+  condition_independent: true
+  model: gpt-5.6-luna
+  temperature: 1.0
+  max_retries: 0
+  agents: [opponentOalpha, opponentObravo, opponentOcharlie, opponentOdelta]
+  speech_styles: [fixed-neutral]
+pools:
+  A:
+    description: Evidence-seeking policy; asks questions and gives cautious reasons.
+    agents: [pilotAalpha, pilotAbravo, pilotAcharlie, pilotAdelta]
+  B:
+    description: Assertive policy; declares suspects and voting intentions early.
+    agents: [pilotBalpha, pilotBbravo, pilotBcharlie, pilotBdelta]
+  C:
+    description: Reserved policy; asks for concrete vote declarations before committing.
+    agents: [pilotCalpha, pilotCbravo, pilotCcharlie, pilotCdelta]

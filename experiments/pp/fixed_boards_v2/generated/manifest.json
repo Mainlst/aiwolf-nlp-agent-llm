@@ -1,0 +1,28 @@
+{
+  "analysis_scenarios": 120,
+  "condition_manifest_sha256": "149d46dee4cea8a75443377015023337d2ff78abba89e8376396461aa568b8f6",
+  "confirmation_scenarios": 12,
+  "evaluation_spec_sha256": "93be1ba327caf9a44791a1d15924c88c55ebedca13783b14442fee48d45d23d3",
+  "evaluation_spec_prior_sha256": "7038f87b0b47e22b962a023554f81de4b1a309b04f0eeda69f2978a7ea2efd59",
+  "evaluation_spec_revision": "Post-run non-analytic metadata correction on 2026-08-19: the intended human-audit requirement is false, and the estimand and judge language are clarified. Prompts, board inputs, outputs, endpoint definitions, and calculations are unchanged.",
+  "files": {
+    "confirmation-inputs.jsonl": "b4de84db7ecea689cfdef712811eb3bfd4943b460404a779af4c670de2af4729",
+    "confirmation-labels.jsonl": "48da527d47de9240873b5b3e583a1bfb97e4f9afc121a498f4bde7e22442e4ea",
+    "inputs.jsonl": "f96a81b0ba89b584ce4e6f4aee97ebb940f10ba4a7ff83c41176af374d09a666",
+    "labels.jsonl": "736533aa8bc59802ad10790e60ead5e9caf76f8442f1de40ec6d4c173c39930f"
+  },
+  "generator_sha256": "996a99615d45812716650ae0e48216db5a01641e49a1d2a19e85aa2e6f1a28da",
+  "parent_grammar_sha256": "e95bece8f390eee12bf2ca394c61d58e9bd8c8451f370f9cac67865a14c475a5",
+  "schema_version": 2,
+  "source": {
+    "generator": "experiments/pp/fixed_boards_v2/generate.py",
+    "kind": "synthetic_rule_grammar_v4_reachable",
+    "legacy_outputs_used": false,
+    "note": "All decision snapshots are server-reachable; post-terminal controls are replaced before rerunning without reading model outputs or tournament logs.",
+    "parent_grammar": "experiments/pp/fixed_boards/generate.py",
+    "seed": 20260817,
+    "tournament_logs_used": false
+  },
+  "spec_sha256": "7807f8fb5b1444dea10d7006739f570e661c6465feddf1752c7cd51a6294b287",
+  "study_id": "aiwolfdial-2026-pp-fixed-boards-v4-reachable"
+}

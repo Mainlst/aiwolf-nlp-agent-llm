@@ -1,0 +1,25 @@
+cff-version: 1.2.0
+message: "Please cite the accompanying AIWolfDial 2026 paper when using these research materials. Publication identifiers will be added after release."
+type: software
+title: "Target-Agent Power Play Instructions in LLM Werewolf: Cue-Conditioned Execution and Matched-Game Outcomes"
+version: 1.0.0-rc.3
+repository-code: "https://github.com/Mainlst/aiwolf-nlp-agent-llm"
+authors:
+  - family-names: Yato
+    given-names: Shoma
+    affiliation: Tokyo Polytechnic University
+  - family-names: Komatsu
+    given-names: Ikumu
+    affiliation: Tokyo Polytechnic University
+  - family-names: Itakura
+    given-names: Haruka
+    affiliation: Tokyo Polytechnic University
+  - family-names: Katagami
+    given-names: Daisuke
+    affiliation: Tokyo Polytechnic University
+license: MIT
+keywords:
+  - AIWolf
+  - Werewolf
+  - power play
+  - large language models

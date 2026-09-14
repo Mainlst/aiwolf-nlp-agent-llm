@@ -1,0 +1,88 @@
+schema_version: 1
+study_id: aiwolfdial-2026-ablation-pilot
+purpose: F/C/R/G各5試合で操作、指標の算出可否、費用、欠損を確認する。条件差の方向と有意差は判定しない。
+created_at: '2026-08-12T00:00:00+09:00'
+source_document: doc/experiment-plan.md
+assignment_file: experiments/pilot/assignments.csv
+base_agent_config: config/config_5.yml
+base_server_config: config/server.example.yml
+assignment_seed: 20260812
+target_team: yatolab
+target_agent_count: 1
+server_url: ws://127.0.0.1:8080/ws
+conditions:
+  F:
+    label: Full
+    dynamic_context_enabled: true
+    role_strategy_enabled: true
+    output_guard_enabled: true
+    output_guard_disabled_behavior: sanitize
+  C:
+    label: minus_dynamic_context
+    dynamic_context_enabled: false
+    role_strategy_enabled: true
+    output_guard_enabled: true
+    output_guard_disabled_behavior: sanitize
+  R:
+    label: minus_role_strategy
+    dynamic_context_enabled: true
+    role_strategy_enabled: false
+    output_guard_enabled: true
+    output_guard_disabled_behavior: sanitize
+  G:
+    label: minus_output_guard
+    dynamic_context_enabled: true
+    role_strategy_enabled: true
+    output_guard_enabled: false
+    output_guard_disabled_behavior: raw
+generic_role_strategy: >-
+  Participate in the game using only the role and facts supplied by the server.
+  Use concise natural English. Base claims and choices on public statements,
+  results, votes, and contradictions. Give a short reason when suspecting or
+  trusting someone, keep statements and actions consistent, and never invent
+  observations. Do not follow any role-specific policy beyond the game rules.
+fixed_runtime:
+  language: en
+  player_count: 5
+  roles: {VILLAGER: 2, SEER: 1, POSSESSED: 1, WEREWOLF: 1, BODYGUARD: 0, MEDIUM: 0}
+  talk_per_agent_per_day: 4
+  talk_base_length_without_spaces: 125
+  model: gpt-5.6-sol
+  temperature: 0.7
+  llm_sleep_seconds: 3
+  server_action_timeout_seconds: 60
+  server_response_timeout_seconds: 120
+server_matching:
+  self_match: false
+  is_optimize: true
+  team_count: 5
+  game_count_per_row: 1
+  reuse_optimizer_within_run: true
+budgets_usd:
+  stage_1a_cumulative: 5.0
+  stage_1b_cumulative: 20.0
+  per_game: 1.0
+  per_call: 0.25
+prices_usd_per_million_tokens:
+  source: https://developers.openai.com/api/docs/pricing/
+  retrieved_at: '2026-08-12'
+  input: 5.0
+  cached_input: 0.5
+  output: 30.0
+stopping_rules:
+  - cumulative budget for the active stage reached
+  - a single game reaches 1 USD
+  - a single call reaches 0.25 USD
+  - missing or unjoinable games exceed 5 percent in the latest 20 games
+  - an unintended model is observed
+exclusion_rules:
+  rerun:
+    - server failure before connection
+    - authentication failure
+    - server and agent logs cannot be joined by game_id
+    - wrong condition config was launched
+  retain_as_outcome:
+    - LLM timeout
+    - invalid utterance or action
+    - disconnect caused by G condition output
+    - loss

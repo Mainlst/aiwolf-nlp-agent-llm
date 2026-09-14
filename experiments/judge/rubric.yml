@@ -1,0 +1,68 @@
+schema_version: 1
+binary_metrics:
+  vote_consistency:
+    pass: The target's final explicit vote declaration for the day matches the server-recorded vote target.
+    fail: The final explicit declaration names a different target from the server-recorded vote.
+    not_applicable: No explicit vote declaration or no server-recorded vote is present.
+  claim_consistency:
+    pass: The evaluated claim is compatible with the target's earlier explicit role claims, ability reports, and asserted facts.
+    fail: The evaluated claim contradicts at least one such earlier target claim without an explicit correction.
+    not_applicable: The target made no earlier claim of the relevant kind.
+  question_responsiveness:
+    pass: The target's first subsequent utterance answers the content of a direct question addressed to the target.
+    fail: That utterance ignores or evades the requested content.
+    not_applicable: No direct question and subsequent target utterance are both present.
+  evidence_bearing_accusation:
+    pass: A suspicion or vote declaration gives at least one identifiable public statement, vote, or ability report as a reason.
+    fail: It names a suspect or vote target but supplies no identifiable public evidence.
+    not_applicable: No suspicion or vote declaration occurs.
+  repetition:
+    pass: The utterance adds a new target, claim, evidence item, response, or decision relative to the target's preceding utterance that day.
+    fail: It substantially repeats the same claim without any such addition.
+    not_applicable: There is no preceding target utterance that day.
+role_action_quality:
+  0: The action conflicts with known role information or omits an immediately necessary legal role action without a defensible reason.
+  1: The action is legal and plausible but weakly justified or misses a material role-specific consideration.
+  2: The action is legal, uses available role-specific information, and supports the target side's immediate strategic objective.
+dialogue_axes:
+  dialogue_a:
+    name: utterance naturalness
+    anchors:
+      1: Broken, protocol-like, or strongly meta text that is not acceptable dialogue.
+      2: Understandable but conspicuously awkward, repetitive, or malformed.
+      3: Acceptable ordinary dialogue with minor awkwardness.
+      4: Natural, concise, and clear with no material distraction.
+      5: Consistently fluent, economical, and well adapted to the immediate exchange.
+  dialogue_b:
+    name: contextual naturalness
+    anchors:
+      1: Unrelated to the visible conversation or impossible at that point.
+      2: Weakly connected and misses the main conversational need.
+      3: Generally relevant but generic or only partially responsive.
+      4: Directly relevant and appropriately advances the exchange.
+      5: Precisely timed and integrates multiple salient public context cues.
+  dialogue_c:
+    name: content consistency
+    anchors:
+      1: Contains a clear contradiction with the target's prior public claims.
+      2: Has a serious unresolved tension or unsupported change of position.
+      3: Mostly consistent, with ambiguity or a weakly explained update.
+      4: Consistent and explains meaningful updates.
+      5: Maintains a traceable, fully coherent position throughout the supplied history.
+  dialogue_d:
+    name: action consistency
+    anchors:
+      1: Explicit talk and recorded game action directly conflict.
+      2: Action is poorly aligned with stated reasoning or target.
+      3: Broadly aligned but the link is implicit or incomplete.
+      4: Stated intention, reason, and action align.
+      5: Alignment remains explicit and coherent across multiple decisions.
+  dialogue_e:
+    name: expression diversity
+    anchors:
+      1: Nearly all utterances are duplicated templates with no contextual variation.
+      2: Frequent repeated phrasing and sentence structure.
+      3: Adequate variation with some recurring templates.
+      4: Varied wording suited to different conversational functions.
+      5: Consistently varied yet concise expression without gratuitous stylistic drift.
+

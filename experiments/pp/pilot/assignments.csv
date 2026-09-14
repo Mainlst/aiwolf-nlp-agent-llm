@@ -1,0 +1,11 @@
+row_id,run_order,condition,planned_role,target_seat,opponent_pool,analysis_block,status,game_id,actual_role,notes
+PP01,1,P+,POSSESSED,1,O,01,planned,,,
+PM01,2,P-PP,WEREWOLF,1,O,01,planned,,,
+PP02,3,P+,WEREWOLF,2,O,02,planned,,,
+PM02,4,P-PP,POSSESSED,2,O,02,planned,,,
+PP03,5,P+,POSSESSED,3,O,03,planned,,,
+PM03,6,P-PP,WEREWOLF,3,O,03,planned,,,
+PP04,7,P+,WEREWOLF,4,O,04,planned,,,
+PM04,8,P-PP,POSSESSED,4,O,04,planned,,,
+PP05,9,P+,POSSESSED,5,O,05,planned,,,
+PM05,10,P-PP,WEREWOLF,5,O,05,planned,,,

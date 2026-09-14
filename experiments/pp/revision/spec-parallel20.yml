@@ -1,0 +1,33 @@
+# B throughput profile: 20 blocks per wave, at most 20 concurrent games.
+schema_version: 1
+study_id: aiwolfdial-2026-pp-revision
+credentials: config/.env
+model: gpt-5.6-luna
+temperature: 1.0
+seed: 20260907
+normal:
+  # Same seat-fixed binary as pp-v2-normal-400-clean-20260815-v1/manifest.json.
+  required_server_binary_sha256: 41f3f0d79b49e4419e2c2831ba1849e6373443d9ee36f7eca993bb1713b901b4
+  blocks: 200
+  blocks_per_wave: 20
+  max_parallel: 20
+  base_port: 19080
+  game_timeout_seconds: 900
+  max_attempts: 2
+  start_deadline: '2026-09-10T12:00:00+09:00'
+  data_deadline: '2026-09-11T12:00:00+09:00'
+  primary: G11-G00
+fixed:
+  repetitions: 2
+  max_parallel: 8
+  group_timeout_seconds: 900
+  max_attempts: 2
+  data_deadline: '2026-09-11T12:00:00+09:00'
+  primary: A11-A10
+  endpoint: talk_vote_consistent_both_repetitions
+analysis:
+  bootstrap_iterations: 10000
+  seed: 20260907
+  interval: percentile_paired_cluster_bootstrap_95
+  primary_families: separate_A_and_B
+  p_values: not_reported

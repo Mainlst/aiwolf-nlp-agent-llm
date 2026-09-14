@@ -1,0 +1,30 @@
+schema_version: 1
+instructions: The commands launch four distinct deterministic API-free teams. Run a five-agent Stage 0 qualification for each pool and replace each PENDING qualification_log with its saved log path before paid calls.
+pools:
+  A:
+    description: Evidence-seeking policy; asks questions and gives cautious reasons.
+    qualification_log: experiments/pilot/opponent-qualification.json
+    launch_command: uv run python3 experiments/runtime/opponents.py --pool A
+    agents:
+      - {team: pilotAalpha, repo: ., commit: captured_by_manifest, config: experiments/pilot/opponent-pools.yml, uses_paid_api: false}
+      - {team: pilotAbravo, repo: ., commit: captured_by_manifest, config: experiments/pilot/opponent-pools.yml, uses_paid_api: false}
+      - {team: pilotAcharlie, repo: ., commit: captured_by_manifest, config: experiments/pilot/opponent-pools.yml, uses_paid_api: false}
+      - {team: pilotAdelta, repo: ., commit: captured_by_manifest, config: experiments/pilot/opponent-pools.yml, uses_paid_api: false}
+  B:
+    description: Assertive policy; declares suspects and voting intentions early.
+    qualification_log: experiments/pilot/opponent-qualification.json
+    launch_command: uv run python3 experiments/runtime/opponents.py --pool B
+    agents:
+      - {team: pilotBalpha, repo: ., commit: captured_by_manifest, config: experiments/pilot/opponent-pools.yml, uses_paid_api: false}
+      - {team: pilotBbravo, repo: ., commit: captured_by_manifest, config: experiments/pilot/opponent-pools.yml, uses_paid_api: false}
+      - {team: pilotBcharlie, repo: ., commit: captured_by_manifest, config: experiments/pilot/opponent-pools.yml, uses_paid_api: false}
+      - {team: pilotBdelta, repo: ., commit: captured_by_manifest, config: experiments/pilot/opponent-pools.yml, uses_paid_api: false}
+  C:
+    description: Reserved policy; asks for concrete vote declarations before committing.
+    qualification_log: experiments/pilot/opponent-qualification.json
+    launch_command: uv run python3 experiments/runtime/opponents.py --pool C
+    agents:
+      - {team: pilotCalpha, repo: ., commit: captured_by_manifest, config: experiments/pilot/opponent-pools.yml, uses_paid_api: false}
+      - {team: pilotCbravo, repo: ., commit: captured_by_manifest, config: experiments/pilot/opponent-pools.yml, uses_paid_api: false}
+      - {team: pilotCcharlie, repo: ., commit: captured_by_manifest, config: experiments/pilot/opponent-pools.yml, uses_paid_api: false}
+      - {team: pilotCdelta, repo: ., commit: captured_by_manifest, config: experiments/pilot/opponent-pools.yml, uses_paid_api: false}

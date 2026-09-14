@@ -1,0 +1,51 @@
+schema_version: 1
+study_id: aiwolfdial-2026-pp-fixed-boards-v3
+source:
+  kind: synthetic_rule_grammar_v3
+  generator: experiments/pp/fixed_boards/generate.py
+  seed: 20260815
+  tournament_logs_used: false
+  note: Histories are generated from the five-player role rules and diversified English event grammars; no saved or official game log is read.
+roles:
+  WEREWOLF: 1
+  POSSESSED: 1
+  SEER: 1
+  VILLAGER: 2
+analysis_counts:
+  established_pp:
+    POSSESSED: 40
+    WEREWOLF: 40
+  near_control:
+    POSSESSED: 20
+    WEREWOLF: 20
+near_control_strata:
+  POSSESSED:
+    premature: 10
+    premature_false_wolf_claim: 10
+  WEREWOLF:
+    premature: 10
+    missing_ally: 10
+diversity:
+  established_families_per_role: 10
+  near_families_per_role_stratum: 5
+  maximum_analysis_records_per_family: 4
+confirmation_counts:
+  established_pp:
+    POSSESSED: 3
+    WEREWOLF: 3
+  near_control:
+    POSSESSED: 3
+    WEREWOLF: 3
+future_information_forbidden_keys:
+  - winner
+  - win_side
+  - future_events
+  - future_vote
+  - ground_truth_roles
+  - hidden_roles
+  - correct_ally
+  - valid_village_targets
+  - objective_pp_possible
+  - epistemic_pp_justified
+output_dir: experiments/pp/fixed_boards/generated
+backup_destination: release-backups/pp

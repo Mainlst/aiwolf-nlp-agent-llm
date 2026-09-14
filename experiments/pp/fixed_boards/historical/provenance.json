@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "restored_on": "2026-09-14",
+  "purpose": "Historical source audit; not the current supported judge runner.",
+  "source_repository": "aiwolfdial/aiwolf-nlp-agent-llm development history",
+  "source_commit": "ca973c12057c36674fb3636772f95b38195830ea",
+  "source_commit_time": "2026-08-15T16:28:48+09:00",
+  "source_path": "experiments/pp/fixed_boards/pp_judge.py",
+  "source_sha256": "ccc372def4e086b03e46d8579a7c6857a269aec84416c234aaa848e3087ad798",
+  "exported_path": "experiments/pp/fixed_boards/historical/pp_judge_original.py",
+  "exported_sha256": "ccc372def4e086b03e46d8579a7c6857a269aec84416c234aaa848e3087ad798",
+  "transformation": "none; byte-identical git blob",
+  "runtime_manifest": {
+    "archive": "dataset/raw/fixed_judge.tar.gz",
+    "member": "manifest.json",
+    "field": "runner_sha256",
+    "value": "ccc372def4e086b03e46d8579a7c6857a269aec84416c234aaa848e3087ad798"
+  },
+  "current_runner": {
+    "path": "experiments/pp/fixed_boards/pp_judge.py",
+    "sha256": "922bbdfba968cb237a69c44f7152143ccb54e6260feeacf7e06165290f5a8bc5"
+  },
+  "difference": {
+    "function": "evidence_errors",
+    "historical_only_line": "    events[\"target-vote\"] = judge_input[\"target_vote\"]",
+    "meaning": "The historical validator accepts target-vote as an evidence event. The current validator does not. This difference does not remove target_vote from the judge input."
+  },
+  "offline_reproduction_executes_this_snapshot": false
+}

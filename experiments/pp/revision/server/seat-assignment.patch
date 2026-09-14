@@ -1,0 +1,187 @@
+diff --git a/logic/game.go b/logic/game.go
+index d214970..e8a5ef5 100644
+--- a/logic/game.go
++++ b/logic/game.go
+@@ -62,7 +62,7 @@ func NewGame(config *model.Config, settings *model.Setting, conns []model.Connec
+ 	}
+ }
+ 
+-func NewGameWithRole(config *model.Config, settings *model.Setting, roleMapConns map[model.Role][]model.Connection) *Game {
++func NewGameWithRole(config *model.Config, settings *model.Setting, roleMapConns map[model.Role][]model.Connection, teamIndexes map[string]int) *Game {
+ 	id := ulid.Make().String()
+ 	var agents []*model.Agent
+ 	if config.CustomProfile.Enable {
+@@ -70,15 +70,15 @@ func NewGameWithRole(config *model.Config, settings *model.Setting, roleMapConns
+ 			profiles, err := util.GenerateProfiles(config.CustomProfile.DynamicProfile, config.CustomProfile.ProfileEncoding, config.Game.AgentCount)
+ 			if err != nil {
+ 				slog.Error("プロフィールの生成に失敗したため、カスタムプロフィールを使用します", "error", err)
+-				agents = util.CreateAgentsWithRoleAndProfile(roleMapConns, config.CustomProfile.Profiles, config.CustomProfile.ProfileEncoding)
++				agents = util.CreateAgentsWithRoleAndProfile(roleMapConns, teamIndexes, config.CustomProfile.Profiles, config.CustomProfile.ProfileEncoding)
+ 			} else {
+-				agents = util.CreateAgentsWithRoleAndProfile(roleMapConns, profiles, config.CustomProfile.ProfileEncoding)
++				agents = util.CreateAgentsWithRoleAndProfile(roleMapConns, teamIndexes, profiles, config.CustomProfile.ProfileEncoding)
+ 			}
+ 		} else {
+-			agents = util.CreateAgentsWithRoleAndProfile(roleMapConns, config.CustomProfile.Profiles, config.CustomProfile.ProfileEncoding)
++			agents = util.CreateAgentsWithRoleAndProfile(roleMapConns, teamIndexes, config.CustomProfile.Profiles, config.CustomProfile.ProfileEncoding)
+ 		}
+ 	} else {
+-		agents = util.CreateAgentsWithRole(roleMapConns)
++		agents = util.CreateAgentsWithRole(roleMapConns, teamIndexes)
+ 	}
+ 	gameStatus := model.NewInitializeGameStatus(agents)
+ 	gameStatuses := make(map[int]*model.GameStatus)
+diff --git a/matchmaking/match_optimizer.go b/matchmaking/match_optimizer.go
+index 8f2f934..a6b1903 100644
+--- a/matchmaking/match_optimizer.go
++++ b/matchmaking/match_optimizer.go
+@@ -151,6 +151,19 @@ func (mo *MatchOptimizer) GetMatches() []map[model.Role][]string {
+ 	return matches
+ }
+ 
++// TeamIndexes returns the frozen optimizer index for each team.  The index is
++// also the intended in-game seat for a scheduled match, so callers must not
++// reconstruct seating from Go map iteration order.
++func (mo *MatchOptimizer) TeamIndexes() map[string]int {
++	mo.mu.RLock()
++	defer mo.mu.RUnlock()
++	indexes := make(map[string]int, len(mo.IdxTeamMap))
++	for index, team := range mo.IdxTeamMap {
++		indexes[team] = index
++	}
++	return indexes
++}
++
+ func (mo *MatchOptimizer) UpdateTeam(team string) {
+ 	mo.mu.Lock()
+ 	defer mo.mu.Unlock()
+diff --git a/orchestrator/game_manager.go b/orchestrator/game_manager.go
+index da992fc..24c47fd 100644
+--- a/orchestrator/game_manager.go
++++ b/orchestrator/game_manager.go
+@@ -66,7 +66,7 @@ func (m *GameManager) TryStartGame(conn model.Connection) {
+ 			slog.Error("待機部屋からの接続の取得に失敗しました", "error", err)
+ 			return
+ 		}
+-		game = logic.NewGameWithRole(&m.config, m.gameSetting, roleMapConns)
++		game = logic.NewGameWithRole(&m.config, m.gameSetting, roleMapConns, m.matchOptimizer.TeamIndexes())
+ 	} else {
+ 		connections, err := m.waitingRoom.GetConnections()
+ 		if err != nil {
+diff --git a/util/game_util.go b/util/game_util.go
+index 0ed97e0..29f68f9 100644
+--- a/util/game_util.go
++++ b/util/game_util.go
+@@ -4,6 +4,7 @@ import (
+ 	"maps"
+ 	"math/rand/v2"
+ 	"slices"
++	"sort"
+ 	"strings"
+ 	"unicode"
+ 	"unicode/utf8"
+@@ -85,34 +86,44 @@ func CreateAgentsWithProfiles(conns []model.Connection, roles map[model.Role]int
+ 	return agents
+ }
+ 
+-func CreateAgentsWithRole(roleMapConns map[model.Role][]model.Connection) []*model.Agent {
+-	agents := make([]*model.Agent, 0)
+-	i := 0
++type roleConnection struct {
++	role model.Role
++	conn model.Connection
++}
++
++func orderedRoleConnections(roleMapConns map[model.Role][]model.Connection, teamIndexes map[string]int) []roleConnection {
++	ordered := make([]roleConnection, 0)
+ 	for role, conns := range roleMapConns {
+ 		for _, conn := range conns {
+-			agent := model.NewAgent(i+1, role, conn)
+-			i++
+-			agents = append(agents, agent)
++			ordered = append(ordered, roleConnection{role: role, conn: conn})
+ 		}
+ 	}
++	sort.Slice(ordered, func(i, j int) bool {
++		return teamIndexes[ordered[i].conn.TeamName] < teamIndexes[ordered[j].conn.TeamName]
++	})
++	return ordered
++}
++
++func CreateAgentsWithRole(roleMapConns map[model.Role][]model.Connection, teamIndexes map[string]int) []*model.Agent {
++	agents := make([]*model.Agent, 0)
++	for i, item := range orderedRoleConnections(roleMapConns, teamIndexes) {
++		agent := model.NewAgent(i+1, item.role, item.conn)
++		agents = append(agents, agent)
++	}
+ 	return agents
+ }
+ 
+-func CreateAgentsWithRoleAndProfile(roleMapConns map[model.Role][]model.Connection, profiles []model.Profile, encoding map[string]string) []*model.Agent {
++func CreateAgentsWithRoleAndProfile(roleMapConns map[model.Role][]model.Connection, teamIndexes map[string]int, profiles []model.Profile, encoding map[string]string) []*model.Agent {
+ 	agents := make([]*model.Agent, 0)
+ 
+ 	// 呼び出し元と共有するprofilesスライスを破壊しないようコピーをシャッフルする。
+ 	profilesCopy := slices.Clone(profiles)
+ 	rand.Shuffle(len(profilesCopy), func(i, j int) { profilesCopy[i], profilesCopy[j] = profilesCopy[j], profilesCopy[i] })
+ 
+-	i := 0
+-	for role, conns := range roleMapConns {
+-		for _, conn := range conns {
+-			profile := profilesCopy[i]
+-			agent := model.NewAgentWithProfile(i+1, role, conn, profile, encoding)
+-			i++
+-			agents = append(agents, agent)
+-		}
++	for i, item := range orderedRoleConnections(roleMapConns, teamIndexes) {
++		profile := profilesCopy[i]
++		agent := model.NewAgentWithProfile(i+1, item.role, item.conn, profile, encoding)
++		agents = append(agents, agent)
+ 	}
+ 	return agents
+ }
+diff --git a/util/game_util_test.go b/util/game_util_test.go
+new file mode 100644
+index 0000000..cda6d13
+--- /dev/null
++++ b/util/game_util_test.go
+@@ -0,0 +1,39 @@
++package util
++
++import (
++	"testing"
++
++	"github.com/aiwolfdial/aiwolf-nlp-server/model"
++	"github.com/stretchr/testify/require"
++)
++
++func TestOrderedRoleConnectionsUsesOptimizerSeats(t *testing.T) {
++	roleMap := map[model.Role][]model.Connection{
++		model.R_POSSESSED: {{TeamName: "target"}},
++		model.R_WEREWOLF:  {{TeamName: "wolf"}},
++		model.R_SEER:      {{TeamName: "seer"}},
++		model.R_VILLAGER:  {{TeamName: "villager-b"}, {TeamName: "villager-a"}},
++	}
++	teamIndexes := map[string]int{
++		"villager-a": 0,
++		"seer":       1,
++		"target":     2,
++		"wolf":       3,
++		"villager-b": 4,
++	}
++
++	ordered := orderedRoleConnections(roleMap, teamIndexes)
++	teams := make([]string, len(ordered))
++	roles := make([]model.Role, len(ordered))
++	for index, item := range ordered {
++		teams[index] = item.conn.TeamName
++		roles[index] = item.role
++	}
++
++	require.Equal(t, []string{"villager-a", "seer", "target", "wolf", "villager-b"}, teams)
++	require.Equal(
++		t,
++		[]model.Role{model.R_VILLAGER, model.R_SEER, model.R_POSSESSED, model.R_WEREWOLF, model.R_VILLAGER},
++		roles,
++	)
++}

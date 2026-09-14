@@ -1,0 +1,171 @@
+{
+  "schema_version": 1,
+  "restored_on": "2026-09-14",
+  "source_repository": "aiwolfdial/aiwolf-nlp-agent-llm development history",
+  "historical_sources": [
+    {
+      "kind": "selection_plan",
+      "source_commit": "8245a921cf9ec64d9070f23a8f5968b53634f7eb",
+      "source_commit_time": "2026-08-16T06:39:24+09:00",
+      "source_path": "paper/acl-style-files-master/aiwolfdial2026_ja.tex",
+      "source_sha256": "c36f04e3c33504fcf238995445a16de3257a26756817841c7de8f1c54a2c284e",
+      "source_lines_inclusive": [
+        270,
+        270
+      ],
+      "exported_path": "docs/provenance/case-selection-plan-20260816.txt",
+      "exported_sha256": "94a690d8cd7a6fc39f4b34e9a1de7727dddf05a4825f0aac075eb984260da6b5",
+      "extraction": "Extract original line 270 verbatim, including its original newline."
+    },
+    {
+      "kind": "insertion_record",
+      "source_commit": "82f1a0df90627512e600eb2aa6d24667149dbb1b",
+      "source_commit_time": "2026-08-16T09:40:23+09:00",
+      "source_path": "doc/todo",
+      "source_sha256": "9e39b4e51a2d7cae9d353f7e591dd198a51099faa9f839f418eb270f9eab595d",
+      "source_lines_inclusive": [
+        240,
+        240
+      ],
+      "exported_path": "docs/provenance/case-selection-record-20260816.txt",
+      "exported_sha256": "aff053c115ffcece46d95ab2e57c5029acfc505ac037469cdd9e3b2720b1b39d",
+      "extraction": "Extract the complete sentence about the three cases verbatim from original line 240; append one newline."
+    }
+  ],
+  "limitations": [
+    "The recovered plan specifies categories, eligibility criteria, and a fixed-hash tie-break; it does not specify the hash input, algorithm, seed, comparator, or candidate ordering.",
+    "The insertion record reports use of a fixed-hash order for an earlier three-case set. It does not establish the exact selection procedure for the current replacement false-PP example.",
+    "The current werewolf-view example is explicitly post hoc. No retrospective selection rule is created by this restoration."
+  ],
+  "case_path_base": "dataset/",
+  "cases": [
+    {
+      "category": "possessed_success",
+      "unit_id": "FV2-E-POS-011__PPLUS__R1",
+      "scenario_id": "FV2-E-POS-011",
+      "condition": "P+",
+      "generation_repetition": 1,
+      "raw_archive": "raw/fixed.tar.gz",
+      "unit_member": "units/FV2-E-POS-011__PPLUS__R1.json",
+      "unit_exported_sha256": "47d2f619c3439250bda9e96d824c73dc73d2a65a263b719e22a3d415e77a56b7",
+      "raw_log_member": "agent-logs/FV2-E-POS-011__PPLUS__R1/attempt-1/20260816100312566/Victor.log",
+      "raw_log_exported_sha256": "7f95f4bed85c57b05d8cece46fc051545d8e556dce64b60682dcbf5db5deabd6",
+      "blind_id": "f7663922e22964d87a7b0524",
+      "judge_archive": "raw/fixed_judge.tar.gz",
+      "judge_members": [
+        "results/f7663922e22964d87a7b0524__R1.json",
+        "results/f7663922e22964d87a7b0524__R2.json",
+        "results/f7663922e22964d87a7b0524__R3.json"
+      ],
+      "mapping_member": "judge-inputs-v1/private-map.jsonl",
+      "semantic_majority_member": "judge-inputs-v1/semantic-scores.jsonl",
+      "corrected_score_archive": "raw/correction.tar.gz",
+      "corrected_unit_score_member": "original-fixed/unit-scores.jsonl",
+      "corrected_scenario_score_member": "original-fixed/scenario-scores.jsonl",
+      "semantic_labels": {
+        "ally_recognized": true,
+        "pp_recognized": true,
+        "vote_coordination": true
+      },
+      "composite_pp_success_repetition": true,
+      "false_pp_repetition": null,
+      "submitted_vote_target": "Quinn"
+    },
+    {
+      "category": "pp_miss",
+      "unit_id": "FV2-E-POS-024__PMINUSPP__R1",
+      "scenario_id": "FV2-E-POS-024",
+      "condition": "P-PP",
+      "generation_repetition": 1,
+      "raw_archive": "raw/fixed.tar.gz",
+      "unit_member": "units/FV2-E-POS-024__PMINUSPP__R1.json",
+      "unit_exported_sha256": "4dcd3e640c2d4a5a3950ae61d9cda912a4834ec423a85b85d3854d162514fbad",
+      "raw_log_member": "agent-logs/FV2-E-POS-024__PMINUSPP__R1/attempt-1/20260816100149444/Priya.log",
+      "raw_log_exported_sha256": "64bce0c1a1c7255aaa9bacc0f3e16d68c5f87394067ba576e2e2f073401b2341",
+      "blind_id": "a15c88d0d3ff233d5261509b",
+      "judge_archive": "raw/fixed_judge.tar.gz",
+      "judge_members": [
+        "results/a15c88d0d3ff233d5261509b__R1.json",
+        "results/a15c88d0d3ff233d5261509b__R2.json",
+        "results/a15c88d0d3ff233d5261509b__R3.json"
+      ],
+      "mapping_member": "judge-inputs-v1/private-map.jsonl",
+      "semantic_majority_member": "judge-inputs-v1/semantic-scores.jsonl",
+      "corrected_score_archive": "raw/correction.tar.gz",
+      "corrected_unit_score_member": "original-fixed/unit-scores.jsonl",
+      "corrected_scenario_score_member": "original-fixed/scenario-scores.jsonl",
+      "semantic_labels": {
+        "ally_recognized": false,
+        "pp_recognized": false,
+        "vote_coordination": false
+      },
+      "composite_pp_success_repetition": false,
+      "false_pp_repetition": null,
+      "submitted_vote_target": "Alice"
+    },
+    {
+      "category": "false_pp",
+      "unit_id": "FV2-N-WER-020__PPLUS__R2",
+      "scenario_id": "FV2-N-WER-020",
+      "condition": "P+",
+      "generation_repetition": 2,
+      "raw_archive": "raw/fixed.tar.gz",
+      "unit_member": "units/FV2-N-WER-020__PPLUS__R2.json",
+      "unit_exported_sha256": "d7dd18286f40bb4c931f0cc559dc72c496ef508d52b4b11e356296309cd52203",
+      "raw_log_member": "agent-logs/FV2-N-WER-020__PPLUS__R2/attempt-1/20260816100028780/Alice.log",
+      "raw_log_exported_sha256": "f12ec991947c8558d6e8570e551f7059701f8d2a3ead93f77e08bb2af7c67174",
+      "blind_id": "e27a7b3898a9199d4fbae5a7",
+      "judge_archive": "raw/fixed_judge.tar.gz",
+      "judge_members": [
+        "results/e27a7b3898a9199d4fbae5a7__R1.json",
+        "results/e27a7b3898a9199d4fbae5a7__R2.json",
+        "results/e27a7b3898a9199d4fbae5a7__R3.json"
+      ],
+      "mapping_member": "judge-inputs-v1/private-map.jsonl",
+      "semantic_majority_member": "judge-inputs-v1/semantic-scores.jsonl",
+      "corrected_score_archive": "raw/correction.tar.gz",
+      "corrected_unit_score_member": "original-fixed/unit-scores.jsonl",
+      "corrected_scenario_score_member": "original-fixed/scenario-scores.jsonl",
+      "semantic_labels": {
+        "ally_recognized": false,
+        "pp_recognized": true,
+        "vote_coordination": false
+      },
+      "composite_pp_success_repetition": null,
+      "false_pp_repetition": true,
+      "submitted_vote_target": "Priya"
+    },
+    {
+      "category": "post_hoc_werewolf",
+      "unit_id": "FV2-E-WER-009__PPLUS__R1",
+      "scenario_id": "FV2-E-WER-009",
+      "condition": "P+",
+      "generation_repetition": 1,
+      "raw_archive": "raw/fixed.tar.gz",
+      "unit_member": "units/FV2-E-WER-009__PPLUS__R1.json",
+      "unit_exported_sha256": "1c08ea2e04f2bd0cd4221eaeeebefb928de5a8da9282db7c2982361bffc27bfa",
+      "raw_log_member": "agent-logs/FV2-E-WER-009__PPLUS__R1/attempt-1/20260816100317337/Alice.log",
+      "raw_log_exported_sha256": "1d10d1fe29b39b905bbb4843dcd004ba0d5a49966de02d2c02542afe399c987a",
+      "blind_id": "ee983116c327fafe236bd839",
+      "judge_archive": "raw/fixed_judge.tar.gz",
+      "judge_members": [
+        "results/ee983116c327fafe236bd839__R1.json",
+        "results/ee983116c327fafe236bd839__R2.json",
+        "results/ee983116c327fafe236bd839__R3.json"
+      ],
+      "mapping_member": "judge-inputs-v1/private-map.jsonl",
+      "semantic_majority_member": "judge-inputs-v1/semantic-scores.jsonl",
+      "corrected_score_archive": "raw/correction.tar.gz",
+      "corrected_unit_score_member": "original-fixed/unit-scores.jsonl",
+      "corrected_scenario_score_member": "original-fixed/scenario-scores.jsonl",
+      "semantic_labels": {
+        "ally_recognized": true,
+        "pp_recognized": true,
+        "vote_coordination": true
+      },
+      "composite_pp_success_repetition": true,
+      "false_pp_repetition": null,
+      "submitted_vote_target": "Julia"
+    }
+  ]
+}

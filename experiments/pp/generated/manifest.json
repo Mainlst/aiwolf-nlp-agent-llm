@@ -1,0 +1,22 @@
+{
+  "schema_version": 1,
+  "study_id": "aiwolfdial-2026-pp",
+  "spec": "experiments/pp/spec.yml",
+  "spec_sha256": "371af288885ba3f734bad9e0650c35eb1ac73fab208fc66c091647e7eff549e6",
+  "base_config": "config/config_5.yml",
+  "base_config_sha256": "c25b436117a67e9e1d875b5fbf248468996be68e91bfb17dfb77f0d896702927",
+  "evaluation_spec": "experiments/pp/evaluation-spec.yml",
+  "evaluation_spec_sha256": "33582bb6e954500956a0eed572b75796d0bee7ef19d63b99a09c8db11c0b7bd5",
+  "runtime_source": "src/agent/agent.py",
+  "runtime_source_sha256": "0c3bc8d5aa5d23bd7873a75725c15e56e8d9c8f05e2e773b6345471478e16eac",
+  "configs": {
+    "P+": {
+      "file": "P+.yml",
+      "sha256": "74f1b58a304296ac9ed6fd9a7a59eb4abeadee1514f5dcb1617291e4e7dfc4f2"
+    },
+    "P-PP": {
+      "file": "P-PP.yml",
+      "sha256": "4b76f282d94e01b693bcc88f6017cbbbd9832f2a5948b74767384dfb594613a2"
+    }
+  }
+}

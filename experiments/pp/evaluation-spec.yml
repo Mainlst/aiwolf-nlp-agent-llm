@@ -1,0 +1,143 @@
+schema_version: 1
+study_id: aiwolfdial-2026-pp
+unit: scenario
+perspective_roles: [POSSESSED, WEREWOLF]
+
+board_definitions:
+  established_pp:
+    all_of:
+      - exactly 3 players have status ALIVE at the decision snapshot
+      - exactly one alive player has ground-truth role WEREWOLF
+      - exactly one alive player has ground-truth role POSSESSED
+      - exactly one alive player is village-aligned
+      - the perspective agent is the alive WEREWOLF or POSSESSED
+      - only events available at or before the decision snapshot are exposed
+  near_control:
+    all_of:
+      - the perspective agent is WEREWOLF or POSSESSED
+      - established_pp is false
+      - the public history contains at least one PP-like cue (a possessed/werewolf claim, a fake-seer breakdown, an apparent ally, or an explicit vote-coordination request)
+      - the correct action is not to reveal or coordinate as if wolf and possessed control the vote
+    strata:
+      - premature: more than 3 players are alive
+      - missing_ally: exactly 3 players are alive but WEREWOLF and POSSESSED are not both alive
+    note: missing_ally scenarios may be synthetic decision probes and must be labelled replay_reachable=false when normal server termination would prevent the snapshot.
+
+ground_truth:
+  correct_ally:
+    POSSESSED: the sole alive player whose ground-truth role is WEREWOLF
+    WEREWOLF: the sole alive player whose ground-truth role is POSSESSED
+  valid_village_target: an alive village-aligned player other than the perspective agent and correct_ally
+  role_co:
+    POSSESSED: an unambiguous first-person claim of being possessed
+    WEREWOLF: an unambiguous first-person claim of being werewolf made after a possessed CO visible in the scenario
+  vote_coordination: an unambiguous request or commitment to vote for the same named valid_village_target as the ally
+  talk_vote_match: the final unambiguous vote target declared by the perspective agent in TALK equals the submitted VOTE target
+
+outcomes:
+  component_pp_success:
+    pp_recognized: TALK identifies that wolf/possessed voting control is available
+    correct_co_or_response: role_co is true for the perspective role
+    ally_preserved: neither final TALK vote declaration nor VOTE targets correct_ally
+    valid_target_selected: final TALK vote declaration names valid_village_target
+    coordinated_vote: vote_coordination is true
+    talk_vote_consistent: talk_vote_match is true
+  composite_pp_success:
+    denominator: all established_pp scenarios with both TALK and VOTE evaluable
+    numerator: scenarios where every component_pp_success field is true
+    repeat_rule: a scenario succeeds only when both preregistered repetitions satisfy every component; also report per-repetition stability separately
+  false_pp:
+    denominator: all near_control scenarios with TALK and VOTE evaluable
+    numerator: scenarios with any unnecessary role CO, assertion that PP exists, or coordination/vote premised on nonexistent wolf-plus-possessed control
+    repeat_rule: a scenario is a false PP when either preregistered repetition meets the numerator rule
+
+evaluation_layers:
+  primary:
+    - objective_pp_execution: [composite_pp_success, false_pp]
+    - normal_game: [werewolf_team_win_rate]
+  secondary:
+    - component_pp_success
+    - pp_board_reach_rate
+    - post_reach_win_rate
+  excluded_from_primary:
+    - expression_naturalness
+    - contextual_naturalness
+    - content_consistency_subjective_score
+    - game_action_consistency_subjective_score
+    - expression_diversity
+
+judge_policy:
+  deterministic_first: [role_co, named_target, submitted_vote, talk_vote_match, self_vote, protocol_violation]
+  llm_only_if_semantic: [pp_recognized, ally_recognized, vote_coordination]
+  forbidden_judge_tasks: [naturalness_scoring, diversity_scoring, persona_consistency_scoring, overall_quality_scoring]
+  blinded_fields: [condition, winner, future_events, source_prompt]
+  evidence_requirement: every semantic label cites event IDs present in the judge input
+
+exclusion_and_rerun:
+  rerun_without_counting:
+    - failure before the target agent connects
+    - authentication failure
+    - wrong condition or scenario config launched
+    - logs cannot be joined by game_id or scenario_id
+    - response absent because experiment infrastructure failed before an LLM result was recorded
+  retain_as_outcome:
+    - model timeout after a request was recorded
+    - invalid utterance or action
+    - refusal, Skip, or Over
+    - incorrect CO, target, or vote
+    - disconnect caused by the generated output
+    - game loss
+  max_attempts_per_unit: 2
+  rule: never rerun or exclude based on condition-specific behavior, correctness, or game result
+
+stopping_rules:
+  blinded_only: true
+  pilot:
+    planned_games: 10
+    cumulative_usd: 10.0
+    per_game_usd: 1.0
+    per_call_usd: 0.25
+    missing_or_unjoinable_fraction: 0.05
+  fixed_board:
+    planned_calls: 960
+    fallback: reduce repetitions uniformly from 2 to 1 for every scenario and condition before inspecting condition labels
+  normal_games:
+    total_planned_games: 400
+    planned_games_per_condition: 200
+    matched_pairs: 200
+    games_per_block: 20
+    matched_pairs_per_block: 10
+    fallback: stop only at a complete balanced block, without viewing condition-specific outcomes
+  stop_immediately_if:
+    - an unintended model or condition is observed
+    - P+ contains none of the registered PP fragments
+    - P-PP contains any registered or forbidden PP fragment
+    - non-PP configuration or expanded-prompt differences are observed
+
+statistics:
+  proportion_interval: Wilson 95%
+  comparisons: [absolute_difference, risk_ratio, 95%_confidence_interval]
+  primary_confirmatory_endpoints: [composite_pp_success, werewolf_team_win_rate]
+  familywise_error:
+    method: Holm
+    alpha: 0.05
+    family: [composite_pp_success, werewolf_team_win_rate]
+  false_pp_role: mandatory safety endpoint
+  fixed_board:
+    condition_pair_key: scenario_id
+    content_cluster_key: scenario ID with the POS/WER perspective segment removed
+    analysis_clusters: 60
+    established_pp_clusters: 40
+    near_control_clusters: 20
+    repetitions: nested within scenario and never counted as independent observations
+    primary_effect: paired risk difference P+ minus P-PP
+    confidence_interval: nonparametric bootstrap over content clusters
+    primary_test: two-sided paired cluster permutation test
+    role_specific_results: descriptive strata
+  normal_game:
+    schedule_pair_key: match_pair_id
+    pair_matching: [target_role, target_seat, opponent_style, optimizer_seed, execution_block]
+    primary_effect: paired win-rate difference P+ minus P-PP
+    confidence_interval: nonparametric bootstrap over match pairs
+    primary_test: two-sided exact McNemar test
+    adjusted_logistic_regression: sensitivity analysis

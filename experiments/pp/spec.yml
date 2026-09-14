@@ -1,0 +1,149 @@
+schema_version: 1
+study_id: aiwolfdial-2026-pp
+base_config: config/config_5.yml
+conditions:
+  P+:
+    label: pp_instruction
+    pp_instruction_enabled: true
+  P-PP:
+    label: without_pp_instruction
+    pp_instruction_enabled: false
+
+# Each entry is an exact, independently removable line.  The generator fails
+# closed if a line is absent or occurs more than once at the declared YAML path.
+# IDs are stable audit identifiers and must not be reused for different text.
+static_fragments:
+  - id: role-werewolf-co-response
+    path: strategy.WEREWOLF
+    text: If a Possessed claim appears at three survivors, as a rule declare werewolf and match votes onto the possessed and villager candidates.
+  - id: role-werewolf-target
+    path: strategy.WEREWOLF
+    text: Even if you choose not to reveal werewolf, clearly state that you believe the possessed's fake result and declare a vote for a villager candidate.
+  - id: role-possessed-judge
+    path: strategy.POSSESSED
+    text: At three survivors, if you are the possessed and the true seer candidate has been killed by attack or execution, prioritize PP above all.
+  - id: role-possessed-co
+    path: strategy.POSSESSED
+    text: 'In that situation, rather than adding divine results and breaking down, call out in natural language, "I''m the possessed. Werewolves, let''s match votes."'
+  - id: role-possessed-white-check
+    path: strategy.POSSESSED
+    text: If you give divine results at three survivors, always check that you don't have so many cleared players that no wolf position remains.
+  - id: role-possessed-white-limit
+    path: strategy.POSSESSED
+    text: Avoid giving white to two survivors, since that leaves no wolf from your viewpoint and breaks down.
+  - id: role-possessed-target
+    path: strategy.POSSESSED
+    text: After a Possessed claim, clearly instruct the wolf candidates to "not vote for me" and to "declare a vote for a villager candidate."
+  - id: mastery-endgame-check
+    path: prompt.game_mastery
+    text: "  At three survivors, if it's wolf/possessed/villager, a PP happens. Always confirm whether a possessed candidate remains and who the wolf and possessed are from your viewpoint."
+  - id: mastery-werewolf-response
+    path: prompt.game_mastery
+    text: "  If a Possessed claim appears at three survivors, prioritize declaring werewolf and matching votes."
+  - id: mastery-possessed-co
+    path: prompt.game_mastery
+    text: "  If a wolf/possessed/villager endgame looks likely at three survivors, declare possessed and call for the werewolf to match votes."
+  - id: talk-possessed-heading
+    path: prompt.talk
+    text: "[Possessed's PP judgment]"
+  - id: talk-possessed-judge
+    path: prompt.talk
+    text: If you are the possessed and there are three survivors, confirm the PP possibility before divine results or unconfirmed player analysis.
+  - id: talk-possessed-co
+    path: prompt.talk
+    text: If you can judge that the three are you, a wolf candidate, and a villager candidate, declare possessed and call for matching votes.
+  - id: talk-possessed-example
+    path: prompt.talk
+    text: 'Example: "I''m the possessed. Werewolf, reveal yourself and let''s match votes"'
+  - id: talk-possessed-attacked-seer
+    path: prompt.talk
+    text: In a three-player board where the true seer candidate was attacked and you remain as the fake seer, prioritize PP above all.
+  - id: talk-possessed-result
+    path: prompt.talk
+    text: In this situation, don't give a new innocent result that erases the wolf position from your viewpoint.
+  - id: talk-possessed-no-reveal
+    path: prompt.talk
+    text: If the wolf won't reveal, ask the wolf candidate to "not vote for me" and "declare a vote for the villager candidate."
+  - id: talk-werewolf-heading
+    path: prompt.talk
+    text: "[Werewolf's PP judgment]"
+  - id: talk-werewolf-response
+    path: prompt.talk
+    text: If you are a werewolf, there are three survivors, and a Possessed claim has appeared, prioritize declaring werewolf over continuing to pose as a villager.
+  - id: talk-werewolf-example
+    path: prompt.talk
+    text: 'Example: "I''m the werewolf. Shion, match with Shunichi"'
+  - id: talk-werewolf-target
+    path: prompt.talk
+    text: Even if you don't reveal werewolf, clearly state that you believe the possessed candidate and declare a vote for the villager candidate.
+  - id: talk-werewolf-no-friendly-vote
+    path: prompt.talk
+    text: Do not vote for the possessed candidate.
+  - id: talk-villager-response
+    path: prompt.talk
+    text: If you are villager-side, there are three survivors, and a Possessed claim appeared, don't end on a vote declaration alone.
+  - id: talk-villager-mislead
+    path: prompt.talk
+    text: Either make the possessed misjudge, or at least show one concrete element of the wolf candidate and argue back.
+  - id: talk-villager-material
+    path: prompt.talk
+    text: 'Material to use: who benefited from the attack, the fake seer''s cleared targets, the previous day''s votes, and the unnaturalness of not revealing werewolf.'
+  - id: talk-villager-example
+    path: prompt.talk
+    text: 'Example: "Takumi not revealing werewolf is aiming for misjudgment. They benefited most from Yumi being killed"'
+  - id: talk-endgame-check
+    path: prompt.talk
+    text: "- Whether it's a wolf/possessed/villager PP board"
+  - id: talk-endgame-possessed
+    path: prompt.talk
+    text: "- If you're the possessed, whether you should declare possessed and call for the werewolf to match votes"
+  - id: talk-endgame-villager
+    path: prompt.talk
+    text: "- If you're villager-side, whether to execute the possessed candidate or directly execute the wolf candidate"
+  - id: talk-endgame-priority
+    path: prompt.talk
+    text: The possessed may let their fake be seen in the endgame. If PP is possible, prioritize matching votes over hiding the fake.
+  - id: vote-possessed-match
+    path: prompt.vote
+    text: If there are three survivors and you called for a PP, match votes with the werewolf who revealed, or the most werewolf-like person, and vote for the villager candidate.
+  - id: vote-possessed-result
+    path: prompt.vote
+    text: If your cleared players among the survivors have grown too many and the wolf position is gone, prioritize PP over divine results.
+  - id: vote-werewolf-match
+    path: prompt.vote
+    text: If a Possessed claim appears at three survivors, vote for the villager candidate, not the possessed candidate.
+  - id: attack-pp-chance
+    path: prompt.attack
+    text: "- Does attacking raise or lower the chance of a PP or half-PP"
+  - id: attack-preserve-pp
+    path: prompt.attack
+    text: Unless there is a guilty (werewolf) result or clear true element, prioritize a true seer candidate over a possessed candidate, or a villager candidate that doesn't break a PP.
+  - id: compact-mastery-pp
+    path: prompt.game_mastery_compact
+    text: "- In a three-survivor endgame, confirm PP; villager-side prioritizes the wolf candidate, the possessed prioritizes matching votes, and the werewolf prioritizes matching votes onto the villager candidate."
+  - id: compact-talk-pp
+    path: prompt.talk_compact
+    text: "- If PP is possible at three survivors, the possessed does a Possessed claim, and the werewolf, responding to the Possessed claim, matches votes onto the villager candidate."
+  - id: compact-vote-pp
+    path: prompt.vote_compact
+    text: "- The werewolf matches the alternative candidate or suspect stated in today's remarks. If there's a Possessed claim at three survivors, match onto the villager candidate."
+
+runtime_fragments:
+  - id: dynamic-endgame-board-check
+    builder: _build_endgame_context
+    marker: At three survivors, always confirm whether it is a wolf/possessed/villager PP board.
+  - id: dynamic-endgame-possessed
+    builder: _build_endgame_context
+    marker: declare possessed and call for the werewolf to match votes.
+  - id: dynamic-endgame-werewolf
+    builder: _build_endgame_context
+    marker: If a possessed CO appears, declare werewolf
+  - id: dynamic-fake-seer-priority
+    builder: _build_fake_seer_consistency_context
+    marker: At three survivors, prioritize PP judgment and matching votes over a new white result.
+
+forbidden_in_p_minus:
+  - '(?i)\bPP\b'
+  - '(?i)half-PP'
+  - '(?i)three survivors.{0,160}(possessed|match votes|declare werewolf)'
+  - '(?i)possessed claim.{0,160}three survivors'
