@@ -7,7 +7,7 @@ import stat
 import zipfile
 
 ROOT = Path(__file__).resolve().parents[1]
-ARCHIVE_NAME = 'camera-ready-code-1.0.0-rc.3.zip'
+ARCHIVE_NAME = 'camera-ready-code-1.0.0-rc.4.zip'
 INVENTORY = 'release/package-files.txt'
 MANIFEST = 'release/code-manifest.json'
 # The manifest cannot hash itself. The reproduction report records its digest.

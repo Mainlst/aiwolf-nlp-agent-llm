@@ -8,7 +8,7 @@
     "partner": "matched: all non-provenance fields; float tolerance 1e-12",
     "stage": "matched: all non-provenance fields; float tolerance 1e-12"
   },
-  "code_manifest_sha256": "20f0e16cd97f94a5a8e1fe384acf0ed9ff64a9ac4f82028ba14d22426b16767b",
+  "code_manifest_sha256": "451eaa1a633ae90048e73912508673ab53d9220fa1e19bde92d8dc489aa47ab8",
   "counts": {
     "boards": 120,
     "factorial_games": 800,
@@ -17,7 +17,7 @@
     "stage_units": 960,
     "talk_judgments": 2880
   },
-  "dataset_checksums_sha256": "b7e67ec7bcb9dafe65cfe55e1f5df4b305800f932d6ebf2e610dd9807c6fef24",
+  "dataset_checksums_sha256": "e28c4c0b6703e231afff670ad0bd288e17f431cae01a4a1280aabcdf4dbb84a4",
   "extraction_records_verified": 2792,
   "network_required": false,
   "scoring_rules_version": "english-declarations-v2-20260910",
