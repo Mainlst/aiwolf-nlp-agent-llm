@@ -1,6 +1,6 @@
 # Target-Agent Power Play Instructions in LLM Werewolf
 
-Camera-ready research materials for the conditionally accepted AIWolfDial 2026 paper **Target-Agent Power Play Instructions in LLM Werewolf: Cue-Conditioned Execution and Matched-Game Outcomes**, by Shoma Yato, Ikumu Komatsu, Haruka Itakura, and Daisuke Katagami.
+Camera-ready research materials for the accepted AIWolfDial 2026 paper **Target-Agent Power Play Instructions in LLM Werewolf: Cue-Conditioned Execution and Matched-Game Outcomes**, by Shoma Yato, Ikumu Komatsu, Haruka Itakura, and Daisuke Katagami.
 
 This is the **code distribution snapshot 1.0.0-rc.4** for [Mainlst/aiwolf-nlp-agent-llm](https://github.com/Mainlst/aiwolf-nlp-agent-llm). The matching dataset is published separately at [synonym/aiwolf-nlp-agent-llm](https://huggingface.co/datasets/synonym/aiwolf-nlp-agent-llm/tree/release-20260914), revision `release-20260914`. This version updates publication-status and download documentation; its analysis implementation is identical to the initial [1.0.0-rc.3 snapshot](https://github.com/Mainlst/aiwolf-nlp-agent-llm/tree/d427dc299bacf4eb4cb41c114c8af476b71ac7ed). Paper publication identifiers are still pending. Code and data use MIT licenses with their respective attribution notices. See [release status](docs/release-status.md). [日本語](README.ja.md).
 

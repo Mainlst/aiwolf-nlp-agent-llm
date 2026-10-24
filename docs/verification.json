@@ -8,7 +8,7 @@
     "partner": "matched: all non-provenance fields; float tolerance 1e-12",
     "stage": "matched: all non-provenance fields; float tolerance 1e-12"
   },
-  "code_manifest_sha256": "451eaa1a633ae90048e73912508673ab53d9220fa1e19bde92d8dc489aa47ab8",
+  "code_manifest_sha256": "a2211f1e9ffe4fead84600ad9eaadfc8b2c5578739313f272287f7e2810963c4",
   "counts": {
     "boards": 120,
     "factorial_games": 800,

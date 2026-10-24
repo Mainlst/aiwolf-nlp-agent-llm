@@ -1,6 +1,6 @@
 # カメラレディー公開用レポジトリ
 
-AIWolfDial 2026に条件付き採択された論文 **Target-Agent Power Play Instructions in LLM Werewolf: Cue-Conditioned Execution and Matched-Game Outcomes**（Shoma Yato、Ikumu Komatsu、Haruka Itakura、Daisuke Katagami）のカメラレディー用研究資料です。
+AIWolfDial 2026に採択された論文 **Target-Agent Power Play Instructions in LLM Werewolf: Cue-Conditioned Execution and Matched-Game Outcomes**（Shoma Yato、Ikumu Komatsu、Haruka Itakura、Daisuke Katagami）のカメラレディー用研究資料です。
 
 4つの評価（元固定盤面・元400試合・追加A・追加B）のコードと保存データの再解析手順を整理した、コード配布用スナップショット `1.0.0-rc.4` です。コード配布先は [Mainlst/aiwolf-nlp-agent-llm](https://github.com/Mainlst/aiwolf-nlp-agent-llm)、データ配布先は [Hugging Face](https://huggingface.co/datasets/synonym/aiwolf-nlp-agent-llm/tree/release-20260914)（固定版 `release-20260914`）です。今回の更新は採択状況と取得手順の説明であり、解析実装は[初回コード版 `1.0.0-rc.3`](https://github.com/Mainlst/aiwolf-nlp-agent-llm/tree/d427dc299bacf4eb4cb41c114c8af476b71ac7ed)と同一です。コード・データはMITで配布し、同梱コードの上流著作権表示を保持します。論文の公開識別子・DOIは未確定です。
 
